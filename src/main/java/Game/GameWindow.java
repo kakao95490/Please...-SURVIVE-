@@ -1,4 +1,4 @@
-package Window;
+package Game;
 
 import javax.swing.*;
 
