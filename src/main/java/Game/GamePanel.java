@@ -1,49 +1,40 @@
 package Game;
 
 import Inputs.*;
+import caractere.Player;
 
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLOutput;
 
-public class GamePanel extends JPanel{
-    private int dx=0, dy=0;
+public class GamePanel extends JPanel {
+    private final static Dimension screenSize = new Dimension(1920, 1080);
+    public Player player;
 
     public GamePanel() {
-        Mouse mouseInputs=new Mouse(this);
+        Mouse mouseInputs = new Mouse(this);
         addKeyListener(new Keyboard(this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
-
+        this.setPanelSize(screenSize);
+        this.player = new Player();
     }
 
-    public void setDx(int dx) {
-        this.dx += dx;
 
+    private void setPanelSize(Dimension size) {
+        setMinimumSize(size);
+        setPreferredSize(size);
+        setMaximumSize(size);
     }
 
-    public void setDy(int dy) {
-        this.dy += dy;
-
-    }
-
-    public void setPos(int dx,int dy){
-        this.dx = dx;
-        this.dy = dy;
-
-    }
-
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        upptdateRectangle();
-        g.fillRect(dx,dy,256,256);
+        this.player.reload(g);
 
     }
-
-    private void upptdateRectangle() {
-
-    }
-
-
 }

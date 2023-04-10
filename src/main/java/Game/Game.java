@@ -33,12 +33,12 @@ public class Game implements Runnable {
             }
 
             //FPS counter
-            if(System.currentTimeMillis() - lastCheck >= 1000){
-                lastCheck=System.currentTimeMillis();
-                System.out.println("FPS : " + frame);
-                frame=0;
+            //if(System.currentTimeMillis() - lastCheck >= 1000){
+                //lastCheck=System.currentTimeMillis();
+                //System.out.println("FPS : " + frame);
+                //frame=0;
 
-            }
+            //}
 
 
 

@@ -39,7 +39,6 @@ public class Mouse implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        gamePanel.setPos(e.getX(),e.getY());
 
     }
 
