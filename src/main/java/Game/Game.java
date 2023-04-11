@@ -1,6 +1,6 @@
 package Game;
 
-import Inputs.KeyboardInputs;
+import Inputs.KeyboardInput;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -22,11 +22,12 @@ import static javafx.application.Application.launch;
 public class Game {
     public int dx=0,dy=0;
     private Canvas canvas;
-    private Scene scene;
+    private static Scene scene;
     private Stage stage;
     private Group root;
-    public KeyboardInputs inputs;
+    public KeyboardInput keyboardInput;
     public Game(){
+
         this.stage = new Stage();
         this.root =new Group();
         this.scene = new Scene(root);
@@ -35,14 +36,14 @@ public class Game {
         root.getChildren().add(canvas);
         this.stage.setTitle("Please....SURVIVE!");
         this.stage.setResizable(false);
-        inputs = new KeyboardInputs(scene);
+        this.keyboardInput = new KeyboardInput(this);
     }
 
     public Canvas getCanvas() {
         return canvas;
     }
 
-    public Scene getScene() {
+    public static Scene getScene() {
         return scene;
     }
 

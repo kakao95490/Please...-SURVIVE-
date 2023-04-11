@@ -11,26 +11,28 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import Caractere.Player;
 
 
 
 public class Main extends Application {
     private Game game;
-    private double FPS_SET=120.0;
-    private double timePerFrame=1000000000.0/FPS_SET;
+    private final double FPS_SET=120.0;
+    private final double timePerFrame=1000000000.0/FPS_SET;
     private long nowTime=System.nanoTime();
     private long lastFrame=System.nanoTime();
     private int frame=0;
     private long lastCheck=System.currentTimeMillis();
+    private Player player;
+    private GraphicsContext caractereSprite;
+
 
     @Override
     public void start(Stage stage) throws Exception {
         game = new Game();
         stage = game.getStage();
-        WritableImage writableImage = new WritableImage(100,100);
-        writableImage
-        PixelReader pixelReader = writableImage.getPixelReader();
-
+        player = new Player(game);
+        caractereSprite = game.getCanvas().getGraphicsContext2D();
 
         stage.show();
 
@@ -61,7 +63,7 @@ public class Main extends Application {
 
 
     private void update() {
-
+        player.reload(caractereSprite);
 
 
     }
