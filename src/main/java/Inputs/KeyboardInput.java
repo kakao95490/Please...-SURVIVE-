@@ -7,33 +7,70 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import Game.Game;
 
+import static utils.Constants.Directions.*;
+
 public class KeyboardInput {
     private Pane root;
     private Scene scene;
-    private boolean[] keysPressed;
+    public boolean[] movementKeyPressed;
+
 
     public KeyboardInput(Game game) {
-        keysPressed = new boolean[256];
+        movementKeyPressed = new boolean[4];
 
-        // écouteur d'événements pour les touches pressées
         Game.getScene().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-            KeyCode keyCode = event.getCode();
-            keysPressed[keyCode.ordinal()] = true;
+            if(event.getCode() == KeyCode.Q) {
+                movementKeyPressed[LEFT]=true;
+            }
+            if(event.getCode() == KeyCode.Z) {
+                movementKeyPressed[UP]=true;
+            }
+            if(event.getCode() == KeyCode.D) {
+                movementKeyPressed[RIGHT]=true;
+            }
+            if(event.getCode() == KeyCode.S) {
+                movementKeyPressed[DOWN]=true;
+            }
         });
 
-        // écouteur d'événements pour les touches relâchées
         Game.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-            KeyCode keyCode = event.getCode();
-            keysPressed[keyCode.ordinal()] = false;
+            if(event.getCode() == KeyCode.Q) {
+                movementKeyPressed[LEFT]=false;
+            }
+            if(event.getCode() == KeyCode.Z) {
+                movementKeyPressed[UP]=false;
+            }
+            if(event.getCode() == KeyCode.D) {
+                movementKeyPressed[RIGHT]=false;
+            }
+            if(event.getCode() == KeyCode.S) {
+                movementKeyPressed[DOWN]=false;
+            }
         });
 
     }
 
-    public boolean isKeyPressed(KeyCode keyCode) {
-        return keysPressed[keyCode.ordinal()];
+    public boolean isEmpty(boolean[] inputTab){
+        for (boolean b : inputTab) {
+            if (b) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    public void clear() {
-        keysPressed = new boolean[256];
+    public boolean directionDiagonal(){
+        int inputNbr = 0;
+        for (boolean b : movementKeyPressed) {
+            if (b) {
+                inputNbr += 1;
+            }
+        }
+        return inputNbr >= 2 ;
     }
+
+    public boolean isKeyPressed(boolean[] inputTab,int key) {
+        return inputTab[key];
+    }
+
 }

@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import Game.Game;
 import javafx.scene.input.KeyCode;
 
+import static utils.Constants.Directions.*;
 import static utils.Constants.PlayerConstants.*;
 
 public class Player {
@@ -17,7 +18,7 @@ public class Player {
 
     private int animationTick = 0;
     private int animationIndex;
-    private final int animationSpeed=5;
+    private final int animationSpeed=3;
 
     private KeyboardInput keyboardInput;
 
@@ -25,15 +26,17 @@ public class Player {
 
     private Game game;
 
-    private int playerStatus = WALKING;
+    private int playerStatus = STATIC;
 
 
     private int spd=5;
+    private int diagSpd=4;
 
     public Player(Game game){
         animationLib=new Image[3][];
         generateAnimationLib();
         this.game=game;
+        keyboardInput=game.keyboardInput;
     }
 
     private void generateAnimationLib() {
@@ -61,26 +64,59 @@ public class Player {
     }
 
     void updatePos(){
-        if(game.keyboardInput.isKeyPressed(KeyCode.Z)){
-            this.Y-=spd;
-        }
-        if(game.keyboardInput.isKeyPressed(KeyCode.S)){
-            this.Y+=spd;
-        }
-        if(game.keyboardInput.isKeyPressed(KeyCode.Q)){
-            this.X-=spd;
-        }
-        if(game.keyboardInput.isKeyPressed(KeyCode.D)){
-            this.X+=spd;
-        }
+        if(keyboardInput.directionDiagonal()){
+            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
+                this.X += diagSpd;
+                this.Y -= diagSpd;
+            }
+            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, DOWN) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
+                this.X += diagSpd;
+                this.Y += diagSpd;
+            }
+            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, LEFT)) {
+                this.X -= diagSpd;
+                this.Y -= diagSpd;
+            }
+            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, DOWN) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, LEFT)) {
+                this.X -= diagSpd;
+                this.Y += diagSpd;
+            }
 
-
+        }
+        else {
+            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP)) {
+                this.Y -= spd;
+            }
+            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, DOWN)) {
+                this.Y += spd;
+            }
+            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, LEFT)) {
+                this.X -= spd;
+            }
+            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
+                this.X += spd;
+            }
+        }
     }
+
+
+
+    void updateStatus() {
+        if(keyboardInput.isEmpty(keyboardInput.movementKeyPressed)){
+            animationIndex=0;
+            playerStatus=STATIC;
+        }
+        else{
+            playerStatus=WALKING;
+        }
+    }
+
 
 
     public void reload(GraphicsContext caractere){
         updateAnimation(animationLib[playerStatus]);
         updatePos();
+        updateStatus();
         caractere.clearRect(0,0,1920,1080);
         caractere.setImageSmoothing(false);
         caractere.drawImage(animationLib[playerStatus][animationIndex],X,Y,200,200);
