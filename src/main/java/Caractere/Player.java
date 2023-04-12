@@ -12,9 +12,8 @@ import static utils.Constants.Directions.*;
 import static utils.Constants.PlayerConstants.*;
 
 public class Player {
-    private String pathSource="file:C:\\Users\\lucas\\Documents\\GitHub\\Please...-SURVIVE-\\resources\\Images\\";
+    private String pathSource="file:C:\\Users\\lucas\\OneDrive\\Documents\\GitHub\\Please...-SURVIVE-\\resources\\Images\\";
     private static Image[][] animationLib;
-    public Image currentSprite;
 
     private int animationTick = 0;
     private int animationIndex;
@@ -34,12 +33,18 @@ public class Player {
     private int accelerationIndex=maxDiagSpd;
     private int spd=0;
     private int diagSpd=0;
+    private GraphicsContext caractereSprite;
+
 
     public Player(Game game){
         animationLib=new Image[3][];
         generateAnimationLib();
         this.game=game;
         keyboardInput=game.keyboardInput;
+        caractereSprite = game.getCanvas().getGraphicsContext2D();
+        caractereSprite.setImageSmoothing(false);
+
+
     }
 
     private void generateAnimationLib() {
@@ -51,6 +56,9 @@ public class Player {
 
         for(int i=0; i<getSpriteAmount(WALKING);i++){
             animationLib[WALKING][i]=new Image(pathSource+"PlayerWalk"+i+".png");
+        }
+        for(int i=0; i<getSpriteAmount(HIT);i++){
+            animationLib[HIT][i]=new Image(pathSource+"PlayerHit"+i+".png");
         }
 
     }
@@ -118,7 +126,7 @@ public class Player {
         if(keyboardInput.isEmpty(keyboardInput.movementKeyPressed)){
             animationIndex=0;
             accelerationIndex=maxDiagSpd;
-            playerStatus=STATIC;
+            playerStatus = STATIC;
         }
         else{
             playerStatus=WALKING;
@@ -127,13 +135,12 @@ public class Player {
 
 
 
-    public void reload(GraphicsContext caractere){
+    public void reload(GraphicsContext gc){
         updateAnimation(animationLib[playerStatus]);
         updatePos();
         updateStatus();
-        caractere.clearRect(0,0,1920,1080);
-        caractere.setImageSmoothing(false);
-        caractere.drawImage(animationLib[playerStatus][animationIndex],X,Y,200,200);
+        gc.clearRect(0,0,1920,1080);
+        gc.drawImage(animationLib[playerStatus][animationIndex],X,Y,200,200);
 
 
     }

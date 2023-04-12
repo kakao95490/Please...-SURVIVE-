@@ -9,7 +9,10 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import Caractere.Player;
 
@@ -21,10 +24,11 @@ public class Main extends Application {
     private final double timePerFrame=1000000000.0/FPS_SET;
     private long nowTime=System.nanoTime();
     private long lastFrame=System.nanoTime();
-    private int frame=0;
+    private Integer frame=0;
     private long lastCheck=System.currentTimeMillis();
     private Player player;
-    private GraphicsContext caractereSprite;
+
+    private GraphicsContext fpsDisplay;
 
 
     @Override
@@ -32,30 +36,24 @@ public class Main extends Application {
         game = new Game();
         stage = game.getStage();
         player = new Player(game);
-        caractereSprite = game.getCanvas().getGraphicsContext2D();
-
         stage.show();
-
-
-
 
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                nowTime=System.nanoTime();
-                if(nowTime - lastFrame >= timePerFrame ){
+                if(now - lastFrame >= timePerFrame ){
                     update();
-                    lastFrame=nowTime;
+                    lastFrame=now;
                     frame++;
                 }
 
                 //FPS counter
-                if(System.currentTimeMillis() - lastCheck >= 1000){
-                    lastCheck=System.currentTimeMillis();
+                if(now - lastCheck >= 1000000000){
+                    lastCheck=System.nanoTime();
                     System.out.println("FPS : " + frame);
                     frame=0;
-
                 }
+
             }
 
         }.start();
@@ -63,7 +61,7 @@ public class Main extends Application {
 
 
     private void update() {
-        player.reload(caractereSprite);
+        player.reload(game.gc);
 
 
     }

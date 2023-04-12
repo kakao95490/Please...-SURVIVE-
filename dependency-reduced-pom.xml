@@ -18,7 +18,7 @@
               <shadedArtifactAttached>true</shadedArtifactAttached>
               <transformers>
                 <transformer>
-                  <mainClass>Game.Main</mainClass>
+                  <mainClass>Game.MainLauncher</mainClass>
                 </transformer>
               </transformers>
             </configuration>
@@ -41,7 +41,7 @@
           <execution>
             <id>default-cli</id>
             <configuration>
-              <mainClass>Game.Main</mainClass>
+              <mainClass>Game.MainLauncher</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>

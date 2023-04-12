@@ -10,7 +10,7 @@ public class Constants {
             return switch (player_action) {
                 case STATIC -> 1;
                 case WALKING -> 9;
-                case HIT -> 2;
+                case HIT -> 3;
                 default -> 0;
             };
         }

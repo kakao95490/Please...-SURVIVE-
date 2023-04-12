@@ -26,6 +26,7 @@ public class Game {
     private Stage stage;
     private Group root;
     public KeyboardInput keyboardInput;
+    public GraphicsContext gc;
     public Game(){
 
         this.stage = new Stage();
@@ -33,9 +34,13 @@ public class Game {
         this.scene = new Scene(root);
         this.stage.setScene(this.scene);
         this.canvas = new Canvas(1920,1080);
+        this.gc = this.canvas.getGraphicsContext2D();
+
         root.getChildren().add(canvas);
         this.stage.setTitle("Please....SURVIVE!");
+
         this.stage.setResizable(false);
+        this.stage.setFullScreen(true);
         this.keyboardInput = new KeyboardInput(this);
     }
 
