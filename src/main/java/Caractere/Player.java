@@ -51,7 +51,7 @@ public class Player extends Entity {
 
     public void updateAnimationIndex(Image[] lib){
         animationTick++;
-        int animationSpd= (game.framerate/animationSpeedFPS);
+        int animationSpd= (int) ((1.0/ game.deltaTime)/animationSpeedFPS);
         if(animationTick>=animationSpd){
             animationTick=0;
             animationIndex++;

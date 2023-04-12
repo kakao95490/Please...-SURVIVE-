@@ -1,5 +1,6 @@
 package Game;
 
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -31,7 +32,6 @@ public class Main extends Application {
     long lastCheck=System.currentTimeMillis();
 
     private long lastTime = System.nanoTime();
-    private long timePerFrame;
 
 
     @Override
@@ -39,25 +39,26 @@ public class Main extends Application {
         game = new Game();
         game.getStage().show();
 
-        new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if(System.currentTimeMillis() - lastCheck >= 1000){
-                    lastCheck=System.currentTimeMillis();
-                    System.out.println(frame);
-                    game.framerate=frame;
-                    frame=0;
+        int FPS_TARGET = 120;
+        double timePerFrame = (double) 1000.0 / FPS_TARGET;
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(timePerFrame), event -> {
 
-                }
-                game.deltaTime =(now - lastTime) / 1000000000.0;
-                lastTime = now;
+            game.deltaTime = (System.nanoTime() - lastTime) / 1000000000.0;
+            lastTime = System.nanoTime();
 
-                update();
-                frame++;
-
-
+            if (System.currentTimeMillis() - lastCheck >= 1000) {
+                lastCheck = System.currentTimeMillis();
+                game.framerate = (int) (1.0 / game.deltaTime);
+                System.out.println(game.framerate);
+                System.out.println(frame);
+                frame=0;
             }
-        }.start();
+
+            update();
+            frame++;
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
 
     }
 
