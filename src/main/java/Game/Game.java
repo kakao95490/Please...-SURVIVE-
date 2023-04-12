@@ -38,6 +38,9 @@ public class Game {
     public GraphicsContext gc;
     public List<Entity> entities;
     public Player player;
+    public double deltaTime;
+
+
     public Game(){
 
         this.stage = new Stage();
@@ -51,7 +54,7 @@ public class Game {
         root.getChildren().add(canvas);
         this.stage.setTitle("Please....SURVIVE!");
 
-        this.stage.setResizable(false);
+        this.stage.setResizable(true);
         this.stage.setFullScreen(true);
         this.keyboardInput = new KeyboardInput(this);
         this.player=new Player(this);

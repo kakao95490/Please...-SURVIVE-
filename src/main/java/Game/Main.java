@@ -24,16 +24,14 @@ import javafx.util.Duration;
 
 
 public class Main extends Application {
-    private Game game;
-    private final double FPS_SET=60.0;
-    private final double timePerFrame=1000.0/FPS_SET;
-    private long nowTime=System.nanoTime();
-    private long lastFrame=System.nanoTime();
-    private Integer frame=0;
-    private long lastCheck=System.currentTimeMillis();
-    private Player player;
 
-    private GraphicsContext fpsDisplay;
+    private Game game;
+
+    int frame = 0;
+    long lastCheck=System.currentTimeMillis();
+
+    private long lastTime = System.nanoTime();
+    private long timePerFrame;
 
 
     @Override
@@ -41,20 +39,32 @@ public class Main extends Application {
         game = new Game();
         game.getStage().show();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(timePerFrame), event ->{
-            update();
+        new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if(System.currentTimeMillis() - lastCheck >= 1000){
+                    lastCheck=System.currentTimeMillis();
+                    System.out.println(frame);
+                    frame=0;
+                    System.out.println(game.deltaTime);
 
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+                }
+                game.deltaTime =(now - lastTime) / 1000000000.0;
+                lastTime = now;
+
+                update();
+                frame++;
+
+
+            }
+        }.start();
+
     }
 
 
     private void update() {
         game.player.reload(game.gc);
         game.reloadCanvas();
-
-
     }
 
 
@@ -65,8 +75,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-
-
     }
 
 
