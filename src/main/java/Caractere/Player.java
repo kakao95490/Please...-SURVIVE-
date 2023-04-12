@@ -29,8 +29,11 @@ public class Player {
     private int playerStatus = STATIC;
 
 
-    private int spd=5;
-    private int diagSpd=4;
+    private int maxSpd=7;
+    private int maxDiagSpd=80*maxSpd/100;
+    private int accelerationIndex=maxDiagSpd;
+    private int spd=0;
+    private int diagSpd=0;
 
     public Player(Game game){
         animationLib=new Image[3][];
@@ -97,6 +100,16 @@ public class Player {
                 this.X += spd;
             }
         }
+        updateSpeed();
+
+    }
+
+    void updateSpeed(){
+        if(accelerationIndex>0) {
+            accelerationIndex--;
+            spd = maxSpd - accelerationIndex;
+            diagSpd = maxDiagSpd - accelerationIndex;
+        }
     }
 
 
@@ -104,6 +117,7 @@ public class Player {
     void updateStatus() {
         if(keyboardInput.isEmpty(keyboardInput.movementKeyPressed)){
             animationIndex=0;
+            accelerationIndex=maxDiagSpd;
             playerStatus=STATIC;
         }
         else{
