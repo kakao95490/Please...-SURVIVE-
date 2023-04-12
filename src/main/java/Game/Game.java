@@ -30,15 +30,16 @@ import static utils.Constants.WindowConstants.WIDTH;
 
 public class Game {
     public int dx=0,dy=0;
-    private Canvas canvas;
+    private final Canvas canvas;
     private static Scene scene;
-    private Stage stage;
-    private Group root;
+    private final Stage stage;
+    private final Group root;
     public KeyboardInput keyboardInput;
     public GraphicsContext gc;
     public List<Entity> entities;
     public Player player;
     public double deltaTime;
+    public int framerate;
 
 
     public Game(){
@@ -82,7 +83,7 @@ public class Game {
     public void reloadCanvas(){
         gc.clearRect(0,0,1920,1080);
         for(Entity entity : entities){
-            gc.drawImage(player.animationLib[entity.status][entity.animationIndex],entity.X,entity.Y,200,200);
+            gc.drawImage(entity.animationLib[entity.status][entity.animationIndex],entity.X,entity.Y,200,200);
         }
 
 

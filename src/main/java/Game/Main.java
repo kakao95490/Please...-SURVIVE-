@@ -45,8 +45,8 @@ public class Main extends Application {
                 if(System.currentTimeMillis() - lastCheck >= 1000){
                     lastCheck=System.currentTimeMillis();
                     System.out.println(frame);
+                    game.framerate=frame;
                     frame=0;
-                    System.out.println(game.deltaTime);
 
                 }
                 game.deltaTime =(now - lastTime) / 1000000000.0;
