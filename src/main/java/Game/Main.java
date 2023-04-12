@@ -39,7 +39,6 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         game = new Game();
-        player = new Player(game);
         game.getStage().show();
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(timePerFrame), event ->{
@@ -52,7 +51,8 @@ public class Main extends Application {
 
 
     private void update() {
-        player.reload(game.gc);
+        game.player.reload(game.gc);
+        game.reloadCanvas();
 
 
     }

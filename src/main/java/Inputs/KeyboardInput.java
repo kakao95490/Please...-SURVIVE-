@@ -74,7 +74,7 @@ public class KeyboardInput {
                 inputNbr += 1;
             }
         }
-        return inputNbr >= 2 ;
+        return inputNbr == 2 ;
     }
 
     public boolean isKeyPressed(boolean[] inputTab,int key) {

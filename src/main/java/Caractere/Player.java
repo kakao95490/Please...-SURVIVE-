@@ -13,61 +13,62 @@ import static utils.Constants.PlayerConstants.*;
 
 public class Player extends Entity {
 
-    private KeyboardInput keyboardInput;
+    public KeyboardInput keyboardInput;
 
 
-    private Game game;
-
-    private int playerStatus = STATIC;
-    private int previousPlayerStatus=STATIC;
+    public Game game;
 
 
+    public int previousPlayerStatus=STATIC;
 
-    private int accelerationIndex=maxDiagSpd;
-    private int spd=0;
-    private int diagSpd=0;
-    private GraphicsContext caractereSprite;
+
+
+    public int accelerationIndex=maxDiagSpd;
+    public int spd=0;
+    public int diagSpd=0;
+    public GraphicsContext caractereSprite;
 
 
     public Player(Game game){
+
+
+        this.entityName = "Player";
         this.animationLib=new Image[3][];
         generateAnimationLib();
-        this.game=game;
-        keyboardInput=game.keyboardInput;
-        caractereSprite = game.getCanvas().getGraphicsContext2D();
-        caractereSprite.setImageSmoothing(false);
 
+        keyboardInput=game.keyboardInput;
+        this.status=STATIC;
 
     }
 
-    private void generateAnimationLib() {
+    public void generateAnimationLib() {
         animationLib[STATIC] = new Image[getSpriteAmount(STATIC)];
         animationLib[WALKING] = new Image[getSpriteAmount(WALKING)];
         animationLib[HIT] = new Image[getSpriteAmount(HIT)];
 
-        animationLib[STATIC][0] = new Image(pathSource+"PlayerWalk0.png");
+        animationLib[STATIC][0] = new Image(pathSource+entityName+"Walk0.png");
 
         for(int i=0; i<getSpriteAmount(WALKING);i++){
-            animationLib[WALKING][i]=new Image(pathSource+"PlayerWalk"+i+".png");
+            animationLib[WALKING][i]=new Image(pathSource+entityName+"Walk"+i+".png");
         }
         for(int j=0; j<getSpriteAmount(HIT);j++){
-            animationLib[HIT][j]=new Image(pathSource+"PlayerHit"+j+".png");
+            animationLib[HIT][j]=new Image(pathSource+entityName+"Hit"+j+".png");
         }
 
     }
 
-    private void updateAnimationIndex(Image[] lib){
+    public void updateAnimationIndex(Image[] lib){
         this.animationTick++;
         if(this.animationTick>=this.animationSpeed){
             this.animationTick=0;
             this.animationIndex++;
-            if(this.animationIndex>=getSpriteAmount(playerStatus)){
+            if(this.animationIndex>=getSpriteAmount(status)){
                 this.animationIndex=0;
             }
         }
     }
 
-    void updatePos(){
+    public void updatePos(){
         if(keyboardInput.directionDiagonal()){
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
                 this.X += diagSpd;
@@ -104,7 +105,7 @@ public class Player extends Entity {
 
     }
 
-    void updateSpeed(){
+    public void updateSpeed(){
         if(accelerationIndex>0) {
             accelerationIndex--;
             spd = maxSpd - accelerationIndex;
@@ -114,37 +115,36 @@ public class Player extends Entity {
 
 
 
-    void updateStatus() {
+    public void updateStatus() {
         if(previousPlayerStatus==HIT && animationIndex+2<=getSpriteAmount(HIT)){
-            playerStatus=HIT;
+            status=HIT;
         }
         else{
             if(keyboardInput.isEmpty(keyboardInput.movementKeyPressed)) {
                 accelerationIndex = maxDiagSpd;
-                playerStatus = STATIC;
+                status = STATIC;
             }
             if(!keyboardInput.isEmpty(keyboardInput.movementKeyPressed)){
-                playerStatus=WALKING;
+                status=WALKING;
             }
             if(keyboardInput.testKey){
-                playerStatus=HIT;
+                status=HIT;
             }
         }
-        if(previousPlayerStatus!=playerStatus){
+        if(previousPlayerStatus!=status){
             animationIndex=0;
         }
-        previousPlayerStatus=playerStatus;
+        previousPlayerStatus=status;
 
     }
 
 
 
     public void reload(GraphicsContext gc){
-        updateAnimationIndex(animationLib[playerStatus]);
+        updateAnimationIndex(animationLib[status]);
         updatePos();
         updateStatus();
-        gc.clearRect(0,0,1920,1080);
-        gc.drawImage(animationLib[playerStatus][animationIndex],X,Y,200,200);
+
     }
 
 }
