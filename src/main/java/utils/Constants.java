@@ -22,4 +22,9 @@ public class Constants {
         public static final int DOWN =3;
 
     }
+
+    public static class WindowConstants{
+        public static final int WIDTH = 1920;
+        public static final int HIGH = 1080;
+    }
 }

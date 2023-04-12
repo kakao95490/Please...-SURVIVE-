@@ -11,25 +11,18 @@ import javafx.scene.input.KeyCode;
 import static utils.Constants.Directions.*;
 import static utils.Constants.PlayerConstants.*;
 
-public class Player {
-    private String pathSource="file:C:\\Users\\lucas\\OneDrive\\Documents\\GitHub\\Please...-SURVIVE-\\resources\\Images\\";
-    private static Image[][] animationLib;
-
-    private int animationTick = 0;
-    private int animationIndex;
-    private final int animationSpeed=3;
+public class Player extends Entity {
 
     private KeyboardInput keyboardInput;
 
-    private int X=0,Y=0;
 
     private Game game;
 
     private int playerStatus = STATIC;
+    private int previousPlayerStatus=STATIC;
 
 
-    private int maxSpd=7;
-    private int maxDiagSpd=80*maxSpd/100;
+
     private int accelerationIndex=maxDiagSpd;
     private int spd=0;
     private int diagSpd=0;
@@ -37,7 +30,7 @@ public class Player {
 
 
     public Player(Game game){
-        animationLib=new Image[3][];
+        this.animationLib=new Image[3][];
         generateAnimationLib();
         this.game=game;
         keyboardInput=game.keyboardInput;
@@ -57,13 +50,13 @@ public class Player {
         for(int i=0; i<getSpriteAmount(WALKING);i++){
             animationLib[WALKING][i]=new Image(pathSource+"PlayerWalk"+i+".png");
         }
-        for(int i=0; i<getSpriteAmount(HIT);i++){
-            animationLib[HIT][i]=new Image(pathSource+"PlayerHit"+i+".png");
+        for(int j=0; j<getSpriteAmount(HIT);j++){
+            animationLib[HIT][j]=new Image(pathSource+"PlayerHit"+j+".png");
         }
 
     }
 
-    private void updateAnimation(Image[] lib){
+    private void updateAnimationIndex(Image[] lib){
         this.animationTick++;
         if(this.animationTick>=this.animationSpeed){
             this.animationTick=0;
@@ -92,7 +85,6 @@ public class Player {
                 this.X -= diagSpd;
                 this.Y += diagSpd;
             }
-
         }
         else {
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP)) {
@@ -123,26 +115,36 @@ public class Player {
 
 
     void updateStatus() {
-        if(keyboardInput.isEmpty(keyboardInput.movementKeyPressed)){
-            animationIndex=0;
-            accelerationIndex=maxDiagSpd;
-            playerStatus = STATIC;
+        if(previousPlayerStatus==HIT && animationIndex+2<=getSpriteAmount(HIT)){
+            playerStatus=HIT;
         }
         else{
-            playerStatus=WALKING;
+            if(keyboardInput.isEmpty(keyboardInput.movementKeyPressed)) {
+                accelerationIndex = maxDiagSpd;
+                playerStatus = STATIC;
+            }
+            if(!keyboardInput.isEmpty(keyboardInput.movementKeyPressed)){
+                playerStatus=WALKING;
+            }
+            if(keyboardInput.testKey){
+                playerStatus=HIT;
+            }
         }
+        if(previousPlayerStatus!=playerStatus){
+            animationIndex=0;
+        }
+        previousPlayerStatus=playerStatus;
+
     }
 
 
 
     public void reload(GraphicsContext gc){
-        updateAnimation(animationLib[playerStatus]);
+        updateAnimationIndex(animationLib[playerStatus]);
         updatePos();
         updateStatus();
         gc.clearRect(0,0,1920,1080);
         gc.drawImage(animationLib[playerStatus][animationIndex],X,Y,200,200);
-
-
     }
 
 }

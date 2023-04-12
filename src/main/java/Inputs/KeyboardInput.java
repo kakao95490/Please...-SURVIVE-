@@ -13,6 +13,7 @@ public class KeyboardInput {
     private Pane root;
     private Scene scene;
     public boolean[] movementKeyPressed;
+    public boolean testKey;
 
 
     public KeyboardInput(Game game) {
@@ -31,6 +32,9 @@ public class KeyboardInput {
             if(event.getCode() == KeyCode.S) {
                 movementKeyPressed[DOWN]=true;
             }
+            if(event.getCode() == KeyCode.T) {
+                testKey = true;
+            }
         });
 
         Game.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
@@ -46,6 +50,10 @@ public class KeyboardInput {
             if(event.getCode() == KeyCode.S) {
                 movementKeyPressed[DOWN]=false;
             }
+            if(event.getCode() == KeyCode.T) {
+                testKey=false;
+            }
+
         });
 
     }

@@ -18,6 +18,9 @@ import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import static javafx.application.Application.launch;
+import static utils.Constants.WindowConstants.HIGH;
+import static utils.Constants.WindowConstants.WIDTH;
+
 
 public class Game {
     public int dx=0,dy=0;
@@ -33,7 +36,7 @@ public class Game {
         this.root =new Group();
         this.scene = new Scene(root);
         this.stage.setScene(this.scene);
-        this.canvas = new Canvas(1920,1080);
+        this.canvas = new Canvas(WIDTH, HIGH);
         this.gc = this.canvas.getGraphicsContext2D();
 
         root.getChildren().add(canvas);

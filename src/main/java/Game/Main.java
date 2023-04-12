@@ -1,6 +1,8 @@
 package Game;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -18,10 +20,13 @@ import Caractere.Player;
 
 
 
+import javafx.util.Duration;
+
+
 public class Main extends Application {
     private Game game;
-    private final double FPS_SET=120.0;
-    private final double timePerFrame=1000000000.0/FPS_SET;
+    private final double FPS_SET=60.0;
+    private final double timePerFrame=1000.0/FPS_SET;
     private long nowTime=System.nanoTime();
     private long lastFrame=System.nanoTime();
     private Integer frame=0;
@@ -34,29 +39,15 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         game = new Game();
-        stage = game.getStage();
         player = new Player(game);
-        stage.show();
+        game.getStage().show();
 
-        new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if(now - lastFrame >= timePerFrame ){
-                    update();
-                    lastFrame=now;
-                    frame++;
-                }
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(timePerFrame), event ->{
+            update();
 
-                //FPS counter
-                if(now - lastCheck >= 1000000000){
-                    lastCheck=System.nanoTime();
-                    System.out.println("FPS : " + frame);
-                    frame=0;
-                }
-
-            }
-
-        }.start();
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
 
