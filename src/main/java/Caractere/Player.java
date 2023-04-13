@@ -14,18 +14,17 @@ public class Player extends Entity {
 
     public KeyboardInput keyboardInput;
 
-
     public Game game;
 
     public final int speed=10;
 
 
-
-    public int previousPlayerStatus=STATIC;
-
     public Player(Game game){
 
         this.game=game;
+        game.gc = game.getCanvas().getGraphicsContext2D();
+        game.gc.setImageSmoothing(false);
+
         this.entityName = "Player";
         animationLib=new Image[3][];
         generateAnimationLib();
@@ -41,13 +40,14 @@ public class Player extends Entity {
         animationLib[WALKING] = new Image[getSpriteAmount(WALKING)];
         animationLib[HIT] = new Image[getSpriteAmount(HIT)];
 
-        animationLib[STATIC][0] = new Image(pathSource+entityName+"Walk0.png");
+        animationLib[STATIC][0] = new Image(getClass().getResource(pathSource+entityName+"Walk0.png").toExternalForm());
+        ;
 
         for(int i=0; i<getSpriteAmount(WALKING);i++){
-            animationLib[WALKING][i]=new Image(pathSource+entityName+"Walk"+i+".png");
+            animationLib[WALKING][i]=new Image(getClass().getResource(pathSource+entityName+"Walk"+i+".png").toExternalForm());
         }
         for(int j=0; j<getSpriteAmount(HIT);j++){
-            animationLib[HIT][j]=new Image(pathSource+entityName+"Hit"+j+".png");
+            animationLib[HIT][j]=new Image(getClass().getResource(pathSource+entityName+"Hit"+j+".png").toExternalForm());
         }
 
     }
@@ -107,7 +107,7 @@ public class Player extends Entity {
 
 
     public void updateStatus() {
-        if(previousPlayerStatus==HIT && animationIndex+2<=getSpriteAmount(HIT)){
+        if(previousStatus==HIT && animationIndex+2<=getSpriteAmount(HIT)){
             status=HIT;
         }
         else{
@@ -121,16 +121,16 @@ public class Player extends Entity {
                 status=HIT;
             }
         }
-        if(previousPlayerStatus!=status){
+        if(previousStatus!=status){
             animationIndex=0;
         }
-        previousPlayerStatus=status;
+        previousStatus=status;
 
     }
 
 
 
-    public void reload(GraphicsContext gc){
+    public void reload(){
         updateAnimationIndex(animationLib[status]);
         updatePos();
         updateStatus();

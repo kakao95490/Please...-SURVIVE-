@@ -11,6 +11,8 @@ import javafx.util.Duration;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+import static utils.Constants.WindowConstants.FPS_TARGET;
+
 
 public class Main extends Application {
 
@@ -18,7 +20,6 @@ public class Main extends Application {
 
     int frame = 0;
     long lastCheck=System.currentTimeMillis();
-    int FPS_TARGET = 60;
     double timePerFrame = (double) 1000.0 / FPS_TARGET;
     private long lastTime = System.nanoTime();
 
@@ -51,7 +52,7 @@ public class Main extends Application {
 
 
     private void update() {
-        game.player.reload(game.gc);
+        game.player.reload();
         game.reloadCanvas();
     }
 

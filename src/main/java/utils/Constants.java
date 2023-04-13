@@ -26,8 +26,20 @@ public class Constants {
     public static class WindowConstants{
         public static final int WIDTH = 1920;
         public static final int HIGH = 1080;
-        public static final double SCALE=3;
+        public static final double SCALE=2;
         public static final int FPS_TARGET = 60;
+    }
+
+    public static class MapConstants{
+        public static final int FLOOR=0;
+        public static final int WALLR=1;
+        public static final int WALLL=2;
+        public static final int WALLU=3;
+        public static final int WALLD=4;
+        public static final int CORNERUR=5;
+        public static final int CORNERUL=6;
+        public static final int CORNERDR=7;
+        public static final int CORNERDL=8;
     }
 
 }
