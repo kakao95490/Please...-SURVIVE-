@@ -65,38 +65,36 @@ public class Player extends Entity {
     }
 
     public void updatePos(){
-        int spd= speed;
-
         if(keyboardInput.directionDiagonal()){
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
-                this.X += spd * 0.80;
-                this.Y -= spd * 0.80;
+                this.X += speed * 0.80;
+                this.Y -= speed * 0.80;
             }
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, DOWN) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
-                this.X += spd * 0.80;
-                this.Y += spd * 0.80;
+                this.X += speed * 0.80;
+                this.Y += speed * 0.80;
             }
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, LEFT)) {
-                this.X -= spd * 0.80;
-                this.Y -= spd * 0.80;
+                this.X -= speed * 0.80;
+                this.Y -= speed * 0.80;
             }
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, DOWN) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, LEFT)) {
-                this.X -= spd * 0.80;
-                this.Y += spd * 0.80;
+                this.X -= speed * 0.80;
+                this.Y += speed * 0.80;
             }
         }
         else {
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP)) {
-                this.Y -= spd;
+                this.Y -= speed;
             }
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, DOWN)) {
-                this.Y += spd;
+                this.Y += speed;
             }
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, LEFT)) {
-                this.X -= spd;
+                this.X -= speed;
             }
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
-                this.X += spd;
+                this.X += speed;
             }
         }
 

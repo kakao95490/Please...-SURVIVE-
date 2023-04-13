@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -45,7 +46,7 @@ public class Game {
     public Double framerate;
 
 
-    public Game(){
+    public Game() throws IOException {
 
         this.stage = new Stage();
         this.root =new Group();
@@ -99,8 +100,6 @@ public class Game {
                 else{
                     gc.drawImage(map.textureLib[FLOOR],x,y,map.textureLib[FLOOR].getWidth()*SCALE,map.textureLib[FLOOR].getHeight()*SCALE);
                 }
-
-
             }
 
         }
