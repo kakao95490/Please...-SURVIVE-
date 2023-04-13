@@ -1,27 +1,15 @@
 package Game;
 
 import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import Caractere.Player;
-
 
 
 import javafx.util.Duration;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class Main extends Application {
@@ -30,7 +18,8 @@ public class Main extends Application {
 
     int frame = 0;
     long lastCheck=System.currentTimeMillis();
-
+    int FPS_TARGET = 60;
+    double timePerFrame = (double) 1000.0 / FPS_TARGET;
     private long lastTime = System.nanoTime();
 
 
@@ -39,18 +28,16 @@ public class Main extends Application {
         game = new Game();
         game.getStage().show();
 
-        int FPS_TARGET = 120;
-        double timePerFrame = (double) 1000.0 / FPS_TARGET;
+
+
+
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(timePerFrame), event -> {
 
-            game.deltaTime = (System.nanoTime() - lastTime) / 1000000000.0;
-            lastTime = System.nanoTime();
 
-            if (System.currentTimeMillis() - lastCheck >= 1000) {
+            if (System.currentTimeMillis() - lastCheck >= 500) {
                 lastCheck = System.currentTimeMillis();
-                game.framerate = (int) (1.0 / game.deltaTime);
-                System.out.println(game.framerate);
-                System.out.println(frame);
+                game.framerate= (double) (frame*2);
+                System.out.println("fps " + game.framerate);
                 frame=0;
             }
 

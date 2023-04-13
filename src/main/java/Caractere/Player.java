@@ -8,6 +8,7 @@ import Game.Game;
 
 import static utils.Constants.Directions.*;
 import static utils.Constants.PlayerConstants.*;
+import static utils.Constants.WindowConstants.FPS_TARGET;
 
 public class Player extends Entity {
 
@@ -16,7 +17,8 @@ public class Player extends Entity {
 
     public Game game;
 
-    public final int speed=700;
+    public final int speed=10;
+
 
 
     public int previousPlayerStatus=STATIC;
@@ -33,6 +35,7 @@ public class Player extends Entity {
 
     }
 
+    @Override
     public void generateAnimationLib() {
         animationLib[STATIC] = new Image[getSpriteAmount(STATIC)];
         animationLib[WALKING] = new Image[getSpriteAmount(WALKING)];
@@ -51,8 +54,8 @@ public class Player extends Entity {
 
     public void updateAnimationIndex(Image[] lib){
         animationTick++;
-        int animationSpd= (int) ((1.0/ game.deltaTime)/animationSpeedFPS);
-        if(animationTick>=animationSpd){
+        int animationspd= (int) (FPS_TARGET/animationSpeedFPS);
+        if(animationTick>=animationspd){
             animationTick=0;
             animationIndex++;
             if(animationIndex>=getSpriteAmount(status)){
@@ -63,7 +66,6 @@ public class Player extends Entity {
 
     public void updatePos(){
         int spd= speed;
-        spd= (int) (spd*game.deltaTime);
 
         if(keyboardInput.directionDiagonal()){
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {

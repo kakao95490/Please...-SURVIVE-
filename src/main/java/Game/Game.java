@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -22,10 +23,10 @@ import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static javafx.application.Application.launch;
-import static utils.Constants.WindowConstants.HIGH;
-import static utils.Constants.WindowConstants.WIDTH;
+import static utils.Constants.WindowConstants.*;
 
 
 public class Game {
@@ -38,8 +39,7 @@ public class Game {
     public GraphicsContext gc;
     public List<Entity> entities;
     public Player player;
-    public double deltaTime;
-    public int framerate;
+    public Double framerate;
 
 
     public Game(){
@@ -61,6 +61,7 @@ public class Game {
         this.player=new Player(this);
         entities = new ArrayList<>();
         entities.add(player);
+        this.framerate=60.0;
     }
 
     public Canvas getCanvas() {
@@ -83,7 +84,7 @@ public class Game {
     public void reloadCanvas(){
         gc.clearRect(0,0,1920,1080);
         for(Entity entity : entities){
-            gc.drawImage(entity.animationLib[entity.status][entity.animationIndex],entity.X,entity.Y,200,200);
+            gc.drawImage(entity.animationLib[entity.status][entity.animationIndex],entity.X,entity.Y,entity.sizeX*SCALE,entity.sizeX*SCALE);
         }
 
 
