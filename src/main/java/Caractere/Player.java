@@ -28,8 +28,8 @@ public class Player extends Entity {
 
         keyboardInput=game.keyboardInput;   //get the keyboard input from the game
         this.status=STATIC; //set the player status
-
-        this.coord = new Coord(0,0); //set the player coord
+        this.coord = new Coord(15*TILE_SIZE,10*TILE_SIZE); //set the player coord spawn
+        this.movement = new Coord(0, 0); //vector of the player movement
         this.tileCoord = new Coord(coord.getX()/TILE, coord.getY()/TILE ); //get the tile coord of the player
     }
 
@@ -92,14 +92,6 @@ public class Player extends Entity {
 
 
 
-    public void reload(){
-        updateAnimationIndex(animationLib[status]);
-        updatePos();
-        updateStatus();
-        game.gc.drawImage(animationLib[status][animationIndex], ((double) WIDTH /2)-TILE, ((double) HEIGHT /2)-TILE  ,TILE_SIZE,TILE_SIZE);
-        setTileCoord();
-        System.out.println(tileCoord);
 
-    }
 
 }

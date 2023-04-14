@@ -12,6 +12,7 @@ import java.util.Objects;
 
 import static utils.Constants.MapConstants.*;
 import static utils.Constants.WindowConstants.SCALE;
+import static utils.Constants.WindowConstants.SPRITE_COORD;
 
 public class Map {
     private Game game;
@@ -60,15 +61,7 @@ public class Map {
     }
 
 
-    public void drawMapMatrice(){
-        for (int i = 0; i < mapMatrice.length; i++) {
-            for (int j = 0; j < mapMatrice[i].length; j++) {
-                if(mapMatrice[i][j] != -1) {
-                    game.gc.drawImage(textureLib[mapMatrice[i][j]], (j * TILE_SIZE)-player.getCoord().getX(), (i * TILE_SIZE)-player.getCoord().getY() ,TILE_SIZE,TILE_SIZE);
-                }
-            }
-        }
-    }
+
 
 
 

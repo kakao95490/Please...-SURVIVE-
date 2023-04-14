@@ -15,6 +15,7 @@ import utils.Coord;
 public abstract class Entity implements InterfaceEntity {
     protected Coord coord;
     protected Coord tileCoord;
+    protected Coord movement;
 
 
     protected int animationTick = 0;
@@ -66,7 +67,6 @@ public abstract class Entity implements InterfaceEntity {
     public Coord getTileCoord() {
         return tileCoord;
     }
-
     public void setTileCoord(){
         tileCoord.setX(coord.getX()/TILE_SIZE);
         tileCoord.setY(coord.getY()/TILE_SIZE);

@@ -1,5 +1,6 @@
 package utils;
 
+import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.WindowConstants.SCALE;
 
 public class Constants {
@@ -30,6 +31,8 @@ public class Constants {
         public static final int HEIGHT = 1080;
         public static final double SCALE=3;
         public static final int FPS_TARGET = 60;
+        public static final Coord CENTER = new Coord(WIDTH/2,HEIGHT/2);
+        public static final Coord SPRITE_COORD = new Coord((int) (WIDTH/2-TILE_SIZE/2),(int) (HEIGHT/2-TILE_SIZE/2));
     }
 
     public static class MapConstants{

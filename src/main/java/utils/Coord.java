@@ -1,6 +1,7 @@
 package utils;
 
-import java.util.Objects;
+import static utils.Constants.MapConstants.TILE;
+import static utils.Constants.MapConstants.TILE_SIZE;
 
 public class Coord {
     private int X;
@@ -51,6 +52,11 @@ public class Coord {
 
     public void addY(int y){
         this.Y+=y;
+    }
+
+    public void setXY(int x, int y){
+        this.X=x;
+        this.Y=y;
     }
 
 

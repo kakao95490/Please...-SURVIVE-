@@ -9,8 +9,6 @@ import javafx.stage.Stage;
 
 import javafx.util.Duration;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 import static utils.Constants.WindowConstants.FPS_TARGET;
 
 
@@ -53,8 +51,8 @@ public class Main extends Application {
 
     private void update() {
         game.gc.clearRect(0, 0, game.getCanvas().getWidth(), game.getCanvas().getHeight());
-        game.map.drawMapMatrice();
-        game.player.reload();
+        game.camera.drawMapMatrice();
+        game.camera.playerReload();
     }
 
 

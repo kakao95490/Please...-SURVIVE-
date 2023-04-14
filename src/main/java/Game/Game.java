@@ -37,6 +37,7 @@ public class Game {
     public List<Entity> entities;
     public Player player;
     public Map map;
+    public Camera camera;
 
 
 
@@ -71,6 +72,8 @@ public class Game {
         this.map = new Map(this);
         entities = new ArrayList<>();
         entities.add(player);
+
+        this.camera= new Camera(this);
 
 
     }
