@@ -1,5 +1,7 @@
 package utils;
 
+import static utils.Constants.WindowConstants.SCALE;
+
 public class Constants {
     public static class PlayerConstants{
         public static final int STATIC=0;
@@ -31,7 +33,8 @@ public class Constants {
     }
 
     public static class MapConstants{
-        public static final int TILE_SIZE=64;
+        public static final int TILE=64;
+        public static final int TILE_SIZE= (int) (64*SCALE);
         public static final int FLOOR=0;
         public static final int WALLR=1;
         public static final int WALLL=2;

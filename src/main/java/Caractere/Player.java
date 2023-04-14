@@ -1,14 +1,11 @@
 package Caractere;
 
 import Inputs.KeyboardInput;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import Game.Game;
 import utils.Coord;
 
-import java.util.Objects;
-
 import static utils.Constants.Directions.*;
+import static utils.Constants.MapConstants.TILE;
 import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.WindowConstants.*;
@@ -19,22 +16,21 @@ public class Player extends Entity {
 
     public Game game;
 
-    public final int speed=10;
-    private final int size = (int) (TILE_SIZE * SCALE);
-
+    public int speed= (int) (3*SCALE);
 
     public Player(Game game){
 
         this.game=game;
 
         this.entityName = "Player";
-        animationLib=new Image[3][];
-        generateAnimationLib();
 
-        keyboardInput=game.keyboardInput;
-        this.status=STATIC;
+        generateAnimationLib(); //generate the animation library
 
-        this.coord = new Coord(0,0);
+        keyboardInput=game.keyboardInput;   //get the keyboard input from the game
+        this.status=STATIC; //set the player status
+
+        this.coord = new Coord(0,0); //set the player coord
+        this.tileCoord = new Coord(coord.getX()/TILE, coord.getY()/TILE ); //get the tile coord of the player
     }
 
     public void updatePos(){
@@ -71,8 +67,6 @@ public class Player extends Entity {
 
 
 
-
-
     public void updateStatus() {
         if(previousStatus==HIT && animationIndex+2<=getSpriteAmount(HIT)){
             status=HIT;
@@ -92,8 +86,9 @@ public class Player extends Entity {
             animationIndex=0;
         }
         previousStatus=status;
-
     }
+
+
 
 
 
@@ -101,8 +96,9 @@ public class Player extends Entity {
         updateAnimationIndex(animationLib[status]);
         updatePos();
         updateStatus();
-        game.gc.drawImage(animationLib[status][animationIndex], (double) WIDTH /2, (double) HEIGHT /2 ,size,size);
-
+        game.gc.drawImage(animationLib[status][animationIndex], ((double) WIDTH /2)-TILE, ((double) HEIGHT /2)-TILE  ,TILE_SIZE,TILE_SIZE);
+        setTileCoord();
+        System.out.println(tileCoord);
 
     }
 

@@ -5,10 +5,12 @@ import java.util.Objects;
 public class Coord {
     private int X;
     private int Y;
+
     public Coord(int x, int y){
         this.X=x;
         this.Y=y;
     }
+
     public int getX() {
         return X;
     }
@@ -50,5 +52,6 @@ public class Coord {
     public void addY(int y){
         this.Y+=y;
     }
+
 
 }

@@ -18,7 +18,6 @@ public class Map {
     private Player player;
     public Image[] textureLib;
     private final int[][] mapMatrice;
-    private final int tileSize= (int) (64);
 
 
     public Map(Game game) throws URISyntaxException, IOException {
@@ -65,7 +64,7 @@ public class Map {
         for (int i = 0; i < mapMatrice.length; i++) {
             for (int j = 0; j < mapMatrice[i].length; j++) {
                 if(mapMatrice[i][j] != -1) {
-                    game.gc.drawImage(textureLib[mapMatrice[i][j]], j * tileSize, i * tileSize,tileSize,tileSize);
+                    game.gc.drawImage(textureLib[mapMatrice[i][j]], (j * TILE_SIZE)-player.getCoord().getX(), (i * TILE_SIZE)-player.getCoord().getY() ,TILE_SIZE,TILE_SIZE);
                 }
             }
         }
