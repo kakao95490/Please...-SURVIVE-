@@ -10,20 +10,20 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 import static utils.Constants.MapConstants.*;
+import static utils.Constants.WindowConstants.SCALE;
 
 public class Map {
     public Game game;
     public Image[] textureLib;
-    private int[][] mapMatrice;
+    private final int[][] mapMatrice;
+    private final int tileSize= (int) (64*SCALE);
 
 
     public Map(Game game) throws URISyntaxException, IOException {
         this.game=game;
-        this.textureLib=new Image[9];
+        this.textureLib=new Image[13];
         this.mapMatrice = getMapCSV();
         importTexture();
-
-
     }
 
     private void importTexture() {
@@ -36,6 +36,11 @@ public class Map {
         textureLib[CORNERUL]= new Image(Objects.requireNonNull(getClass().getResource( "/Map/WallCornerUL.png")).toExternalForm());
         textureLib[CORNERDR]= new Image(Objects.requireNonNull(getClass().getResource( "/Map/WallCornerDR.png")).toExternalForm());
         textureLib[CORNERDL]= new Image(Objects.requireNonNull(getClass().getResource( "/Map/WallCornerDL.png")).toExternalForm());
+        textureLib[OUTCORNERUR] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/OutCornerUR.png")).toExternalForm());
+        textureLib[OUTCORNERUL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/OutCornerUL.png")).toExternalForm());
+        textureLib[OUTCORNERDR] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/OutCornerDR.png")).toExternalForm());
+        textureLib[OUTCORNERDL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/OutCornerDL.png")).toExternalForm());
+
     }
 
     private int[][] getMapCSV() throws URISyntaxException, IOException {
@@ -44,5 +49,24 @@ public class Map {
         String file = String.valueOf(Paths.get(url.toURI()).toFile());
         return CSVReader.readCsv(String.valueOf(file));
     }
+
+    public int[][] getMapMatrice() {
+        return mapMatrice;
+    }
+
+
+    public void drawMapMatrice(){
+        for (int i = 0; i < mapMatrice.length; i++) {
+            for (int j = 0; j < mapMatrice[i].length; j++) {
+                if(mapMatrice[i][j] != -1) {
+                    game.gc.drawImage(textureLib[mapMatrice[i][j]], j * tileSize, i * tileSize,tileSize,tileSize);
+                }
+            }
+        }
+    }
+
+
+
+
 
 }

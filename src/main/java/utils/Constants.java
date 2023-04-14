@@ -40,6 +40,10 @@ public class Constants {
         public static final int CORNERUL=6;
         public static final int CORNERDR=7;
         public static final int CORNERDL=8;
+        public static final int OUTCORNERUR=9;
+        public static final int OUTCORNERUL=10;
+        public static final int OUTCORNERDR=11;
+        public static final int OUTCORNERDL=12;
     }
 
 }

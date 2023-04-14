@@ -95,11 +95,11 @@ public class Player extends Entity {
 
 
 
-    public void reload(GraphicsContext gc){
+    public void reload(){
         updateAnimationIndex(animationLib[status]);
         updatePos();
         updateStatus();
-        gc.drawImage(animationLib[status][animationIndex],getCoord().getX(),getCoord().getY() ,sizeX*SCALE,sizeX*SCALE);
+        game.gc.drawImage(animationLib[status][animationIndex],getCoord().getX(),getCoord().getY() ,sizeX*SCALE,sizeX*SCALE);
 
 
     }
