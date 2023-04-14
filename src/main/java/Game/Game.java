@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -27,29 +28,37 @@ public class Game {
     private static Scene scene;
     private final Stage stage;
     private final Group root;
-    public KeyboardInput keyboardInput;
+    private TilePane tilePane;
     public GraphicsContext gc;
+
+    public KeyboardInput keyboardInput;
+    public Double framerate;
+
     public List<Entity> entities;
     public Player player;
     public Map map;
-    public Double framerate;
+
+
 
 
     public Game() throws IOException, URISyntaxException {
 
         this.stage = new Stage();
-        this.root =new Group();
+        this.root = new Group();
+
+        //set a canva for the player
+        this.canvas = new Canvas(WIDTH,HEIGHT);
+        gc = getCanvas().getGraphicsContext2D();
+        gc.setImageSmoothing(false);
 
 
-        
 
 
-
-        scene = new Scene(root,WIDTH, HIGH);
+        scene = new Scene(root,WIDTH, HEIGHT);
         Color BACKGROUND_COLOR = Color.BLACK;
         scene.setFill(BACKGROUND_COLOR);
         this.stage.setScene(scene);
-        this.canvas = new Canvas(scene.getWidth(),scene.getWidth());
+
         root.getChildren().add(canvas);
         this.stage.setTitle("Please....SURVIVE!");
 
@@ -63,8 +72,7 @@ public class Game {
         entities = new ArrayList<>();
         entities.add(player);
 
-        gc = getCanvas().getGraphicsContext2D();
-        gc.setImageSmoothing(false);
+
     }
 
     public Canvas getCanvas() {
@@ -84,12 +92,5 @@ public class Game {
     }
 
 
-
-
-
-
-    private void setWindow(){
-
-    }
 }
 

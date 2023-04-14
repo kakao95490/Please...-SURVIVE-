@@ -25,12 +25,13 @@ public class Constants {
 
     public static class WindowConstants{
         public static final int WIDTH = 1920;
-        public static final int HIGH = 1080;
+        public static final int HEIGHT = 1080;
         public static final double SCALE=3;
         public static final int FPS_TARGET = 60;
     }
 
     public static class MapConstants{
+        public static final int TILE_SIZE=64;
         public static final int FLOOR=0;
         public static final int WALLR=1;
         public static final int WALLL=2;
@@ -44,6 +45,10 @@ public class Constants {
         public static final int OUTCORNERUL=10;
         public static final int OUTCORNERDR=11;
         public static final int OUTCORNERDL=12;
+        public static final int DOORR=13;
+        public static final int DOORL=14;
+        public static final int DOORU=15;
+        public static final int DOORD=16;
     }
 
 }

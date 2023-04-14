@@ -9,8 +9,9 @@ import utils.Coord;
 import java.util.Objects;
 
 import static utils.Constants.Directions.*;
+import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.PlayerConstants.*;
-import static utils.Constants.WindowConstants.SCALE;
+import static utils.Constants.WindowConstants.*;
 
 public class Player extends Entity {
 
@@ -19,6 +20,7 @@ public class Player extends Entity {
     public Game game;
 
     public final int speed=10;
+    private final int size = (int) (TILE_SIZE * SCALE);
 
 
     public Player(Game game){
@@ -99,7 +101,7 @@ public class Player extends Entity {
         updateAnimationIndex(animationLib[status]);
         updatePos();
         updateStatus();
-        game.gc.drawImage(animationLib[status][animationIndex],getCoord().getX(),getCoord().getY() ,sizeX*SCALE,sizeX*SCALE);
+        game.gc.drawImage(animationLib[status][animationIndex], (double) WIDTH /2, (double) HEIGHT /2 ,size,size);
 
 
     }

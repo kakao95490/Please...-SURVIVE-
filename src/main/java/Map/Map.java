@@ -1,5 +1,6 @@
 package Map;
 
+import Caractere.Player;
 import Game.Game;
 import javafx.scene.image.Image;
 
@@ -13,15 +14,17 @@ import static utils.Constants.MapConstants.*;
 import static utils.Constants.WindowConstants.SCALE;
 
 public class Map {
-    public Game game;
+    private Game game;
+    private Player player;
     public Image[] textureLib;
     private final int[][] mapMatrice;
-    private final int tileSize= (int) (64*SCALE);
+    private final int tileSize= (int) (64);
 
 
     public Map(Game game) throws URISyntaxException, IOException {
         this.game=game;
-        this.textureLib=new Image[13];
+        this.player=game.player;
+        this.textureLib=new Image[17];
         this.mapMatrice = getMapCSV();
         importTexture();
     }
@@ -40,7 +43,10 @@ public class Map {
         textureLib[OUTCORNERUL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/OutCornerUL.png")).toExternalForm());
         textureLib[OUTCORNERDR] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/OutCornerDR.png")).toExternalForm());
         textureLib[OUTCORNERDL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/OutCornerDL.png")).toExternalForm());
-
+        textureLib[DOORR] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoorR.png")).toExternalForm());
+        textureLib[DOORL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoorL.png")).toExternalForm());
+        textureLib[DOORU] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoorU.png")).toExternalForm());
+        textureLib[DOORD] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoorD.png")).toExternalForm());
     }
 
     private int[][] getMapCSV() throws URISyntaxException, IOException {
