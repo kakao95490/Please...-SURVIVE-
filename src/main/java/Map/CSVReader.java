@@ -6,7 +6,8 @@ import java.io.IOException;
 
 public class CSVReader {
 
-    public static int[][] readCsv(String filename) throws IOException, IOException {
+    public static int[][] readCsv(String filename) throws IOException {
+
         BufferedReader reader = new BufferedReader(new FileReader(filename));
         String line;
         int numRows = 0;
@@ -36,9 +37,9 @@ public class CSVReader {
     }
 
     public static void printMatrix(int[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                System.out.print(matrix[i][j] + " ");
+        for (int[] ints : matrix) {
+            for (int anInt : ints) {
+                System.out.print(anInt + " ");
             }
             System.out.println();
         }

@@ -1,22 +1,17 @@
 package Inputs;
 
-import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import Game.Game;
 
 import static utils.Constants.Directions.*;
 
 public class KeyboardInput {
-    private Pane root;
-    private Scene scene;
     public boolean[] movementKeyPressed;
     public boolean testKey;
 
 
-    public KeyboardInput(Game game) {
+    public KeyboardInput() {
         movementKeyPressed = new boolean[4];
 
         Game.getScene().addEventHandler(KeyEvent.KEY_PRESSED, event -> {

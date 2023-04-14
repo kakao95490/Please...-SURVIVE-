@@ -52,8 +52,8 @@ public class Main extends Application {
 
 
     private void update() {
-        game.player.reload();
         game.reloadCanvas();
+        game.player.reload(game.gc);
     }
 
 
