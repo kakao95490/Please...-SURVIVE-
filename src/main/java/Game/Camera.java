@@ -6,7 +6,6 @@ import static utils.Constants.Directions.*;
 import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.WindowConstants.SPRITE_COORD;
 import Map.Map;
-import Caractere.Entity;
 
 public class Camera {
     Game game;

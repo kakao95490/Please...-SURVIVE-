@@ -18,8 +18,7 @@ public class Main extends Application {
 
     int frame = 0;
     long lastCheck=System.currentTimeMillis();
-    double timePerFrame = (double) 1000.0 / FPS_TARGET;
-    private long lastTime = System.nanoTime();
+    double timePerFrame = 1000.0 / FPS_TARGET;
 
 
     @Override

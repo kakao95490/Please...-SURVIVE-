@@ -2,11 +2,9 @@ package Caractere;
 
 import Inputs.KeyboardInput;
 import Game.Game;
-import javafx.scene.shape.Rectangle;
 import utils.Coord;
 
 import static utils.Constants.Directions.*;
-import static utils.Constants.MapConstants.TILE;
 import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.WindowConstants.*;
@@ -71,7 +69,7 @@ public class Player extends Entity {
     }
 
 
-
+    @Override
     public void updateStatus() {
         if(previousStatus==HIT && animationIndex+2<=getSpriteAmount(HIT)){
             status=HIT;

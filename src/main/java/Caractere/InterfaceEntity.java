@@ -7,4 +7,5 @@ public interface InterfaceEntity {
     void generateAnimationLib();
     void updatePos();
     void updateAnimationIndex(Image[] lib);
+    void updateStatus();
 }

@@ -6,20 +6,16 @@ import java.util.Objects;
 
 import static utils.Constants.Directions.*;
 import static utils.Constants.Directions.LEFT;
-import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.PlayerConstants.HIT;
 import static utils.Constants.WindowConstants.FPS_TARGET;
 
-
-import javafx.scene.shape.Rectangle;
 import utils.Coord;
 
 public abstract class Entity implements InterfaceEntity {
     protected Coord coord;
     protected Coord tileCoord;
     protected Coord movement;
-    protected Coord hitbox;
     protected int direction;
 
 
@@ -70,15 +66,6 @@ public abstract class Entity implements InterfaceEntity {
         return coord;
     }
 
-    public Coord getTileCoord() {
-        return tileCoord;
-    }
-
-
-    public void updateTileCoord(){
-        tileCoord = coord.tileCoord();
-    }
-
 
     public void updateDirection(){
         direction=-1;
@@ -108,6 +95,8 @@ public abstract class Entity implements InterfaceEntity {
             }
         }
     }
+
+
 
 
 

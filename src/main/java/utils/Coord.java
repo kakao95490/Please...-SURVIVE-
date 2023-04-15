@@ -15,17 +15,10 @@ public class Coord {
         return X;
     }
 
-    public void setX(int x) {
-        this.X = x;
-    }
-
     public int getY() {
         return Y;
     }
 
-    public void setY(int y) {
-        this.Y = y;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -54,9 +47,6 @@ public class Coord {
         return new Coord(X/TILE_SIZE, Y/TILE_SIZE);
     }
 
-    public Coord hitboxCoord(){
-        return new Coord(X+ (int) (TILE_SIZE * 0.5), Y + (int) (TILE_SIZE * 0.5));
-    }
 
 
 }

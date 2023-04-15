@@ -17,8 +17,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javafx.application.Application.launch;
-import static utils.Constants.MapConstants.*;
 import static utils.Constants.WindowConstants.*;
 
 
