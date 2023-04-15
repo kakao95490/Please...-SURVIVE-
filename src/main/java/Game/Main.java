@@ -51,8 +51,11 @@ public class Main extends Application {
 
     private void update() {
         game.gc.clearRect(0, 0, game.getCanvas().getWidth(), game.getCanvas().getHeight());
-        game.camera.drawMapMatrice();
         game.camera.playerReload();
+        game.camera.drawMapMatrice();
+        game.camera.playerRender();
+
+
     }
 
 

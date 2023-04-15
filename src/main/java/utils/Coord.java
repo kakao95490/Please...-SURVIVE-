@@ -1,6 +1,5 @@
 package utils;
 
-import static utils.Constants.MapConstants.TILE;
 import static utils.Constants.MapConstants.TILE_SIZE;
 
 public class Coord {
@@ -46,17 +45,17 @@ public class Coord {
         this.Y+=y;
     }
 
-    public void addX(int x){
-        this.X+=x;
-    }
-
-    public void addY(int y){
-        this.Y+=y;
-    }
-
     public void setXY(int x, int y){
         this.X=x;
         this.Y=y;
+    }
+
+    public Coord tileCoord(){
+        return new Coord(X/TILE_SIZE, Y/TILE_SIZE);
+    }
+
+    public Coord hitboxCoord(){
+        return new Coord(X+ (int) (TILE_SIZE * 0.5), Y + (int) (TILE_SIZE * 0.5));
     }
 
 

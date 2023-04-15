@@ -27,6 +27,7 @@ public class Map {
         this.textureLib=new Image[17];
         this.mapMatrice = getMapCSV();
         importTexture();
+        CSVReader.printMatrix(mapMatrice);
     }
 
     private void importTexture() {

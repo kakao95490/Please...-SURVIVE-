@@ -2,6 +2,7 @@ package Caractere;
 
 import Inputs.KeyboardInput;
 import Game.Game;
+import javafx.scene.shape.Rectangle;
 import utils.Coord;
 
 import static utils.Constants.Directions.*;
@@ -28,41 +29,45 @@ public class Player extends Entity {
 
         keyboardInput=game.keyboardInput;   //get the keyboard input from the game
         this.status=STATIC; //set the player status
-        this.coord = new Coord(15*TILE_SIZE,10*TILE_SIZE); //set the player coord spawn
+        this.coord = new Coord(8*TILE_SIZE, 6*TILE_SIZE); //set the player coord spawn
         this.movement = new Coord(0, 0); //vector of the player movement
-        this.tileCoord = new Coord(coord.getX()/TILE, coord.getY()/TILE ); //get the tile coord of the player
+        this.tileCoord = coord.tileCoord(); //get the tile coord of the player
+
+
     }
 
     public void updatePos(){
+
+        movement.setXY(0,0);
         if(keyboardInput.directionDiagonal()){
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
-                coord.addXY((int) (speed * 0.80), (int) (-speed * 0.80));
+                movement.addXY((int) (speed * 0.80), (int) (-speed * 0.80));
             }
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, DOWN) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
-                coord.addXY((int) (speed * 0.80), (int) (speed * 0.80));
+                movement.addXY((int) (speed * 0.80), (int) (speed * 0.80));
             }
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, LEFT)) {
-                coord.addXY((int) (-speed * 0.80), (int) (-speed * 0.80));
+                movement.addXY((int) (-speed * 0.80), (int) (-speed * 0.80));
             }
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, DOWN) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, LEFT)) {
-                coord.addXY((int) (-speed * 0.80), (int) (speed * 0.80));
+                movement.addXY((int) (-speed * 0.80), (int) (speed * 0.80));
             }
         }
         else {
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP)) {
-                coord.addY(-speed);
+                movement.addXY(0, -speed);
             }
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, DOWN)) {
-                coord.addY(speed);
+                movement.addXY(0, speed);
             }
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, LEFT)) {
-                coord.addX(-speed);
+                movement.addXY(-speed, 0);
             }
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
-                coord.addX(speed);
+                movement.addXY(speed, 0);
             }
         }
-
+        coord.addXY(movement.getX(),movement.getY());
     }
 
 
@@ -87,8 +92,6 @@ public class Player extends Entity {
         }
         previousStatus=status;
     }
-
-
 
 
 
