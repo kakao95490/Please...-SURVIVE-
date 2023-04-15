@@ -67,7 +67,7 @@ public class Game {
 
 
         this.player=new Player(this);
-        this.map = new Map(this);
+        this.map = new Map();
         entities = new ArrayList<>();
         entities.add(player);
 

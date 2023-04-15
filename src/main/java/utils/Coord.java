@@ -47,6 +47,10 @@ public class Coord {
         return new Coord(X/TILE_SIZE, Y/TILE_SIZE);
     }
 
+    public Coord pixelCoord(int x, int y){
+        return new Coord(x*TILE_SIZE, y*TILE_SIZE);
+    }
+
 
 
 }

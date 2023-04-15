@@ -11,11 +11,13 @@ import static utils.Constants.PlayerConstants.HIT;
 import static utils.Constants.WindowConstants.FPS_TARGET;
 
 import utils.Coord;
+import utils.Hitbox;
 
 public abstract class Entity implements InterfaceEntity {
     protected Coord coord;
-    protected Coord tileCoord;
     protected Coord movement;
+    protected Hitbox hitbox;
+
     protected int direction;
 
 
@@ -100,7 +102,9 @@ public abstract class Entity implements InterfaceEntity {
 
 
 
-
+    public Hitbox getHitbox() {
+        return hitbox;
+    }
     public int getDirection() {
         return direction;
     }

@@ -3,6 +3,7 @@ package Caractere;
 import Inputs.KeyboardInput;
 import Game.Game;
 import utils.Coord;
+import utils.Hitbox;
 
 import static utils.Constants.Directions.*;
 import static utils.Constants.MapConstants.TILE_SIZE;
@@ -13,13 +14,11 @@ public class Player extends Entity {
 
     public KeyboardInput keyboardInput;
 
-    public Game game;
 
     public int speed= (int) (3*SCALE);
 
     public Player(Game game){
 
-        this.game=game;
 
         this.entityName = "Player";
 
@@ -27,9 +26,9 @@ public class Player extends Entity {
 
         keyboardInput=game.keyboardInput;   //get the keyboard input from the game
         this.status=STATIC; //set the player status
-        this.coord = new Coord(8*TILE_SIZE, 6*TILE_SIZE); //set the player coord spawn
+        this.coord = new Coord(12*TILE_SIZE, 9*TILE_SIZE); //set the player coord spawn
         this.movement = new Coord(0, 0); //vector of the player movement
-        this.tileCoord = coord.tileCoord(); //get the tile coord of the player
+        this.hitbox = new Hitbox(coord); //set the player hitbox
 
 
     }
@@ -66,6 +65,7 @@ public class Player extends Entity {
             }
         }
         coord.addXY(movement.getX(),movement.getY());
+        hitbox.updateHitbox();
     }
 
 

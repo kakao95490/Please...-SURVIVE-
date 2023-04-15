@@ -15,16 +15,12 @@ import static utils.Constants.WindowConstants.SCALE;
 import static utils.Constants.WindowConstants.SPRITE_COORD;
 
 public class Map {
-    private Game game;
-    private Player player;
     public Image[] textureLib;
     private final int[][] mapMatrice;
 
 
-    public Map(Game game) throws URISyntaxException, IOException {
-        this.game=game;
-        this.player=game.player;
-        this.textureLib=new Image[17];
+    public Map() throws URISyntaxException, IOException {
+        this.textureLib=new Image[31];
         this.mapMatrice = getMapCSV();
         importTexture();
         CSVReader.printMatrix(mapMatrice);
@@ -48,6 +44,21 @@ public class Map {
         textureLib[DOORL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoorL.png")).toExternalForm());
         textureLib[DOORU] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoorU.png")).toExternalForm());
         textureLib[DOORD] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoorD.png")).toExternalForm());
+        textureLib[CHAIR] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/Chair.png")).toExternalForm());
+        textureLib[CHAIR2] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/Chair2.png")).toExternalForm());
+        textureLib[DOUBLEWALL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoubleWallVertical.png")).toExternalForm());
+        textureLib[DOUBLEWALLCORNERD] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoubleWallCornerD.png")).toExternalForm());
+        textureLib[DOUBLEWALLCORNERU] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoubleWallCornerU.png")).toExternalForm());
+        textureLib[TABLEU] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TableU.png")).toExternalForm());
+        textureLib[TABLED] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TableD.png")).toExternalForm());
+        textureLib[TABLEUR] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TableUR.png")).toExternalForm());
+        textureLib[TABLEUL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TableUL.png")).toExternalForm());
+        textureLib[TABLEDR] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TableDR.png")).toExternalForm());
+        textureLib[TABLEDL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TableDL.png")).toExternalForm());
+        textureLib[TRIPLEWALLDOWN] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TripleWallDown.png")).toExternalForm());
+        textureLib[TRIPLEWALLUP] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TripleWallUp.png")).toExternalForm());
+        textureLib[PLANT] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/Plant.png")).toExternalForm());
+
     }
 
     private int[][] getMapCSV() throws URISyntaxException, IOException {

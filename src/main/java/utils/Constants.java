@@ -59,6 +59,24 @@ public class Constants {
         public static final int DOORL=14;
         public static final int DOORU=15;
         public static final int DOORD=16;
+        public static final int CHAIR=17;
+        public static final int CHAIR2=18;
+        public static final int TABLEU=19;
+        public static final int TABLED=20;
+        public static final int TABLEUR=21;
+        public static final int TABLEUL=22;
+        public static final int TABLEDR=23;
+        public static final int TABLEDL=24;
+        public static final int DOUBLEWALL=25;
+        public static final int DOUBLEWALLCORNERD=26;
+        public static final int DOUBLEWALLCORNERU=27;
+        public static final int TRIPLEWALLDOWN=28;
+        public static final int TRIPLEWALLUP=29;
+        public static final int PLANT=30;
+
+
+
+
     }
 
 }
