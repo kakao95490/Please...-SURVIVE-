@@ -1,6 +1,5 @@
-package Caractere;
+package Entities;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public interface InterfaceEntity {

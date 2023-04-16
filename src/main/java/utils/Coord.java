@@ -51,6 +51,4 @@ public class Coord {
         return new Coord(x*TILE_SIZE, y*TILE_SIZE);
     }
 
-
-
 }

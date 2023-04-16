@@ -1,4 +1,4 @@
-package Caractere;
+package Entities;
 
 import Inputs.KeyboardInput;
 import Game.Game;
@@ -29,14 +29,19 @@ public class Player extends Entity {
         this.status=STATIC; //set the player status
         this.coord = new Coord(12*TILE_SIZE, 9*TILE_SIZE); //set the player coord spawn
         this.movement = new Coord(0, 0); //vector of the player movement
-        this.hitbox = new Hitbox(coord); //set the player hitbox
-        this.weapon = new Pistol(); //set the player weapon
+        this.hitbox = new Hitbox(coord,TILE_SIZE/2,TILE_SIZE/4,TILE_SIZE/2); //set the player hitbox
+        this.weapon = new Pistol(this); //set the player weapon
 
 
     }
 
-    public void updatePos(){
 
+    public void shooting(){
+        weapon.shoot();
+
+    }
+
+    public void updatePos(){
         movement.setXY(0,0);
         if(keyboardInput.directionDiagonal()){
             if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
@@ -84,7 +89,7 @@ public class Player extends Entity {
                 status=WALKING;
             }
             if(keyboardInput.testKey){
-                status=HIT;
+                shooting();
             }
         }
         if(previousStatus!=status){
@@ -92,6 +97,8 @@ public class Player extends Entity {
         }
         previousStatus=status;
     }
+
+
 
 
 

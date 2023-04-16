@@ -1,7 +1,5 @@
 package Map;
 
-import Caractere.Player;
-import Game.Game;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
@@ -11,8 +9,6 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 import static utils.Constants.MapConstants.*;
-import static utils.Constants.WindowConstants.SCALE;
-import static utils.Constants.WindowConstants.SPRITE_COORD;
 
 public class Map {
     public Image[] textureLib;

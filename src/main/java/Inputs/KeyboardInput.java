@@ -8,6 +8,7 @@ import static utils.Constants.Directions.*;
 
 public class KeyboardInput {
     public boolean[] movementKeyPressed;
+    public boolean[] shootKeyPressed;
     public boolean testKey;
 
 
@@ -28,8 +29,11 @@ public class KeyboardInput {
                 movementKeyPressed[DOWN]=true;
             }
             if(event.getCode() == KeyCode.T) {
-                testKey = true;
+                testKey=true;
             }
+
+
+
         });
 
         Game.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
@@ -48,6 +52,7 @@ public class KeyboardInput {
             if(event.getCode() == KeyCode.T) {
                 testKey=false;
             }
+
 
         });
 

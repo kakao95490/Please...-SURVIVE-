@@ -8,22 +8,28 @@ public class Hitbox{
     private Coord cornerDownRight;
     private Coord cornerUpRight;
     private Coord cornerDownLeft;
+    private int size;
+    private int offsetX;
+    private int offsetY;
 
 
 
-    public Hitbox(Coord coord) {
+    public Hitbox(Coord coord, int size, int offsetX, int offsetY) {
         this.entityCoord = coord;
-        this.cornerUpLeft = new Coord(coord.getX()+TILE_SIZE/4, coord.getY()+TILE_SIZE/2);
-        this.cornerDownRight = new Coord(coord.getX()+TILE_SIZE-TILE_SIZE/4, coord.getY()+TILE_SIZE);
-        this.cornerUpRight = new Coord(coord.getX()+TILE_SIZE-TILE_SIZE/4, coord.getY()+TILE_SIZE/2);
-        this.cornerDownLeft = new Coord(coord.getX()+TILE_SIZE/4, coord.getY()+TILE_SIZE);
+        this.size = size;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        this.cornerUpLeft = new Coord(coord.getX()+offsetX, coord.getY()+offsetY);
+        this.cornerDownRight = new Coord(coord.getX()+offsetX+size, coord.getY()+offsetY+size);
+        this.cornerUpRight = new Coord(coord.getX()+offsetX+size, coord.getY()+offsetY);
+        this.cornerDownLeft = new Coord(coord.getX()+size, coord.getY()+offsetY+size);
     }
 
     public void updateHitbox(){
-        this.cornerUpLeft.setXY(entityCoord.getX()+TILE_SIZE/4, entityCoord.getY()+TILE_SIZE/2);
-        this.cornerDownRight.setXY(entityCoord.getX()+TILE_SIZE-TILE_SIZE/4, entityCoord.getY()+TILE_SIZE);
-        this.cornerUpRight.setXY(entityCoord.getX()+TILE_SIZE-TILE_SIZE/4, entityCoord.getY()+TILE_SIZE/2);
-        this.cornerDownLeft.setXY(entityCoord.getX()+TILE_SIZE/4, entityCoord.getY()+TILE_SIZE);
+        this.cornerUpLeft = new Coord(entityCoord.getX()+offsetX, entityCoord.getY()+offsetY);
+        this.cornerDownRight = new Coord(entityCoord.getX()+offsetX+size, entityCoord.getY()+offsetY+size);
+        this.cornerUpRight = new Coord(entityCoord.getX()+offsetX+size, entityCoord.getY()+offsetY);
+        this.cornerDownLeft = new Coord(entityCoord.getX()+size, entityCoord.getY()+offsetY+size);
     }
 
     public Coord getCornerUpLeft() {

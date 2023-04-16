@@ -1,4 +1,4 @@
-package Caractere;
+package Entities;
 
 import Weapons.Weapon;
 import javafx.scene.image.Image;
@@ -130,5 +130,10 @@ public abstract class Entity implements InterfaceEntity {
 
     public int getSpeed() {
         return speed;
+    }
+
+
+    public Weapon getWeapon(){
+        return weapon;
     }
 }

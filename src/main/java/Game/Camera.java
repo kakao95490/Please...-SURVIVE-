@@ -1,7 +1,8 @@
 package Game;
 
-import Caractere.Entity;
-import Caractere.Player;
+import Entities.Bullet;
+import Entities.Entity;
+import Entities.Player;
 
 import static utils.Constants.Directions.*;
 import static utils.Constants.MapConstants.TILE_SIZE;
@@ -36,13 +37,18 @@ public class Camera {
     public void playerReload(){
         player.updateAnimationIndex(player.animationLib[player.status]);
         player.updatePos();
+        player.updateDirection();
         cancelWallCollision(player);
         player.updateStatus();
-        player.updateDirection();
+        player.getWeapon().updateBullets(game.gc);
+
+
     }
 
     public void playerRender(){
         game.gc.drawImage(player.animationLib[player.status][player.animationIndex], SPRITE_COORD.getX(), SPRITE_COORD.getY() ,TILE_SIZE,TILE_SIZE);
+
+
     }
 
 

@@ -1,8 +1,8 @@
 package Game;
 
 import Map.Map;
-import Caractere.Entity;
-import Caractere.Player;
+import Entities.Entity;
+import Entities.Player;
 import Inputs.KeyboardInput;
 import javafx.scene.Group;
 import javafx.scene.Scene;
