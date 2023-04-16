@@ -27,7 +27,6 @@ public class Constants {
         public static final int UP_RIGHT =5;
         public static final int DOWN_LEFT =6;
         public static final int DOWN_RIGHT =7;
-
     }
 
     public static class WindowConstants{
@@ -41,7 +40,7 @@ public class Constants {
 
     public static class MapConstants{
         public static final int TILE=64;
-        public static final int TILE_SIZE= (int) (64*SCALE);
+        public static final int TILE_SIZE= (int) (TILE*SCALE);
         public static final int FLOOR=0;
         public static final int WALLR=1;
         public static final int WALLL=2;

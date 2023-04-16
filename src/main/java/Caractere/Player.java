@@ -2,6 +2,7 @@ package Caractere;
 
 import Inputs.KeyboardInput;
 import Game.Game;
+import Weapons.Pistol;
 import utils.Coord;
 import utils.Hitbox;
 
@@ -29,6 +30,7 @@ public class Player extends Entity {
         this.coord = new Coord(12*TILE_SIZE, 9*TILE_SIZE); //set the player coord spawn
         this.movement = new Coord(0, 0); //vector of the player movement
         this.hitbox = new Hitbox(coord); //set the player hitbox
+        this.weapon = new Pistol(); //set the player weapon
 
 
     }

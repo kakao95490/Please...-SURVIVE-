@@ -1,5 +1,6 @@
 package Caractere;
 
+import Weapons.Weapon;
 import javafx.scene.image.Image;
 
 import java.util.Objects;
@@ -18,7 +19,16 @@ public abstract class Entity implements InterfaceEntity {
     protected Coord movement;
     protected Hitbox hitbox;
 
-    protected int direction;
+    protected int Xdirection;
+    protected int Ydirection;
+
+    protected int speed;
+
+    Boolean[] wallCollision = {false, false, false, false};
+
+
+    protected Weapon weapon;
+
 
 
 
@@ -70,32 +80,19 @@ public abstract class Entity implements InterfaceEntity {
 
 
     public void updateDirection(){
-        direction=-1;
-        if(movement.getX()==0){
-            if(movement.getY()>0){
-                direction=DOWN;
-            } else if (movement.getY()<0){
-                direction=UP;
-            }
+        Xdirection=-1;
+        Ydirection=-1;
+        if(movement.getY()>0){
+            Ydirection=DOWN;
+        } else if (movement.getY()<0){
+            Ydirection=UP;
         }
         if(movement.getX()>0){
-            if(movement.getY()>0){
-                direction=DOWN_RIGHT;
-            } else if (movement.getY()<0){
-                direction=UP_RIGHT;
-            } else if (movement.getY()==0) {
-                direction=RIGHT;
-            }
+            Xdirection=RIGHT;
+        } else if (movement.getX()<0){
+            Xdirection=LEFT;
         }
-        if(movement.getX()<0){
-            if(movement.getY()>0){
-                direction=DOWN_LEFT;
-            } else if (movement.getY()<0){
-                direction=UP_LEFT;
-            } else if (movement.getY()==0) {
-                direction=LEFT;
-            }
-        }
+
     }
 
 
@@ -105,10 +102,33 @@ public abstract class Entity implements InterfaceEntity {
     public Hitbox getHitbox() {
         return hitbox;
     }
-    public int getDirection() {
-        return direction;
+    public int getXDirection() {
+        return Xdirection;
+    }
+    public int getYDirection() {
+        return Ydirection;
+    }
+
+    public Boolean[] getWallCollision() {
+        return wallCollision;
+    }
+
+    public void setWallCollision(int i,Boolean b) {
+        this.wallCollision[i] = b;
+    }
+
+    public void resetWallCollision(){
+        for(int i=0;i<4;i++){
+            wallCollision[i]=false;
+        }
+    }
+
+    public Coord getMovement(){
+        return movement;
     }
 
 
-
+    public int getSpeed() {
+        return speed;
+    }
 }
