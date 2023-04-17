@@ -1,5 +1,6 @@
 package Entities;
 
+import Weapons.Weapon;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import utils.Coord;
@@ -17,18 +18,22 @@ public class Bullet extends Entity{
     private int damage;
     private int range;
     private int speed;
+    private Weapon shotBy;
+    private Coord baseCoord;
     Image sprite = new Image(Objects.requireNonNull(getClass().getResource("/Objects/BulletSprite.png")).toExternalForm());
 
-    public Bullet(Coord coord, int Xdirection, int Ydirection, int damage, int range, int speed) {
+    public Bullet(Weapon weapon, Coord coord, int Xdirection, int Ydirection, int damage, int range, int speed) {
         this.Xdirection = Xdirection;
         this.Ydirection = Ydirection;
-        this.coord = new Coord(SPRITE_COORD.getX()+TILE_SIZE/2-10,SPRITE_COORD.getY()+TILE_SIZE/2-10);
+        this.baseCoord = new Coord(coord.getX(), coord.getY());
+        this.coord=coord;
         this.damage = damage;
         this.range = range;
-        this.speed = speed;
+        this.speed = (int) (speed*SCALE);
         this.status = WALKING;
         this.hitbox = new Hitbox(coord, (int) (10*SCALE),0, 0);
-
+        this.shotBy = weapon;
+        this.movement= new Coord(0,0);
     }
 
 
@@ -38,19 +43,20 @@ public class Bullet extends Entity{
     public void updatePos() {
         if(status == WALKING){
             if(Xdirection==RIGHT){
-                coord.addXY(speed, 0);
+                baseCoord.addXY(speed, 0);
             }
             if(Xdirection==LEFT){
-                coord.addXY(-speed, 0);
+                baseCoord.addXY(-speed, 0);
             }
             if(Ydirection==UP){
-                coord.addXY(0, -speed);
+                baseCoord.addXY(0, -speed);
             }
             if(Ydirection==DOWN){
-                coord.addXY(0, speed);
+                baseCoord.addXY(0, speed);
             }
             range-=1;
         }
+
     }
 
     public Hitbox getHitbox(){
@@ -65,7 +71,7 @@ public class Bullet extends Entity{
     }
 
     public void render(GraphicsContext g){
-        g.drawImage(sprite, coord.getX(), coord.getY(), 10*SCALE, 10*SCALE);
+        g.drawImage(sprite, baseCoord.getX()+movement.getX()-coord.getX()+ SPRITE_COORD.getX()+TILE_SIZE/2, baseCoord.getY()+movement.getY()-coord.getY()+ SPRITE_COORD.getY()+TILE_SIZE/2, 10*SCALE, 10*SCALE);
     }
 
 }

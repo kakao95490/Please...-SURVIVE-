@@ -51,7 +51,7 @@ public abstract class Weapon {
 
     public void shoot(){
         if(cooldown==currentCooldown){
-            bullets.add(new Bullet(owner.getCoord(), owner.getXLookingDirection(), owner.getYLookingDirection(), damage, range, 8));
+            bullets.add(new Bullet(this,owner.getCoord(), owner.getXLookingDirection(), owner.getYLookingDirection(), damage, range, 5));
             currentCooldown--;
         }
     }
@@ -79,6 +79,9 @@ public abstract class Weapon {
         }
     }
 
+    public Entity getOwner(){
+        return owner;
+    }
 
 
 
