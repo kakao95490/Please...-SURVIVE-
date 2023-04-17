@@ -5,6 +5,9 @@ import Entities.Entity;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 import static utils.Constants.Directions.RIGHT;
 import static utils.Constants.PlayerConstants.STATIC;

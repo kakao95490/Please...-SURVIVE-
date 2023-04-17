@@ -4,14 +4,11 @@ import Map.Map;
 import Entities.Entity;
 import Entities.Player;
 import Inputs.KeyboardInput;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,13 +20,16 @@ import static utils.Constants.WindowConstants.*;
 
 
 public class Game {
-    public int dx=0,dy=0;
+
+    public int decalageCameraX;
+    public int decalageCameraY;
     private final Canvas canvas;
+    private final Canvas bgCanvas;
     private static Scene scene;
     private final Stage stage;
     private final Group root;
-    private TilePane tilePane;
     public GraphicsContext gc;
+    public GraphicsContext bgc;
 
     public KeyboardInput keyboardInput;
     public Double framerate;
@@ -49,8 +49,11 @@ public class Game {
 
         //set a canva for the player
         this.canvas = new Canvas(WIDTH,HEIGHT);
-        gc = getCanvas().getGraphicsContext2D();
+        this.bgCanvas = new Canvas(WIDTH,HEIGHT);
+        this.gc = canvas.getGraphicsContext2D();
+        this.bgc = bgCanvas.getGraphicsContext2D();
         gc.setImageSmoothing(false);
+        bgc.setImageSmoothing(false);
 
 
 
@@ -60,7 +63,8 @@ public class Game {
         scene.setFill(BACKGROUND_COLOR);
         this.stage.setScene(scene);
 
-        root.getChildren().add(canvas);
+        this.root.getChildren().add(bgCanvas);
+        this.root.getChildren().add(canvas);
         this.stage.setTitle("Please....SURVIVE!");
 
         this.stage.setResizable(true);
@@ -74,6 +78,9 @@ public class Game {
         entities.add(player);
 
         this.camera= new Camera(this);
+
+        this.decalageCameraX=SPRITE_COORD.getX() - player.getCoord().getX();
+        this.decalageCameraY=SPRITE_COORD.getY() - player.getCoord().getY();
 
 
     }
