@@ -19,6 +19,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.WindowConstants.*;
 
 

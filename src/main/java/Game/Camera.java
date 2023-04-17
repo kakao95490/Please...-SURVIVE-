@@ -6,7 +6,8 @@ import Entities.Player;
 
 import static utils.Constants.Directions.*;
 import static utils.Constants.MapConstants.TILE_SIZE;
-import static utils.Constants.WindowConstants.SPRITE_COORD;
+import static utils.Constants.WindowConstants.*;
+
 import Map.Map;
 
 public class Camera {
@@ -22,20 +23,7 @@ public class Camera {
     }
 
 
-    /*public void drawMapMatrice(){
-
-        System.out.println(player.getCoord().tileCoord());
-        for (int i = 0; i < map.getMapMatrice().length; i++) {
-            for (int j = 0; j < map.getMapMatrice()[i].length; j++) {
-                if(map.getMapMatrice()[i][j] != -1) {
-                    game.bgc.drawImage(map.textureLib[map.getMapMatrice()[i][j]], (j * TILE_SIZE)-player.getCoord().getX()+ SPRITE_COORD.getX(), (i * TILE_SIZE)-player.getCoord().getY()+ SPRITE_COORD.getY(),TILE_SIZE,TILE_SIZE);
-                }
-            }
-        }
-    }*/
-
     public void drawMapMatrice(){
-        System.out.println(player.getCoord().tileCoord());
         for (int i = 0; i < map.getMapMatrice().length; i++) {
             for (int j = 0; j < map.getMapMatrice()[i].length; j++) {
                 if(map.getMapMatrice()[i][j] != -1) {
@@ -43,6 +31,11 @@ public class Camera {
                 }
             }
         }
+    }
+
+    public void updateMap(){
+        game.perspectiveCamera.setTranslateX(player.getCoord().getX()-WIDTH/2/SCALE);
+        game.perspectiveCamera.setTranslateY(player.getCoord().getY()-HEIGHT/2/SCALE);
     }
 
 
