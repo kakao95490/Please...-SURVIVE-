@@ -19,8 +19,10 @@ public abstract class Entity implements InterfaceEntity {
     protected Coord movement;
     protected Hitbox hitbox;
 
-    protected int Xdirection;
-    protected int Ydirection;
+    protected int Xdirection=-1;
+    protected int Ydirection=-1;
+    protected int XlookingDirection=-1;
+    protected int YlookingDirection=-1;
 
     protected int speed;
 
@@ -107,6 +109,12 @@ public abstract class Entity implements InterfaceEntity {
     }
     public int getYDirection() {
         return Ydirection;
+    }
+    public int getXLookingDirection() {
+        return XlookingDirection;
+    }
+    public int getYLookingDirection() {
+        return YlookingDirection;
     }
 
     public Boolean[] getWallCollision() {

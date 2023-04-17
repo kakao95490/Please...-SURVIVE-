@@ -12,7 +12,7 @@ import javafx.util.Duration;
 import static utils.Constants.WindowConstants.FPS_TARGET;
 
 
-public class Main extends Application {
+public class  Main extends Application {
 
     private Game game;
 

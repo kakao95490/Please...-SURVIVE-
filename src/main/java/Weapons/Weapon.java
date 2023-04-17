@@ -6,6 +6,9 @@ import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
 
+import static utils.Constants.Directions.RIGHT;
+import static utils.Constants.PlayerConstants.STATIC;
+
 public abstract class Weapon {
     protected int damage;
     protected int range;
@@ -48,24 +51,31 @@ public abstract class Weapon {
 
     public void shoot(){
         if(cooldown==currentCooldown){
-
-        }
-        else if(currentCooldown>0){
+            bullets.add(new Bullet(owner.getCoord(), owner.getXLookingDirection(), owner.getYLookingDirection(), damage, range, 8));
             currentCooldown--;
         }
-        else if(currentCooldown==0){
-            currentCooldown=cooldown;
-        }
-        System.out.println("pew");
-        bullets.add(new Bullet(owner.getCoord(), owner.getXDirection(), owner.getYDirection(), damage, range, 10));
-        currentCooldown--;
     }
 
     public void updateBullets(GraphicsContext g){
         for(Bullet bullet : bullets){
-            bullet.updatePos();
-            bullet.getHitbox().updateHitbox();
-            bullet.render(g);
+            if(bullet.status==STATIC){
+                bullets.remove(bullet);
+            }
+            else {
+                bullet.updateStatus();
+                bullet.updatePos();
+                bullet.getHitbox().updateHitbox();
+
+                bullet.render(g);
+            }
+        }
+    }
+
+    public void updateCooldown(){
+        if(currentCooldown>0 && currentCooldown!=cooldown){
+            currentCooldown--;
+        } else if (currentCooldown<=0 ) {
+            currentCooldown=cooldown;
         }
     }
 

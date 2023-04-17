@@ -14,6 +14,7 @@ public class KeyboardInput {
 
     public KeyboardInput() {
         movementKeyPressed = new boolean[4];
+        shootKeyPressed = new boolean[4];
 
         Game.getScene().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if(event.getCode() == KeyCode.Q) {
@@ -31,6 +32,19 @@ public class KeyboardInput {
             if(event.getCode() == KeyCode.T) {
                 testKey=true;
             }
+            if(event.getCode() == KeyCode.UP){
+                shootKeyPressed[UP]=true;
+            }
+            if(event.getCode() == KeyCode.DOWN){
+                shootKeyPressed[DOWN]=true;
+            }
+            if(event.getCode() == KeyCode.LEFT){
+                shootKeyPressed[LEFT]=true;
+            }
+            if(event.getCode() == KeyCode.RIGHT){
+                shootKeyPressed[RIGHT]=true;
+            }
+
 
 
 
@@ -51,6 +65,18 @@ public class KeyboardInput {
             }
             if(event.getCode() == KeyCode.T) {
                 testKey=false;
+            }
+            if(event.getCode() == KeyCode.UP){
+                shootKeyPressed[UP]=false;
+            }
+            if(event.getCode() == KeyCode.DOWN){
+                shootKeyPressed[DOWN]=false;
+            }
+            if(event.getCode() == KeyCode.LEFT){
+                shootKeyPressed[LEFT]=false;
+            }
+            if(event.getCode() == KeyCode.RIGHT){
+                shootKeyPressed[RIGHT]=false;
             }
 
 
@@ -76,6 +102,7 @@ public class KeyboardInput {
         }
         return inputNbr == 2 ;
     }
+
 
     public boolean isKeyPressed(boolean[] inputTab,int key) {
         return inputTab[key];

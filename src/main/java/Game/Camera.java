@@ -40,24 +40,33 @@ public class Camera {
         player.updateDirection();
         cancelWallCollision(player);
         player.updateStatus();
-        player.getWeapon().updateBullets(game.gc);
+        player.updateShootingDirection();
+
 
 
     }
 
     public void playerRender(){
         game.gc.drawImage(player.animationLib[player.status][player.animationIndex], SPRITE_COORD.getX(), SPRITE_COORD.getY() ,TILE_SIZE,TILE_SIZE);
+        player.getWeapon().updateBullets(game.gc);
 
 
     }
 
 
     public void collideDirection(Entity entity){
+        entity.getHitbox().updateHitbox();
         entity.resetWallCollision();
         entity.setWallCollision(0, map.getMapMatrice()[entity.getHitbox().getCornerUpLeft().tileCoord().getY()][entity.getHitbox().getCornerUpLeft().tileCoord().getX()] != 0);
         entity.setWallCollision(1, map.getMapMatrice()[entity.getHitbox().getCornerUpRight().tileCoord().getY()][entity.getHitbox().getCornerUpRight().tileCoord().getX()] != 0);
         entity.setWallCollision(2, map.getMapMatrice()[entity.getHitbox().getCornerDownLeft().tileCoord().getY()][entity.getHitbox().getCornerDownLeft().tileCoord().getX()] != 0);
         entity.setWallCollision(3, map.getMapMatrice()[entity.getHitbox().getCornerDownRight().tileCoord().getY()][entity.getHitbox().getCornerDownRight().tileCoord().getX()] != 0);
+        System.out.println(entity.getHitbox().getCornerUpLeft());
+        System.out.println(entity.getHitbox().getCornerUpRight());
+        System.out.println(entity.getHitbox().getCornerDownLeft());
+        System.out.println(entity.getHitbox().getCornerDownRight());
+
+
     }
 
     public void cancelWallCollision(Entity entity){
@@ -98,16 +107,6 @@ public class Camera {
         }
         while(entity.getWallCollision()[0] || entity.getWallCollision()[1] || entity.getWallCollision()[2] || entity.getWallCollision()[3]) {
 
-            if(direction[1] < 0) {
-                player.getCoord().addXY(-1,0);
-            } else if(direction[1] > 0) {
-                player.getCoord().addXY(1,0);
-            }
-            if(direction[0] < 0) {
-                player.getCoord().addXY(0,-1);
-            } else if(direction[0] > 0) {
-                player.getCoord().addXY(0,1);
-            }
             player.getCoord().addXY(direction[1], direction[0]);
             player.getHitbox().updateHitbox();
             collideDirection(entity);

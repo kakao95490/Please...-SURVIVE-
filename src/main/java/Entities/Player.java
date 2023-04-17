@@ -36,10 +36,7 @@ public class Player extends Entity {
     }
 
 
-    public void shooting(){
-        weapon.shoot();
 
-    }
 
     public void updatePos(){
         movement.setXY(0,0);
@@ -75,6 +72,31 @@ public class Player extends Entity {
         hitbox.updateHitbox();
     }
 
+    public void updateShootingDirection(){
+        XlookingDirection=-1;
+        YlookingDirection=-1;
+        if(keyboardInput.isKeyPressed(keyboardInput.shootKeyPressed, UP)){
+            YlookingDirection=UP;
+        }
+        if(keyboardInput.isKeyPressed(keyboardInput.shootKeyPressed, DOWN)){
+            YlookingDirection=DOWN;
+        }
+        if(keyboardInput.isKeyPressed(keyboardInput.shootKeyPressed, LEFT)){
+            XlookingDirection=LEFT;
+        }
+        if(keyboardInput.isKeyPressed(keyboardInput.shootKeyPressed, RIGHT)){
+            XlookingDirection=RIGHT;
+        }
+        shooting();
+    }
+
+    public void shooting(){
+        if(XlookingDirection!=-1 || YlookingDirection!=-1){
+            weapon.shoot();
+        }
+        weapon.updateCooldown();
+
+    }
 
     @Override
     public void updateStatus() {
