@@ -35,12 +35,11 @@ public class Constants {
         public static final double SCALE=3;
         public static final int FPS_TARGET = 60;
         public static final Coord CENTER = new Coord(WIDTH/2,HEIGHT/2);
-        public static final Coord SPRITE_COORD = new Coord((int) (WIDTH/2-TILE_SIZE/2),(int) (HEIGHT/2-TILE_SIZE/2));
+        public static final Coord SPRITE_COORD = new Coord((int) ((WIDTH/2-TILE_SIZE/2)/SCALE),(int) ((HEIGHT/2-TILE_SIZE/2)/SCALE));
     }
 
     public static class MapConstants{
-        public static final int TILE=64;
-        public static final int TILE_SIZE= (int) (TILE*SCALE);
+        public static final int TILE_SIZE= 64;
         public static final int FLOOR=0;
         public static final int WALLR=1;
         public static final int WALLL=2;

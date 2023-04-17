@@ -29,9 +29,9 @@ public class Bullet extends Entity{
         this.coord=coord;
         this.damage = damage;
         this.range = range;
-        this.speed = (int) (speed*SCALE);
+        this.speed =speed;
         this.status = WALKING;
-        this.hitbox = new Hitbox(coord, (int) (10*SCALE),0, 0);
+        this.hitbox = new Hitbox(coord, 10,0, 0);
         this.shotBy = weapon;
         this.movement= new Coord(0,0);
     }
@@ -71,7 +71,7 @@ public class Bullet extends Entity{
     }
 
     public void render(GraphicsContext g){
-        g.drawImage(sprite, baseCoord.getX()+movement.getX()-coord.getX()+ SPRITE_COORD.getX()+TILE_SIZE/2, baseCoord.getY()+movement.getY()-coord.getY()+ SPRITE_COORD.getY()+TILE_SIZE/2, 10*SCALE, 10*SCALE);
+        g.drawImage(sprite, baseCoord.getX()+TILE_SIZE/2, baseCoord.getY()+TILE_SIZE/2, 10, 10);
     }
 
 }

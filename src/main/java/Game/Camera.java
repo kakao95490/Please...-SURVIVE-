@@ -22,17 +22,31 @@ public class Camera {
     }
 
 
-    public void drawMapMatrice(){
+    /*public void drawMapMatrice(){
 
         System.out.println(player.getCoord().tileCoord());
         for (int i = 0; i < map.getMapMatrice().length; i++) {
             for (int j = 0; j < map.getMapMatrice()[i].length; j++) {
                 if(map.getMapMatrice()[i][j] != -1) {
-                    game.gc.drawImage(map.textureLib[map.getMapMatrice()[i][j]], (j * TILE_SIZE)-player.getCoord().getX()+ SPRITE_COORD.getX(), (i * TILE_SIZE)-player.getCoord().getY()+ SPRITE_COORD.getY(),TILE_SIZE,TILE_SIZE);
+                    game.bgc.drawImage(map.textureLib[map.getMapMatrice()[i][j]], (j * TILE_SIZE)-player.getCoord().getX()+ SPRITE_COORD.getX(), (i * TILE_SIZE)-player.getCoord().getY()+ SPRITE_COORD.getY(),TILE_SIZE,TILE_SIZE);
+                }
+            }
+        }
+    }*/
+
+    public void drawMapMatrice(){
+        System.out.println(player.getCoord().tileCoord());
+        for (int i = 0; i < map.getMapMatrice().length; i++) {
+            for (int j = 0; j < map.getMapMatrice()[i].length; j++) {
+                if(map.getMapMatrice()[i][j] != -1) {
+                    game.bgc.drawImage(map.textureLib[map.getMapMatrice()[i][j]], (j * TILE_SIZE), (i * TILE_SIZE),TILE_SIZE,TILE_SIZE);
                 }
             }
         }
     }
+
+
+
 
     public void playerReload(){
         player.updateAnimationIndex(player.animationLib[player.status]);
@@ -47,7 +61,7 @@ public class Camera {
     }
 
     public void playerRender(){
-        game.gc.drawImage(player.animationLib[player.status][player.animationIndex], SPRITE_COORD.getX(), SPRITE_COORD.getY() ,TILE_SIZE,TILE_SIZE);
+        game.gc.drawImage(player.animationLib[player.status][player.animationIndex], player.getCoord().getX(), player.getCoord().getY() ,TILE_SIZE,TILE_SIZE);
         player.getWeapon().updateBullets(game.gc);
 
 

@@ -16,7 +16,7 @@ public class Player extends Entity {
     public KeyboardInput keyboardInput;
 
 
-    public int speed= (int) (3*SCALE);
+    public int speed= 3;
 
     public Player(Game game){
 
