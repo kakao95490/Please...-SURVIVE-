@@ -1,6 +1,6 @@
 package Game;
 
-import Entities.BaseMonke;
+import Entities.Living.BaseMonke;
 import Entities.Entity;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -17,7 +17,6 @@ import static utils.Constants.WindowConstants.FPS_TARGET;
 public class  Main extends Application {
 
     private Game game;
-    public Entity baseMonke;
 
     int frame = 0;
     long lastCheck=System.currentTimeMillis();
@@ -29,8 +28,6 @@ public class  Main extends Application {
         game = new Game();
         game.getStage().show();
         game.camera.drawMapMatrice();
-        Entity baseMonke = new BaseMonke();
-        this.baseMonke = new BaseMonke();
 
 
 

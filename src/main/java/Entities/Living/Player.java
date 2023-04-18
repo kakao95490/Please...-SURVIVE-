@@ -1,4 +1,4 @@
-package Entities;
+package Entities.Living;
 
 import Inputs.KeyboardInput;
 import Game.Game;
@@ -11,22 +11,23 @@ import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.WindowConstants.*;
 
-public class Player extends Entity {
+public class Player extends LivingEntity {
+    private Game game;
 
-    public KeyboardInput keyboardInput;
 
     public Player(Game game){
+        super();
         this.entityName = "Player";
         this.speed= (int) (3*SCALE);
-
+        this.size = TILE_SIZE;
+        this.game=game;
         generateAnimationLib(); //generate the animation library
-
-        keyboardInput=game.keyboardInput;   //get the keyboard input from the game
         this.status=STATIC; //set the player status
-        this.coord = new Coord(12*TILE_SIZE, 9*TILE_SIZE); //set the player coord spawn
-        this.movement = new Coord(0, 0); //vector of the player movement
-        this.hitbox = new Hitbox(coord,TILE_SIZE/2,TILE_SIZE/4,TILE_SIZE/2); //set the player hitbox
-        this.weapon = new Pistol(this); //set the player weapon
+        this.coord.setXY(11*TILE_SIZE, 8*TILE_SIZE);//set the player coord spawn
+        this.hitbox.setHitboxSize(size/2);
+        this.hitbox.setHitboxOffset(size/4,size/2);
+        this.hitbox.updateHitbox();
+        this.weapon = new Pistol(); //set the player weapon
 
     }
 
@@ -35,31 +36,31 @@ public class Player extends Entity {
 
     public void updatePos(){
         movement.setXY(0,0);
-        if(keyboardInput.directionDiagonal()){
-            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
+        if(game.keyboardInput.directionDiagonal()){
+            if (game.keyboardInput.isKeyPressed(game.keyboardInput.movementKeyPressed, UP) && game.keyboardInput.isKeyPressed(game.keyboardInput.movementKeyPressed, RIGHT)) {
                 movement.addXY((int) (speed * 0.80), (int) (-speed * 0.80));
             }
-            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, DOWN) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
+            if (game.keyboardInput.isKeyPressed(game.keyboardInput.movementKeyPressed, DOWN) && game.keyboardInput.isKeyPressed(game.keyboardInput.movementKeyPressed, RIGHT)) {
                 movement.addXY((int) (speed * 0.80), (int) (speed * 0.80));
             }
-            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, LEFT)) {
+            if (game.keyboardInput.isKeyPressed(game.keyboardInput.movementKeyPressed, UP) && game.keyboardInput.isKeyPressed(game.keyboardInput.movementKeyPressed, LEFT)) {
                 movement.addXY((int) (-speed * 0.80), (int) (-speed * 0.80));
             }
-            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, DOWN) && keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, LEFT)) {
+            if (game.keyboardInput.isKeyPressed(game.keyboardInput.movementKeyPressed, DOWN) && game.keyboardInput.isKeyPressed(game.keyboardInput.movementKeyPressed, LEFT)) {
                 movement.addXY((int) (-speed * 0.80), (int) (speed * 0.80));
             }
         }
         else {
-            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, UP)) {
+            if (game.keyboardInput.isKeyPressed(game.keyboardInput.movementKeyPressed, UP)) {
                 movement.addXY(0, -speed);
             }
-            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, DOWN)) {
+            if (game.keyboardInput.isKeyPressed(game.keyboardInput.movementKeyPressed, DOWN)) {
                 movement.addXY(0, speed);
             }
-            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, LEFT)) {
+            if (game.keyboardInput.isKeyPressed(game.keyboardInput.movementKeyPressed, LEFT)) {
                 movement.addXY(-speed, 0);
             }
-            if (keyboardInput.isKeyPressed(keyboardInput.movementKeyPressed, RIGHT)) {
+            if (game.keyboardInput.isKeyPressed(game.keyboardInput.movementKeyPressed, RIGHT)) {
                 movement.addXY(speed, 0);
             }
         }
@@ -70,16 +71,16 @@ public class Player extends Entity {
     public void updateShootingDirection(){
         XlookingDirection=-1;
         YlookingDirection=-1;
-        if(keyboardInput.isKeyPressed(keyboardInput.shootKeyPressed, UP)){
+        if(game.keyboardInput.isKeyPressed(game.keyboardInput.shootKeyPressed, UP)){
             YlookingDirection=UP;
         }
-        if(keyboardInput.isKeyPressed(keyboardInput.shootKeyPressed, DOWN)){
+        if(game.keyboardInput.isKeyPressed(game.keyboardInput.shootKeyPressed, DOWN)){
             YlookingDirection=DOWN;
         }
-        if(keyboardInput.isKeyPressed(keyboardInput.shootKeyPressed, LEFT)){
+        if(game.keyboardInput.isKeyPressed(game.keyboardInput.shootKeyPressed, LEFT)){
             XlookingDirection=LEFT;
         }
-        if(keyboardInput.isKeyPressed(keyboardInput.shootKeyPressed, RIGHT)){
+        if(game.keyboardInput.isKeyPressed(game.keyboardInput.shootKeyPressed, RIGHT)){
             XlookingDirection=RIGHT;
         }
         shooting();
@@ -87,25 +88,24 @@ public class Player extends Entity {
 
     public void shooting(){
         if(XlookingDirection!=-1 || YlookingDirection!=-1){
-            weapon.shoot();
+            shoot();
         }
         weapon.updateCooldown();
 
     }
 
-    @Override
     public void updateStatus() {
         if(previousStatus==HIT && animationIndex+2<=getSpriteAmount(HIT)){
             status=HIT;
         }
         else{
-            if(keyboardInput.isEmpty(keyboardInput.movementKeyPressed)) {
+            if(game.keyboardInput.isEmpty(game.keyboardInput.movementKeyPressed)) {
                 status = STATIC;
             }
-            if(!keyboardInput.isEmpty(keyboardInput.movementKeyPressed)){
+            if(!game.keyboardInput.isEmpty(game.keyboardInput.movementKeyPressed)){
                 status=WALKING;
             }
-            if(keyboardInput.testKey){
+            if(game.keyboardInput.testKey){
                 shooting();
             }
         }

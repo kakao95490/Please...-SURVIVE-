@@ -1,9 +1,10 @@
 package Game;
 
-import Entities.Bullet;
+import Entities.Living.LivingEntity;
+import Entities.Inert.Bullet;
 import Map.Map;
 import Entities.Entity;
-import Entities.Player;
+import Entities.Living.Player;
 import Inputs.KeyboardInput;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -151,7 +152,7 @@ public class Game {
 
 
 
-    public void updateBullets(Entity entity,GraphicsContext g){
+    public void updateBullets(LivingEntity entity, GraphicsContext g){
         for(int i=0; i<entity.getWeapon().getBullets().size();i++){
             Bullet bullet = entity.getWeapon().getBullets().get(i);
             if(bullet.status==STATIC){

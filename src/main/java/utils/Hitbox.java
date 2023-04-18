@@ -60,6 +60,14 @@ public class Hitbox{
         return (this.isColliding(hitbox.getCornerUpRight()) || this.isColliding(hitbox.getCornerDownRight()));
     }
 
+    public void setHitboxSize(int size){
+        this.size = size;
+    }
+    public void setHitboxOffset(int offsetX, int offsetY){
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+    }
+
 
 
 }

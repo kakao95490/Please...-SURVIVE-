@@ -1,10 +1,10 @@
 package Weapons;
 
 import Entities.Entity;
+import Entities.Living.LivingEntity;
 
 public class Pistol extends Weapon{
-    public Pistol(Entity owner){
-        this.owner = owner;
+    public Pistol(){
         this.damage = 50;
         this.cooldown = 30;
         this.currentCooldown = this.cooldown;

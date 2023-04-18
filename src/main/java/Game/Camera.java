@@ -1,15 +1,12 @@
 package Game;
 
-import Entities.Bullet;
+import Entities.Living.LivingEntity;
+import Entities.Inert.Bullet;
 import Entities.Entity;
-import Entities.Player;
 
-import static utils.Constants.Directions.*;
 import static utils.Constants.MapConstants.TILE_SIZE;
-import static utils.Constants.PlayerConstants.STATIC;
 import static utils.Constants.WindowConstants.*;
 
-import Map.Map;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Camera {
@@ -41,14 +38,14 @@ public class Camera {
     }
 
     //render bullets shot by an entity
-    public void renderBullets(Entity entity,GraphicsContext g){
+    public void renderBullets(LivingEntity entity, GraphicsContext g){
         for(Bullet bullet : entity.getWeapon().getBullets()){
             bullet.render(game.gc,game.decalageCameraX,game.decalageCameraY);
         }
     }
 
     //render an entity
-    void renderEntity(Entity entity, GraphicsContext g){
+    void renderEntity(LivingEntity entity, GraphicsContext g){
         g.drawImage(entity.animationLib[entity.status][entity.animationIndex], entity.getCoord().getX()+(game.decalageCameraX), entity.getCoord().getY()+(game.decalageCameraY), TILE_SIZE, TILE_SIZE);
     }
 

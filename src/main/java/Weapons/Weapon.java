@@ -1,25 +1,18 @@
 package Weapons;
 
-import Entities.Bullet;
+import Entities.Inert.Bullet;
 import Entities.Entity;
-import javafx.scene.canvas.GraphicsContext;
+import Entities.Living.LivingEntity;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.ListIterator;
-
-import static utils.Constants.Directions.RIGHT;
-import static utils.Constants.PlayerConstants.STATIC;
 
 public abstract class Weapon {
     protected int damage;
     protected int range;
-    protected int bulletSize;
+    public int bulletSize;
     protected int cooldown;
     protected int currentCooldown;
     protected ArrayList<Bullet> bullets = new ArrayList<>();
-    protected Entity owner;
 
 
 
@@ -53,12 +46,7 @@ public abstract class Weapon {
         return bullets;
     }
 
-    public void shoot(){
-        if(cooldown==currentCooldown){
-            bullets.add(new Bullet(this,owner.getCoord(), owner.getXLookingDirection(), owner.getYLookingDirection(), damage, range, 5,bulletSize));
-            currentCooldown--;
-        }
-    }
+
 
 
 
@@ -69,13 +57,6 @@ public abstract class Weapon {
             currentCooldown=cooldown;
         }
     }
-
-    public Entity getOwner(){
-        return owner;
-    }
-
-
-
 
 
 }
