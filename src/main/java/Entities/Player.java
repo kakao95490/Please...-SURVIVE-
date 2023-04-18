@@ -15,13 +15,9 @@ public class Player extends Entity {
 
     public KeyboardInput keyboardInput;
 
-
-    public int speed= (int) (3*SCALE);
-
     public Player(Game game){
-
-
         this.entityName = "Player";
+        this.speed= (int) (3*SCALE);
 
         generateAnimationLib(); //generate the animation library
 
@@ -31,7 +27,6 @@ public class Player extends Entity {
         this.movement = new Coord(0, 0); //vector of the player movement
         this.hitbox = new Hitbox(coord,TILE_SIZE/2,TILE_SIZE/4,TILE_SIZE/2); //set the player hitbox
         this.weapon = new Pistol(this); //set the player weapon
-
 
     }
 

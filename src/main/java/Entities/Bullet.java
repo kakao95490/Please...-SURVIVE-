@@ -19,22 +19,22 @@ public class Bullet extends Entity{
     private int range;
     private int speed;
     private Weapon shotBy;
-    private Coord baseCoord;
-    Image sprite = new Image(Objects.requireNonNull(getClass().getResource("/Objects/BulletSprite.png")).toExternalForm());
+    public Coord baseCoord;
+    public Image sprite = new Image(Objects.requireNonNull(getClass().getResource("/Objects/BulletSprite.png")).toExternalForm());
 
-    public Bullet(Weapon weapon, Coord coord, int Xdirection, int Ydirection, int damage, int range, int speed) {
+    public Bullet(Weapon weapon, Coord coord, int Xdirection, int Ydirection, int damage, int range, int speed,int bulletSize) {
         this.Xdirection = Xdirection;
         this.Ydirection = Ydirection;
-        this.baseCoord = new Coord(coord.getX(), coord.getY());
-        this.coord=coord;
+        this.coord = new Coord(coord.getX()+TILE_SIZE/2-bulletSize, coord.getY()+TILE_SIZE/2-bulletSize/2);
         this.damage = damage;
         this.range = range;
         this.speed = (int) (speed*SCALE);
         this.status = WALKING;
-        this.hitbox = new Hitbox(coord, (int) (10*SCALE),0, 0);
         this.shotBy = weapon;
-        this.movement= new Coord(0,0);
+        this.size= (int) (15*SCALE);
+        this.hitbox = new Hitbox(coord, size,0, 0);
     }
+
 
 
 
@@ -47,16 +47,16 @@ public class Bullet extends Entity{
         }
         if(status == WALKING){
             if(Xdirection==RIGHT){
-                baseCoord.addXY(spd, 0);
+                coord.addXY(spd, 0);
             }
             if(Xdirection==LEFT){
-                baseCoord.addXY(-spd, 0);
+                coord.addXY(-spd, 0);
             }
             if(Ydirection==UP){
-                baseCoord.addXY(0, -spd);
+                coord.addXY(0, -spd);
             }
             if(Ydirection==DOWN){
-                baseCoord.addXY(0, spd);
+                coord.addXY(0, spd);
             }
             range-=1;
         }
@@ -66,6 +66,9 @@ public class Bullet extends Entity{
     public Hitbox getHitbox(){
         return hitbox;
     }
+    public int getSize(){
+        return size;
+    }
 
     @Override
     public void updateStatus() {
@@ -74,8 +77,11 @@ public class Bullet extends Entity{
         }
     }
 
-    public void render(GraphicsContext g){
-        g.drawImage(sprite, baseCoord.getX()+movement.getX()-coord.getX()+ SPRITE_COORD.getX()+TILE_SIZE/2, baseCoord.getY()+movement.getY()-coord.getY()+ SPRITE_COORD.getY()+TILE_SIZE/2, 15*SCALE, 15*SCALE);
+    public void render(GraphicsContext g,int decalageX,int decalageY){
+        g.drawImage(sprite, coord.getX()+decalageX, coord.getY()+decalageY,size,size);
+
     }
+
+
 
 }

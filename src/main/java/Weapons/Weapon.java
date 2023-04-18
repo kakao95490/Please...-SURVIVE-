@@ -15,6 +15,7 @@ import static utils.Constants.PlayerConstants.STATIC;
 public abstract class Weapon {
     protected int damage;
     protected int range;
+    protected int bulletSize;
     protected int cooldown;
     protected int currentCooldown;
     protected ArrayList<Bullet> bullets = new ArrayList<>();
@@ -54,25 +55,12 @@ public abstract class Weapon {
 
     public void shoot(){
         if(cooldown==currentCooldown){
-            bullets.add(new Bullet(this,owner.getCoord(), owner.getXLookingDirection(), owner.getYLookingDirection(), damage, range, 5));
+            bullets.add(new Bullet(this,owner.getCoord(), owner.getXLookingDirection(), owner.getYLookingDirection(), damage, range, 5,bulletSize));
             currentCooldown--;
         }
     }
 
-    public void updateBullets(GraphicsContext g){
-        for(Bullet bullet : bullets){
-            if(bullet.status==STATIC){
-                bullets.remove(bullet);
-            }
-            else {
-                bullet.updateStatus();
-                bullet.updatePos();
-                bullet.getHitbox().updateHitbox();
 
-                bullet.render(g);
-            }
-        }
-    }
 
     public void updateCooldown(){
         if(currentCooldown>0 && currentCooldown!=cooldown){

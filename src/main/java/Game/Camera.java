@@ -6,112 +6,63 @@ import Entities.Player;
 
 import static utils.Constants.Directions.*;
 import static utils.Constants.MapConstants.TILE_SIZE;
+import static utils.Constants.PlayerConstants.STATIC;
 import static utils.Constants.WindowConstants.*;
 
 import Map.Map;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Camera {
     Game game;
-    Player player;
-    Map map;
-    int decalageCameraX;
-    int decalageCameraY;
 
 
     public Camera(Game game){
-        this.game = game;
-        this.player = game.player;
-        this.map = game.map;
 
+        this.game = game;
     }
 
 
+
+    //draw the map with the movement of the player (decalageCamera)
     public void drawMapMatrice(){
-        game.bgc.clearRect(0, 0, WIDTH, HEIGHT);
-        game.decalageCameraX=SPRITE_COORD.getX() - player.getCoord().getX();
-        game.decalageCameraY=SPRITE_COORD.getY() - player.getCoord().getY();
-        for (int i = 0; i < map.getMapMatrice().length; i++) {
-            for (int j = 0; j < map.getMapMatrice()[i].length; j++) {
-                if(map.getMapMatrice()[i][j] != -1) {
-                    game.bgc.drawImage(map.textureLib[map.getMapMatrice()[i][j]], (j * TILE_SIZE) + game.decalageCameraX , (i * TILE_SIZE)+game.decalageCameraY,TILE_SIZE,TILE_SIZE);
+        for (int i = 0; i < game.map.getMapMatrice().length; i++) {
+            for (int j = 0; j < game.map.getMapMatrice()[i].length; j++) {
+                if(game.map.getMapMatrice()[i][j] != -1) {
+                    game.bgc.drawImage(game.map.textureLib[game.map.getMapMatrice()[i][j]], (j * TILE_SIZE) + game.decalageCameraX , (i * TILE_SIZE)+game.decalageCameraY,TILE_SIZE,TILE_SIZE);
                 }
             }
         }
     }
 
-    public void playerReload(){
-        player.updateAnimationIndex(player.animationLib[player.status]);
-        player.updatePos();
-        player.updateDirection();
-        cancelWallCollision(player);
-        player.updateStatus();
-        player.updateShootingDirection();
 
-
-
-
-    }
-
+    //render the player
     public void playerRender(){
-        game.gc.clearRect(0, 0, WIDTH, HEIGHT);
-        game.gc.drawImage(player.animationLib[player.status][player.animationIndex], SPRITE_COORD.getX(), SPRITE_COORD.getY() ,TILE_SIZE,TILE_SIZE);
-        player.getWeapon().updateBullets(game.bgc);
-
+        game.gc.drawImage(game.player.animationLib[game.player.status][game.player.animationIndex], SPRITE_COORD.getX(), SPRITE_COORD.getY() ,TILE_SIZE,TILE_SIZE);
     }
 
-
-    public void collideDirection(Entity entity){
-        entity.getHitbox().updateHitbox();
-        entity.resetWallCollision();
-        entity.setWallCollision(0, map.getMapMatrice()[entity.getHitbox().getCornerUpLeft().tileCoord().getY()][entity.getHitbox().getCornerUpLeft().tileCoord().getX()] != 0);
-        entity.setWallCollision(1, map.getMapMatrice()[entity.getHitbox().getCornerUpRight().tileCoord().getY()][entity.getHitbox().getCornerUpRight().tileCoord().getX()] != 0);
-        entity.setWallCollision(2, map.getMapMatrice()[entity.getHitbox().getCornerDownLeft().tileCoord().getY()][entity.getHitbox().getCornerDownLeft().tileCoord().getX()] != 0);
-        entity.setWallCollision(3, map.getMapMatrice()[entity.getHitbox().getCornerDownRight().tileCoord().getY()][entity.getHitbox().getCornerDownRight().tileCoord().getX()] != 0);
+    //render bullets shot by an entity
+    public void renderBullets(Entity entity,GraphicsContext g){
+        for(Bullet bullet : entity.getWeapon().getBullets()){
+            bullet.render(game.gc,game.decalageCameraX,game.decalageCameraY);
+        }
     }
 
-    public void cancelWallCollision(Entity entity){
-        collideDirection(entity);
-        //int[0] = up and down, int[1] = left and right
-        int[] direction = new int[]{0,0};
-        if(entity.getWallCollision()[0]) {
-            if (entity.getYDirection() == UP){
-                direction[0] += 1;
-            }
-            if (entity.getXDirection() == LEFT){
-                direction[1] += 1;
-            }
-        }
-        if(entity.getWallCollision()[1]){
-            if (entity.getYDirection() == UP){
-                direction[0] += 1;
-            }
-            if (entity.getXDirection() == RIGHT){
-                direction[1] -= 1;
-            }
-        }
-        if(entity.getWallCollision()[2]){
-            if (entity.getYDirection() == DOWN){
-                direction[0] -= 1;
-            }
-            if (entity.getXDirection() == LEFT){
-                direction[1] += 1;
-            }
-        }
-        if(entity.getWallCollision()[3]) {
-            if (entity.getYDirection() == DOWN){
-                direction[0] -= 1;
-            }
-            if (entity.getXDirection() == RIGHT){
-                direction[1] -= 1;
-            }
-        }
-        while(entity.getWallCollision()[0] || entity.getWallCollision()[1] || entity.getWallCollision()[2] || entity.getWallCollision()[3]) {
+    //render an entity
+    void renderEntity(Entity entity, GraphicsContext g){
+        g.drawImage(entity.animationLib[entity.status][entity.animationIndex], entity.getCoord().getX()+(game.decalageCameraX), entity.getCoord().getY()+(game.decalageCameraY), TILE_SIZE, TILE_SIZE);
+    }
 
-            entity.getCoord().addXY(direction[1], direction[0]);
-            entity.getHitbox().updateHitbox();
-            collideDirection(entity);
-        }
+    void renderAll(){
+        //clear all
+        game.bgc.clearRect(0, 0, WIDTH, HEIGHT);
+        game.gc.clearRect(0,0,WIDTH,HEIGHT);
 
+        //redraw the map with the movement of the player
+        drawMapMatrice();
+
+        //render entities
+        playerRender();
+        renderBullets(game.player, game.gc);
 
     }
 

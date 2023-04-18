@@ -31,14 +31,12 @@ public abstract class Entity implements InterfaceEntity {
 
     protected Weapon weapon;
 
-
-
-
     protected int animationTick = 0;
 
     public int animationIndex;
     public Image[][] animationLib;
 
+    public int size;
     public int status;
     protected int previousStatus=STATIC;
 
@@ -76,11 +74,9 @@ public abstract class Entity implements InterfaceEntity {
         }
     }
 
-    public Coord getCoord() {
-        return coord;
-    }
 
 
+    @Override
     public void updateDirection(){
         Xdirection=-1;
         Ydirection=-1;
@@ -131,16 +127,9 @@ public abstract class Entity implements InterfaceEntity {
         }
     }
 
-    public Coord getMovement(){
-        return movement;
+    public Coord getCoord() {
+        return coord;
     }
-
-
-    public int getSpeed() {
-        return speed;
-    }
-
-
     public Weapon getWeapon(){
         return weapon;
     }

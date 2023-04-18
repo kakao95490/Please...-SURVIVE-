@@ -72,10 +72,10 @@ public class Constants {
         public static final int TRIPLEWALLDOWN=28;
         public static final int TRIPLEWALLUP=29;
         public static final int PLANT=30;
+    }
 
-
-
-
+    public static class EntityConstants{
+        public static final int BASE_MONKE=0;
     }
 
 }
