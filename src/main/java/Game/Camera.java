@@ -14,8 +14,8 @@ public class Camera {
 
 
     public Camera(Game game){
-
         this.game = game;
+
     }
 
 

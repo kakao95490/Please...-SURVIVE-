@@ -1,15 +1,9 @@
 package Entities;
 
-import Weapons.Weapon;
-import javafx.scene.image.Image;
-
-import java.util.Objects;
 
 import static utils.Constants.Directions.*;
 import static utils.Constants.Directions.LEFT;
 import static utils.Constants.PlayerConstants.*;
-import static utils.Constants.PlayerConstants.HIT;
-import static utils.Constants.WindowConstants.FPS_TARGET;
 
 import utils.Coord;
 import utils.Hitbox;

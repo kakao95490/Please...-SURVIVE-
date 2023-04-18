@@ -12,37 +12,37 @@ public class KeyboardInput {
     public boolean testKey;
 
 
-    public KeyboardInput() {
+    public KeyboardInput(Game game) {
         movementKeyPressed = new boolean[4];
         shootKeyPressed = new boolean[4];
 
-        Game.getScene().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+        game.getScene().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if(event.getCode() == KeyCode.Q) {
-                movementKeyPressed[LEFT]=true;
+                game.player.movementKeyPressed[LEFT]=true;
             }
             if(event.getCode() == KeyCode.Z) {
-                movementKeyPressed[UP]=true;
+                game.player.movementKeyPressed[UP]=true;
             }
             if(event.getCode() == KeyCode.D) {
-                movementKeyPressed[RIGHT]=true;
+                game.player.movementKeyPressed[RIGHT]=true;
             }
             if(event.getCode() == KeyCode.S) {
-                movementKeyPressed[DOWN]=true;
+                game.player.movementKeyPressed[DOWN]=true;
             }
             if(event.getCode() == KeyCode.T) {
                 testKey=true;
             }
             if(event.getCode() == KeyCode.UP){
-                shootKeyPressed[UP]=true;
+                game.player.shootKeyPressed[UP]=true;
             }
             if(event.getCode() == KeyCode.DOWN){
-                shootKeyPressed[DOWN]=true;
+                game.player.shootKeyPressed[DOWN]=true;
             }
             if(event.getCode() == KeyCode.LEFT){
-                shootKeyPressed[LEFT]=true;
+                game.player.shootKeyPressed[LEFT]=true;
             }
             if(event.getCode() == KeyCode.RIGHT){
-                shootKeyPressed[RIGHT]=true;
+                game.player.shootKeyPressed[RIGHT]=true;
             }
 
 
@@ -50,36 +50,34 @@ public class KeyboardInput {
 
         });
 
-        Game.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+        game.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if(event.getCode() == KeyCode.Q) {
-                movementKeyPressed[LEFT]=false;
+                game.player.movementKeyPressed[LEFT]=false;
             }
             if(event.getCode() == KeyCode.Z) {
-                movementKeyPressed[UP]=false;
+                game.player.movementKeyPressed[UP]=false;
             }
             if(event.getCode() == KeyCode.D) {
-                movementKeyPressed[RIGHT]=false;
+                game.player.movementKeyPressed[RIGHT]=false;
             }
             if(event.getCode() == KeyCode.S) {
-                movementKeyPressed[DOWN]=false;
+                game.player.movementKeyPressed[DOWN]=false;
             }
             if(event.getCode() == KeyCode.T) {
                 testKey=false;
             }
             if(event.getCode() == KeyCode.UP){
-                shootKeyPressed[UP]=false;
+                game.player.shootKeyPressed[UP]=false;
             }
             if(event.getCode() == KeyCode.DOWN){
-                shootKeyPressed[DOWN]=false;
+                game.player.shootKeyPressed[DOWN]=false;
             }
             if(event.getCode() == KeyCode.LEFT){
-                shootKeyPressed[LEFT]=false;
+                game.player.shootKeyPressed[LEFT]=false;
             }
             if(event.getCode() == KeyCode.RIGHT){
-                shootKeyPressed[RIGHT]=false;
+                game.player.shootKeyPressed[RIGHT]=false;
             }
-
-
         });
 
     }

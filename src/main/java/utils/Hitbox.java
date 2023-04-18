@@ -3,7 +3,7 @@ package utils;
 import static utils.Constants.MapConstants.TILE_SIZE;
 
 public class Hitbox{
-    private Coord entityCoord;
+    private final Coord entityCoord;
     private Coord cornerUpLeft;
     private Coord cornerDownRight;
     private Coord cornerUpRight;

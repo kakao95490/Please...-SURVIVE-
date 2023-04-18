@@ -73,10 +73,11 @@ public class Game {
 
         this.stage.setResizable(true);
         this.stage.setFullScreen(true);
-        this.keyboardInput = new KeyboardInput();
+        this.player=new Player();
+        this.keyboardInput = new KeyboardInput(this);
 
 
-        this.player=new Player(this);
+
         this.map = new Map();
         entities = new ArrayList<>();
         entities.add(player);
@@ -90,7 +91,7 @@ public class Game {
     }
 
     public void playerUpdate(){
-        player.updateAnimationIndex(player.animationLib[player.status]);
+        player.updateAnimationIndex();
         player.updatePos();
         player.updateDirection();
         cancelWallCollision(player);

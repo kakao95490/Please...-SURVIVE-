@@ -33,7 +33,7 @@ public abstract class LivingEntity extends Entity {
     }
 
 
-    public void updateAnimationIndex(Image[] lib){
+    public void updateAnimationIndex(){
         animationTick++;
         int animationSpeedFPS = 16;
         int animationspd= FPS_TARGET/ animationSpeedFPS;
