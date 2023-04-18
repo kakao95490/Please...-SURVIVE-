@@ -16,7 +16,7 @@ public class KeyboardInput {
         movementKeyPressed = new boolean[4];
         shootKeyPressed = new boolean[4];
 
-        game.getScene().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+        game.camera.getScene().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if(event.getCode() == KeyCode.Q) {
                 game.player.movementKeyPressed[LEFT]=true;
             }
@@ -50,7 +50,7 @@ public class KeyboardInput {
 
         });
 
-        game.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+        game.camera.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if(event.getCode() == KeyCode.Q) {
                 game.player.movementKeyPressed[LEFT]=false;
             }
@@ -82,28 +82,7 @@ public class KeyboardInput {
 
     }
 
-    public boolean isEmpty(boolean[] inputTab){
-        for (boolean b : inputTab) {
-            if (b) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean directionDiagonal(){
-        int inputNbr = 0;
-        for (boolean b : movementKeyPressed) {
-            if (b) {
-                inputNbr += 1;
-            }
-        }
-        return inputNbr == 2 ;
-    }
 
 
-    public boolean isKeyPressed(boolean[] inputTab,int key) {
-        return inputTab[key];
-    }
 
 }

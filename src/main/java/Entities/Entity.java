@@ -10,6 +10,7 @@ import utils.Hitbox;
 
 public abstract class Entity {
     protected Coord coord;
+    protected Coord spawnPoint;
     protected Coord movement;
     protected Hitbox hitbox;
 
@@ -27,8 +28,10 @@ public abstract class Entity {
 
     public Entity() {
         this.coord = new Coord(0,0);
+        this.spawnPoint = new Coord(0,0);
         this.movement = new Coord(0,0);
         this.hitbox = new Hitbox(coord,0,0,0);
+
     }
 
 

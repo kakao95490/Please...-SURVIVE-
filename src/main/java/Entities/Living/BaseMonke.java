@@ -8,7 +8,7 @@ import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.PlayerConstants.WALKING;
 import static utils.Constants.WindowConstants.SCALE;
 
-public class BaseMonke extends LivingEntity {
+public class BaseMonke extends Ennemies {
     public BaseMonke() {
         this.entityName = "BaseMonke";
         this.speed = (int) (3*SCALE);

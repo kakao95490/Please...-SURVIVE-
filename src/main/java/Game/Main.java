@@ -26,8 +26,6 @@ public class  Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         game = new Game();
-        game.getStage().show();
-        game.camera.drawMapMatrice();
 
 
 
@@ -50,9 +48,9 @@ public class  Main extends Application {
 
     }
 
-
     private void update() {
         game.updateAll();
+
         game.camera.renderAll();
 
     }

@@ -75,6 +75,13 @@ public class Constants {
     }
 
     public static class EntityConstants{
+
+        public static Coord getSpawnPoint(int randNum){
+            return switch (randNum) {
+                default -> new Coord(6*TILE_SIZE, 3*TILE_SIZE);
+            };
+        }
+
         public static final int BASE_MONKE=0;
     }
 

@@ -1,5 +1,6 @@
 package Game;
 
+import Entities.Living.BaseMonke;
 import Entities.Living.LivingEntity;
 import Entities.Inert.Bullet;
 import Map.Map;
@@ -19,21 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static utils.Constants.Directions.*;
+import static utils.Constants.EntityConstants.BASE_MONKE;
 import static utils.Constants.PlayerConstants.STATIC;
 import static utils.Constants.WindowConstants.*;
 
 
 public class Game {
 
-    public int decalageCameraX;
-    public int decalageCameraY;
-    private final Canvas canvas;
-    private final Canvas bgCanvas;
-    private static Scene scene;
-    private final Stage stage;
-    private final Group root;
-    public GraphicsContext gc;
-    public GraphicsContext bgc;
+
 
     public KeyboardInput keyboardInput;
     public Double framerate;
@@ -42,50 +36,29 @@ public class Game {
     public Player player;
     public Map map;
     public Camera camera;
+    public Level level1 = new Level(new int[]{BASE_MONKE});
 
 
 
 
     public Game() throws IOException, URISyntaxException {
-        this.camera= new Camera(this);
-        this.stage = new Stage();
-        this.root = new Group();
+
+
 
         //set a canva for the player
-        this.canvas = new Canvas(WIDTH,HEIGHT);
-        this.bgCanvas = new Canvas(WIDTH,HEIGHT);
-        this.gc = canvas.getGraphicsContext2D();
-        this.bgc = bgCanvas.getGraphicsContext2D();
-        gc.setImageSmoothing(false);
-        bgc.setImageSmoothing(false);
 
 
-
-
-        scene = new Scene(root,WIDTH, HEIGHT);
-        Color BACKGROUND_COLOR = Color.BLACK;
-        scene.setFill(BACKGROUND_COLOR);
-        this.stage.setScene(scene);
-
-        this.root.getChildren().add(bgCanvas);
-        this.root.getChildren().add(canvas);
-        this.stage.setTitle("Please....SURVIVE!");
-
-        this.stage.setResizable(true);
-        this.stage.setFullScreen(true);
         this.player=new Player();
+
+
+        this.map = new Map();
+
+        this.camera= new Camera(this);
         this.keyboardInput = new KeyboardInput(this);
 
 
 
-        this.map = new Map();
-        entities = new ArrayList<>();
-        entities.add(player);
 
-
-
-        this.decalageCameraX=SPRITE_COORD.getX() - player.getCoord().getX();
-        this.decalageCameraY=SPRITE_COORD.getY() - player.getCoord().getY();
 
 
     }
@@ -153,7 +126,7 @@ public class Game {
 
 
 
-    public void updateBullets(LivingEntity entity, GraphicsContext g){
+    public void updateBullets(LivingEntity entity){
         for(int i=0; i<entity.getWeapon().getBullets().size();i++){
             Bullet bullet = entity.getWeapon().getBullets().get(i);
             if(bullet.status==STATIC){
@@ -167,38 +140,17 @@ public class Game {
         }
     }
 
-    public void updateCameraOffset(){
-        decalageCameraX=SPRITE_COORD.getX() - player.getCoord().getX();
-        decalageCameraY=SPRITE_COORD.getY() - player.getCoord().getY();
-    }
+
 
 
     void updateAll(){
+        level1.update();
         playerUpdate();
-        updateCameraOffset();
-        updateBullets(player,gc);
+
+        updateBullets(player);
     }
 
 
-
-
-
-
-    public Canvas getCanvas() {
-        return canvas;
-    }
-
-    public static Scene getScene() {
-        return scene;
-    }
-
-    public Stage getStage() {
-        return stage;
-    }
-
-    public Group getRoot() {
-        return root;
-    }
 
 
 }

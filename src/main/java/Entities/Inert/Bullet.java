@@ -62,11 +62,6 @@ public class Bullet extends InertEntity {
         }
     }
 
-    public void render(GraphicsContext g,int decalageX,int decalageY){
-        g.drawImage(sprite, coord.getX()+decalageX, coord.getY()+decalageY,size,size);
-
-    }
-
 
 
 }
