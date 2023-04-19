@@ -15,8 +15,7 @@ import static utils.Constants.WindowConstants.FPS_TARGET;
 
 public abstract class LivingEntity extends Entity {
     protected Weapon weapon;
-    protected int speed;
-    public static Coord playerCoord;
+
 
     public int XlookingDirection=-1;
     public int YlookingDirection=-1;
@@ -34,7 +33,6 @@ public abstract class LivingEntity extends Entity {
     public LivingEntity() {
         super();
     }
-
 
     public void updateAnimationIndex(){
         animationTick++;
@@ -64,10 +62,6 @@ public abstract class LivingEntity extends Entity {
             animationLib[HIT][j]=new Image(Objects.requireNonNull(getClass().getResource("/Sprites/" + this.entityName + "Hit" + j + ".png")).toExternalForm());
         }
     }
-
-
-
-
 
     public Weapon getWeapon() {
         return weapon;

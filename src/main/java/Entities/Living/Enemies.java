@@ -12,7 +12,7 @@ import static utils.Constants.WindowConstants.FPS_TARGET;
 public abstract class Enemies extends LivingEntity{
     private List<Coord> path = new ArrayList<>();
 
-    private int updatePathTick = FPS_TARGET/6;
+    private int updatePathTick = FPS_TARGET/4;
     private int updatePathIndex = updatePathTick;
 
 
@@ -23,13 +23,10 @@ public abstract class Enemies extends LivingEntity{
     }
 
     public void updatePath(AStar aStar){
-        System.out.println(coord.tileCoord());
-        System.out.println(playerCoord.tileCoord());
-        setPath(aStar.findPath(coord.invertedCoord().tileCoord(),playerCoord.tileCoord().invertedCoord()));
+        setPath(aStar.findPath(coord.centeredCoord().tileCoord().invertedCoord(),playerCoord.centeredCoord().tileCoord().invertedCoord()));
         for (Coord value : path) {
             System.out.println(value);
         }
-        System.out.println("  ");
     }
 
 
@@ -40,32 +37,47 @@ public abstract class Enemies extends LivingEntity{
         } else {
             updatePathIndex--;
         }
-        if (path != null) {
-            if (path.size() > 0) {
-                Coord nextCoord = path.get(0);
-                if (coord.tileCoord().getX() < nextCoord.getX()) {
-                    coord.addXY(speed, 0);
-                    XlookingDirection = RIGHT;
-                    Xdirection = RIGHT;
-                } else if (coord.tileCoord().getX() > nextCoord.getX()) {
-                    coord.addXY(-speed, 0);
-                    XlookingDirection = LEFT;
-                    Xdirection = LEFT;
-                }
-                if (coord.tileCoord().getY() < nextCoord.getY()) {
-                    coord.addXY(0, speed);
-                    YlookingDirection = DOWN;
-                    Ydirection = DOWN;
-                } else if (coord.tileCoord().getY() > nextCoord.getY()) {
-                    coord.addXY(0, -speed);
-                    YlookingDirection = UP;
-                    Ydirection = UP;
-                }
-                if (coord.tileCoord().equals(nextCoord)) {
+        if(path != null) {
+
+            if( path.size()>3 ){
+                Coord nextTile = path.get(0);
+                destCoord = nextTile.pixelCoord().centeredCoord();
+                directionCalcul();
+                coord.addXY(movement.getX(), movement.getY());
+                if (coord.centeredCoord().tileCoord() == nextTile) {
                     path.remove(0);
+                }
+
+            }
+
+            else if (path.size() > 2 && !isNearPlayer()) {
+                Coord nextTile = path.get(2);
+                destCoord = nextTile.pixelCoord().centeredCoord();
+                directionCalcul();
+                coord.addXY(movement.getX(), movement.getY());
+                if (coord.centeredCoord().tileCoord() == nextTile) {
+                    path.remove(0);
+                    path.remove(1);
+                    path.remove(2);
+                }
+            }
+            else {
+                destCoord = playerCoord.centeredCoord();
+                directionCalcul();
+                coord.addXY(movement.getX(), movement.getY());
+            }
+        }
+    }
+
+    public boolean isNearPlayer(){
+        for(int i=playerCoord.tileCoord().getX()-2;i<=playerCoord.tileCoord().getX()+2;i++){
+            for(int j=playerCoord.tileCoord().getY()-2;j<=playerCoord.tileCoord().getY()+2;j++){
+                if(coord.tileCoord().getX()==i && coord.tileCoord().getY()==j){
+                    return true;
                 }
             }
         }
+        return false;
     }
 
 

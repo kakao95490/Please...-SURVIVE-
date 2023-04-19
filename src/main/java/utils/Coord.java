@@ -1,5 +1,7 @@
 package utils;
 
+import Entities.Entity;
+
 import static utils.Constants.MapConstants.TILE_SIZE;
 
 public class Coord {
@@ -47,15 +49,15 @@ public class Coord {
         return new Coord(X/TILE_SIZE, Y/TILE_SIZE);
     }
 
-    public Coord pixelCoord(int x, int y){
-        return new Coord(x*TILE_SIZE, y*TILE_SIZE);
+    public Coord pixelCoord(){
+        return new Coord(X*TILE_SIZE, Y*TILE_SIZE);
     }
 
     public Coord invertedCoord(){
         return new Coord(Y,X);
     }
-    public Coord spriteCoord(){
-        return new Coord(X/TILE_SIZE, Y/TILE_SIZE);
+    public Coord centeredCoord(){
+        return new Coord(X+ TILE_SIZE/2, Y+ TILE_SIZE/2);
     }
 
 }

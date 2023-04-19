@@ -27,9 +27,9 @@ public class Hitbox{
 
     public void updateHitbox(){
         this.cornerUpLeft = new Coord(entityCoord.getX()+offsetX, entityCoord.getY()+offsetY);
-        this.cornerDownRight = new Coord(entityCoord.getX()+offsetX+size, entityCoord.getY()+offsetY+size);
+        this.cornerDownRight = new Coord(entityCoord.getX()+offsetX+size, entityCoord.getY()+offsetY+size-1);
         this.cornerUpRight = new Coord(entityCoord.getX()+offsetX+size, entityCoord.getY()+offsetY);
-        this.cornerDownLeft = new Coord(entityCoord.getX()+offsetX, entityCoord.getY()+offsetY+size);
+        this.cornerDownLeft = new Coord(entityCoord.getX()+offsetX, entityCoord.getY()+offsetY+size-1);
     }
 
     public Coord getCornerUpLeft() {
