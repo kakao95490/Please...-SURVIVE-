@@ -25,8 +25,8 @@ public class Player extends LivingEntity {
         this.status=STATIC; //set the player status
         this.coord.setXY(11*TILE_SIZE, 8*TILE_SIZE);//set the player coord spawn
         this.playerCoord = coord;
-        this.hitbox.setHitboxSize(size/2);
-        this.hitbox.setHitboxOffset(size/4,size/2);
+        this.hitbox.setHitboxSize(size);
+        //this.hitbox.setHitboxOffset(size/4,size/2);
         this.hitbox.updateHitbox();
         this.weapon = new Pistol(); //set the player weapon
         this.movementKeyPressed = new boolean[4];

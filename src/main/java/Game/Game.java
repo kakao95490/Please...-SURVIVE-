@@ -147,7 +147,7 @@ public class Game {
 
     public void updateEnemies(){
         for(int i =0;i<level1.getIngameEnnemyList().size();i++){
-            level1.getIngameEnnemyList().get(i).updatePos();
+            level1.getIngameEnnemyList().get(i).updatePos(aStar);
             cancelWallCollision(level1.getIngameEnnemyList().get(i));
         }
     }

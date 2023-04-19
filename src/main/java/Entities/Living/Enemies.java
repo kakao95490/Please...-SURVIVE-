@@ -24,14 +24,16 @@ public abstract class Enemies extends LivingEntity{
 
     public void updatePath(AStar aStar){
         System.out.println(coord.tileCoord());
-        setPath(aStar.findPath(coord.tileCoord(),playerCoord.tileCoord()));
+        System.out.println(playerCoord.tileCoord());
+        setPath(aStar.findPath(coord.invertedCoord().tileCoord(),playerCoord.tileCoord().invertedCoord()));
         for (Coord value : path) {
             System.out.println(value);
         }
         System.out.println("  ");
     }
 
-    /*public void updatePos(AStar aStar) {
+
+    public void updatePos(AStar aStar) {
         if (updatePathIndex == 0) {
             updatePathIndex = updatePathTick;
             updatePath(aStar);
@@ -44,47 +46,27 @@ public abstract class Enemies extends LivingEntity{
                 if (coord.tileCoord().getX() < nextCoord.getX()) {
                     coord.addXY(speed, 0);
                     XlookingDirection = RIGHT;
+                    Xdirection = RIGHT;
                 } else if (coord.tileCoord().getX() > nextCoord.getX()) {
                     coord.addXY(-speed, 0);
                     XlookingDirection = LEFT;
+                    Xdirection = LEFT;
                 }
                 if (coord.tileCoord().getY() < nextCoord.getY()) {
                     coord.addXY(0, speed);
                     YlookingDirection = DOWN;
+                    Ydirection = DOWN;
                 } else if (coord.tileCoord().getY() > nextCoord.getY()) {
                     coord.addXY(0, -speed);
                     YlookingDirection = UP;
+                    Ydirection = UP;
                 }
                 if (coord.tileCoord().equals(nextCoord)) {
                     path.remove(0);
                 }
             }
         }
-    }*/
-
-
-    public void updatePos() {
-        System.out.println(playerCoord.tileCoord());
-
-        if (coord.getX() < playerCoord.getX()) {
-            coord.addXY(speed, 0);
-            XlookingDirection = RIGHT;
-            Xdirection= RIGHT;
-            System.out.println("ça va à droite");
-        } else if (coord.getX() > playerCoord.getX()) {
-            coord.addXY(-speed, 0);
-            XlookingDirection = LEFT;
-            Xdirection= LEFT;
-        }
-        if (coord.getY() < playerCoord.getY()) {
-            coord.addXY(0, speed);
-            YlookingDirection = DOWN;
-            Ydirection= DOWN;
-        } else if (coord.getY() > playerCoord.getY()) {
-            coord.addXY(0, -speed);
-            YlookingDirection = UP;
-            Ydirection= UP;
-        }
     }
+
 
 }

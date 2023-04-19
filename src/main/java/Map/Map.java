@@ -1,6 +1,7 @@
 package Map;
 
 import javafx.scene.image.Image;
+import utils.AStar;
 import utils.Coord;
 
 import java.io.IOException;
@@ -98,6 +99,15 @@ public class Map {
 
     public ArrayList<int[]> getSpwanCoords() {
         return spwanCoords;
+    }
+
+    public static void main(String[] args) throws URISyntaxException, IOException {
+        Map map = new Map();
+        AStar astar = new AStar(map.getMapMatrice());
+        List<Coord> pathList = astar.findPath(new Coord(6,1), new Coord(8,11));
+        for(Coord coord : pathList) {
+            System.out.println(coord);
+        }
     }
 
 

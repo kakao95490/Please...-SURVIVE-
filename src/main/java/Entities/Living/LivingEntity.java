@@ -4,6 +4,7 @@ import Entities.Entity;
 import Entities.Inert.Bullet;
 import Weapons.Weapon;
 import javafx.scene.image.Image;
+import utils.AStar;
 import utils.Coord;
 
 import java.util.Objects;
@@ -64,8 +65,6 @@ public abstract class LivingEntity extends Entity {
         }
     }
 
-    public abstract void updatePos();
-
 
 
 
@@ -73,4 +72,5 @@ public abstract class LivingEntity extends Entity {
     public Weapon getWeapon() {
         return weapon;
     }
+
 }
