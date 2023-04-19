@@ -1,6 +1,7 @@
 package Weapons;
 
-import Entities.Entity;
+
+import Entities.Inert.Bullet;
 import Entities.Living.LivingEntity;
 
 public class Pistol extends Weapon{
@@ -11,6 +12,9 @@ public class Pistol extends Weapon{
         this.range=60;
         this.bulletSize=15;
     }
+
+
+
 
 
 

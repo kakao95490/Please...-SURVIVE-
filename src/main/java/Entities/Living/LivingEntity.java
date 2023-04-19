@@ -4,6 +4,7 @@ import Entities.Entity;
 import Entities.Inert.Bullet;
 import Weapons.Weapon;
 import javafx.scene.image.Image;
+import utils.Coord;
 
 import java.util.Objects;
 
@@ -14,9 +15,10 @@ import static utils.Constants.WindowConstants.FPS_TARGET;
 public abstract class LivingEntity extends Entity {
     protected Weapon weapon;
     protected int speed;
+    public static Coord playerCoord;
 
-    protected int XlookingDirection=-1;
-    protected int YlookingDirection=-1;
+    public int XlookingDirection=-1;
+    public int YlookingDirection=-1;
     public int getXLookingDirection() {
         return XlookingDirection;
     }
@@ -62,13 +64,10 @@ public abstract class LivingEntity extends Entity {
         }
     }
 
+    public abstract void updatePos();
 
-    public void shoot(){
-        if(weapon.getCooldown() ==weapon.getCurrentCooldown()){
-            weapon.getBullets().add(new Bullet(coord, XlookingDirection, YlookingDirection, weapon.getRange(), 5,weapon.bulletSize));
-            weapon.setCurrentCooldown(weapon.getCurrentCooldown()-1);
-        }
-    }
+
+
 
 
     public Weapon getWeapon() {

@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Classe permettant de lire un fichier CSV et de le convertir en matrice
+ *
+ */
+
 public class CSVReader {
 
     public static int[][] readCsv(String filename) throws IOException {
@@ -18,6 +23,7 @@ public class CSVReader {
             String[] row = line.split(",");
             numCols = Math.max(numCols, row.length);
         }
+
 
         // Création de la matrice
         int[][] matrix = new int[numRows][numCols];

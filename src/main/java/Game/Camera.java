@@ -1,6 +1,6 @@
 package Game;
 
-import Entities.Living.Ennemies;
+import Entities.Living.Enemies;
 import Entities.Living.LivingEntity;
 import Entities.Inert.Bullet;
 
@@ -81,7 +81,7 @@ public class Camera {
     }
 
     void renderEnnemies(){
-        for(Ennemies entity : game.level1.getIngameEnnemyList()){
+        for(Enemies entity : game.level1.getIngameEnnemyList()){
             entity.updateAnimationIndex();
             renderEntity(entity, bgc);
         }

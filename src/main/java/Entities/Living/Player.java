@@ -24,6 +24,7 @@ public class Player extends LivingEntity {
         generateAnimationLib(); //generate the animation library
         this.status=STATIC; //set the player status
         this.coord.setXY(11*TILE_SIZE, 8*TILE_SIZE);//set the player coord spawn
+        this.playerCoord = coord;
         this.hitbox.setHitboxSize(size/2);
         this.hitbox.setHitboxOffset(size/4,size/2);
         this.hitbox.updateHitbox();
@@ -89,7 +90,7 @@ public class Player extends LivingEntity {
 
     public void shooting(){
         if(XlookingDirection!=-1 || YlookingDirection!=-1){
-            shoot();
+            weapon.shoot(coord, XlookingDirection, YlookingDirection);
         }
         weapon.updateCooldown();
 

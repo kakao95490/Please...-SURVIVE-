@@ -1,28 +1,19 @@
 package Game;
 
-import Entities.Living.BaseMonke;
 import Entities.Living.LivingEntity;
 import Entities.Inert.Bullet;
 import Map.Map;
 import Entities.Entity;
 import Entities.Living.Player;
 import Inputs.KeyboardInput;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+import utils.AStar;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static utils.Constants.Directions.*;
 import static utils.Constants.EntityConstants.BASE_MONKE;
 import static utils.Constants.PlayerConstants.STATIC;
-import static utils.Constants.WindowConstants.*;
 
 
 public class Game {
@@ -32,11 +23,11 @@ public class Game {
     public KeyboardInput keyboardInput;
     public Double framerate;
 
-    public List<Entity> entities;
     public Player player;
     public Map map;
     public Camera camera;
-    public Level level1 = new Level(new int[]{BASE_MONKE});
+    public Level level1;
+    public AStar aStar;
 
 
 
@@ -55,6 +46,8 @@ public class Game {
 
         this.camera= new Camera(this);
         this.keyboardInput = new KeyboardInput(this);
+        this.level1 = new Level(new int[]{BASE_MONKE},map.getSpwanCoords());
+        this.aStar = new AStar(map.getMapMatrice());
 
 
 
@@ -72,16 +65,23 @@ public class Game {
         player.updateShootingDirection();
     }
 
-    public void collideDirection(Entity entity){
+    public boolean wallCollision(Entity entity){
+        boolean collide = false;
         entity.getHitbox().updateHitbox();
         entity.resetWallCollision();
         entity.setWallCollision(0, map.getMapMatrice()[entity.getHitbox().getCornerUpLeft().tileCoord().getY()][entity.getHitbox().getCornerUpLeft().tileCoord().getX()] != 0);
         entity.setWallCollision(1, map.getMapMatrice()[entity.getHitbox().getCornerUpRight().tileCoord().getY()][entity.getHitbox().getCornerUpRight().tileCoord().getX()] != 0);
         entity.setWallCollision(2, map.getMapMatrice()[entity.getHitbox().getCornerDownLeft().tileCoord().getY()][entity.getHitbox().getCornerDownLeft().tileCoord().getX()] != 0);
         entity.setWallCollision(3, map.getMapMatrice()[entity.getHitbox().getCornerDownRight().tileCoord().getY()][entity.getHitbox().getCornerDownRight().tileCoord().getX()] != 0);
+        if(entity.getWallCollision()[0] || entity.getWallCollision()[1] || entity.getWallCollision()[2] || entity.getWallCollision()[3]){
+            collide = true;
+        }
+        return collide;
     }
     public void cancelWallCollision(Entity entity){
-        collideDirection(entity);
+        if(!wallCollision(entity)){
+            return;
+        };
         //int[0] = up and down, int[1] = left and right
         int[] direction = new int[]{0,0};
         if(entity.getWallCollision()[0]) {
@@ -120,7 +120,7 @@ public class Game {
 
             entity.getCoord().addXY(direction[1], direction[0]);
             entity.getHitbox().updateHitbox();
-            collideDirection(entity);
+            wallCollision(entity);
         }
     }
 
@@ -130,22 +130,38 @@ public class Game {
         for(int i=0; i<entity.getWeapon().getBullets().size();i++){
             Bullet bullet = entity.getWeapon().getBullets().get(i);
             if(bullet.status==STATIC){
+
                 entity.getWeapon().getBullets().remove(bullet);
             }
             else {
+
                 bullet.updateStatus();
                 bullet.updatePos();
+                if(wallCollision(bullet)){
+                    bullet.status=STATIC;
+                }
                 bullet.getHitbox().updateHitbox();
             }
+        }
+    }
+
+    public void updateEnemies(){
+        for(int i =0;i<level1.getIngameEnnemyList().size();i++){
+            level1.getIngameEnnemyList().get(i).updatePos();
+            cancelWallCollision(level1.getIngameEnnemyList().get(i));
         }
     }
 
 
 
 
+
     void updateAll(){
-        level1.update();
+
         playerUpdate();
+        level1.update();
+        updateEnemies();
+
 
         updateBullets(player);
     }

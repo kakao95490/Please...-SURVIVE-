@@ -26,6 +26,8 @@ public class Bullet extends InertEntity {
         this.speed = (int) (speed*SCALE);
         this.status = WALKING;
         this.size= (int) (15*SCALE);
+        this.hitbox.setHitboxSize(size);
+        this.hitbox.setHitboxOffset(0,0);
         this.hitbox.updateHitbox();
         this.sprite = new Image(Objects.requireNonNull(getClass().getResource("/Objects/BulletSprite.png")).toExternalForm());
     }

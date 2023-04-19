@@ -1,10 +1,14 @@
 package Weapons;
 
 import Entities.Inert.Bullet;
-import Entities.Entity;
 import Entities.Living.LivingEntity;
+import utils.Coord;
 
 import java.util.ArrayList;
+
+/**
+ * Classe abstraite qui représente une arme
+ */
 
 public abstract class Weapon {
     protected int damage;
@@ -12,8 +16,8 @@ public abstract class Weapon {
     public int bulletSize;
     protected int cooldown;
     protected int currentCooldown;
+    protected LivingEntity owner;
     protected ArrayList<Bullet> bullets = new ArrayList<>();
-
 
 
 
@@ -33,13 +37,6 @@ public abstract class Weapon {
         return currentCooldown;
     }
 
-    public void setCurrentCooldown(int currentCooldown) {
-        this.currentCooldown = currentCooldown;
-    }
-
-    public void updateCoolDown() {
-        this.currentCooldown--;
-    }
 
 
     public ArrayList<Bullet> getBullets() {
@@ -57,6 +54,15 @@ public abstract class Weapon {
             currentCooldown=cooldown;
         }
     }
+
+    public void shoot(Coord ownerCoord, int XlookingDirection, int YlookingDirection){
+        if(cooldown==currentCooldown){
+            bullets.add(new Bullet(ownerCoord, XlookingDirection, YlookingDirection, range, 5,bulletSize));
+            currentCooldown--;
+        }
+    }
+
+
 
 
 }
