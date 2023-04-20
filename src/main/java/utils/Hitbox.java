@@ -1,7 +1,5 @@
 package utils;
 
-import static utils.Constants.MapConstants.TILE_SIZE;
-
 public class Hitbox{
     private final Coord entityCoord;
     private Coord cornerUpLeft;
@@ -59,6 +57,23 @@ public class Hitbox{
     public boolean isCollidingFromRight(Hitbox hitbox) {
         return (this.isColliding(hitbox.getCornerUpRight()) || this.isColliding(hitbox.getCornerDownRight()));
     }
+
+    public boolean isCollidingFromTopLeft(Hitbox hitbox) {
+        return this.isColliding(hitbox.getCornerUpLeft());
+    }
+
+    public boolean isCollidingFromTopRight(Hitbox hitbox) {
+        return this.isColliding(hitbox.getCornerUpRight());
+    }
+
+    public boolean isCollidingFromBottomLeft(Hitbox hitbox) {
+        return this.isColliding(hitbox.getCornerDownLeft());
+    }
+
+    public boolean isCollidingFromBottomRight(Hitbox hitbox) {
+        return this.isColliding(hitbox.getCornerDownRight());
+    }
+
 
     public void setHitboxSize(int size){
         this.size = size;

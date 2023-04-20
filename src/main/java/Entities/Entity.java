@@ -10,6 +10,7 @@ import utils.Hitbox;
 
 public abstract class Entity {
     protected Coord coord;
+    protected Coord prevCoord;
     protected Coord destCoord;
     public static Coord playerCoord;
     protected Coord spawnPoint;
@@ -21,7 +22,7 @@ public abstract class Entity {
     protected int Ydirection=-1;
 
 
-    Boolean[] wallCollision = {false, false, false, false};
+    protected Boolean[] wallCollision = {false, false, false, false};
 
     public int size;
     public int status;
@@ -31,12 +32,16 @@ public abstract class Entity {
 
     public Entity() {
         this.coord = new Coord(0,0);
+        this.prevCoord = new Coord(0,0);
         this.spawnPoint = new Coord(0,0);
         this.destCoord = new Coord(0,0);
         this.movement = new Coord(0,0);
         this.hitbox = new Hitbox(coord,0,0,0);
-
     }
+
+
+
+    public abstract void cancelCollision();
 
 
 
@@ -44,19 +49,16 @@ public abstract class Entity {
 
 
     public void updateDirection(){
-        Xdirection=-1;
-        Ydirection=-1;
-        if(movement.getY()>0){
-            Ydirection=DOWN;
-        } else if (movement.getY()<0){
-            Ydirection=UP;
-        }
-        if(movement.getX()>0){
+        if(prevCoord.getX()<coord.getX()){
             Xdirection=RIGHT;
-        } else if (movement.getX()<0){
+        } else if (prevCoord.getX()>coord.getX()){
             Xdirection=LEFT;
         }
-
+        if(prevCoord.getY()<coord.getY()){
+            Ydirection=DOWN;
+        } else if (prevCoord.getY()>coord.getY()){
+            Ydirection=UP;
+        }
     }
 
     /**
@@ -74,16 +76,6 @@ public abstract class Entity {
         double py =  Math.sin(angle);
         double x = px*speed;
         double y = py*speed;
-        if(x>0){
-            Xdirection=RIGHT;
-        } else if (x<0){
-            Xdirection=LEFT;
-        }
-        if(y>0){
-            Ydirection=DOWN;
-        } else if (y<0){
-            Ydirection=UP;
-        }
         movement.setXY((int)x,(int)y);
     }
 
@@ -99,19 +91,34 @@ public abstract class Entity {
     }
 
     public void cancelEntityCollision(Entity entity){
-        if(getEntityCollisionDirection(entity)==LEFT){
-            while(hitbox.isCollidingFromLeft(entity.getHitbox())){
-                coord.addXY(-1,0);
+        prevCoord.setXY(coord.getX(),coord.getY());
+        if(hitbox.isCollidingFromTopLeft(entity.getHitbox())){
+            while(hitbox.isCollidingFromTopLeft(entity.getHitbox())){
+                coord.addXY(-1,-1);
                 hitbox.updateHitbox();
             }
         }
-        if(getEntityCollisionDirection(entity)==RIGHT){
-            while(hitbox.isCollidingFromRight(entity.getHitbox())){
-                coord.addXY(1,0);
+        if(hitbox.isCollidingFromTopRight(entity.getHitbox())){
+            while(hitbox.isCollidingFromTopRight(entity.getHitbox())){
+                coord.addXY(1,-1);
+                hitbox.updateHitbox();
+            }
+        }
+        if(hitbox.isCollidingFromBottomLeft(entity.getHitbox())){
+            while(hitbox.isCollidingFromBottomLeft(entity.getHitbox())){
+                coord.addXY(-1,1);
+                hitbox.updateHitbox();
+            }
+        }
+        if(hitbox.isCollidingFromBottomRight(entity.getHitbox())){
+            while(hitbox.isCollidingFromBottomRight(entity.getHitbox())){
+                coord.addXY(1,1);
                 hitbox.updateHitbox();
             }
         }
     }
+
+
 
 
 

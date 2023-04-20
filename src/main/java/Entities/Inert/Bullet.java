@@ -65,5 +65,7 @@ public class Bullet extends InertEntity {
     }
 
 
-
+    @Override
+    public void cancelCollision() {
+    }
 }

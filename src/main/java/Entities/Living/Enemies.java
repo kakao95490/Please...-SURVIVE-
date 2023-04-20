@@ -27,6 +27,7 @@ public abstract class Enemies extends LivingEntity{
     }
 
     public void updatePos(AStar aStar) {
+        prevCoord.setXY(coord.getX(), coord.getY());
         //find the nearest path 4 times per second
         if (updatePathIndex == 0) {
             updatePathIndex = updatePathTick;
@@ -51,9 +52,38 @@ public abstract class Enemies extends LivingEntity{
             else {
                 destCoord = playerCoord.centeredCoord();
                 directionCalcul();
+
                 coord.addXY(movement.getX(), movement.getY());
             }
+            updateDirection();
         }
+    }
+
+    @Override
+    public void cancelCollision() {
+
+        updateDirection();
+        int[] cancelCollision = {0, 0};
+        if(wallCollision[0]){
+            cancelCollision[0]+=1;
+            cancelCollision[1]+=1;
+        }
+        if(wallCollision[1]){
+            cancelCollision[0]-=1;
+            cancelCollision[1]+=1;
+        }
+        if(wallCollision[3]){
+            cancelCollision[0]-=1;
+            cancelCollision[1]-=1;
+        }
+        if(wallCollision[2]){
+            cancelCollision[0]+=1;
+            cancelCollision[1]-=1;
+        }
+
+        coord.addXY(cancelCollision[0],cancelCollision[1]);
+
+
     }
 
     /**

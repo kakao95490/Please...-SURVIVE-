@@ -9,6 +9,8 @@ import utils.Coord;
 
 import java.util.Objects;
 
+import static utils.Constants.Directions.*;
+import static utils.Constants.Directions.DOWN;
 import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.PlayerConstants.HIT;
 import static utils.Constants.WindowConstants.FPS_TARGET;
@@ -62,6 +64,8 @@ public abstract class LivingEntity extends Entity {
             animationLib[HIT][j]=new Image(Objects.requireNonNull(getClass().getResource("/Sprites/" + this.entityName + "Hit" + j + ".png")).toExternalForm());
         }
     }
+
+
 
     public Weapon getWeapon() {
         return weapon;

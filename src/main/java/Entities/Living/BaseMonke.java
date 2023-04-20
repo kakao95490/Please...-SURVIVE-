@@ -9,6 +9,7 @@ import static utils.Constants.WindowConstants.SCALE;
 public class BaseMonke extends Enemies {
     public BaseMonke(int x, int y) {
         this.coord.setXY(x*TILE_SIZE, y*TILE_SIZE);
+        this.prevCoord.setXY(coord.getX(),coord.getY());
         this.entityName = "BaseMonke";
         this.speed = (int) (2*SCALE);
         this.size = TILE_SIZE;
@@ -20,6 +21,5 @@ public class BaseMonke extends Enemies {
         System.out.println("basemonke spawn");
         System.out.println(coord.tileCoord());
     }
-
 
 }

@@ -21,6 +21,7 @@ public class Player extends LivingEntity {
         generateAnimationLib(); //generate the animation library
         this.status=STATIC; //set the player status
         this.coord.setXY(11*TILE_SIZE, 8*TILE_SIZE);//set the player coord spawn
+        this.prevCoord.setXY(coord.getX(),coord.getY());
         playerCoord = coord;
         this.hitbox.setHitboxSize(size/2);
         this.hitbox.setHitboxOffset(size/4,size/2);
@@ -30,11 +31,55 @@ public class Player extends LivingEntity {
         this.shootKeyPressed = new boolean[4];
     }
 
+    @Override
+    public void cancelCollision() {
+
+        updateDirection();
+        int[] cancelCollision = {0, 0};
+        if(wallCollision[0]){
+            if(Xdirection==LEFT){
+                cancelCollision[0]+=1;
+            }
+            if(Ydirection==UP){
+                cancelCollision[1]+=1;
+            }
+        }
+        if(wallCollision[1]){
+            if(Xdirection==RIGHT){
+                cancelCollision[0]-=1;
+            }
+            if(Ydirection==UP){
+                cancelCollision[1]+=1;
+            }
+        }
+        if(wallCollision[3]){
+            if(Xdirection==RIGHT){
+                cancelCollision[0]-=1;
+            }
+            if(Ydirection==DOWN){
+                cancelCollision[1]-=1;
+            }
+        }
+        if(wallCollision[2]){
+            if(Xdirection==LEFT){
+                cancelCollision[0]+=1;
+            }
+            if(Ydirection==DOWN){
+                cancelCollision[1]-=1;
+            }
+        }
+        coord.addXY(cancelCollision[0],cancelCollision[1]);
+
+
+    }
+
+
 
 
 
     public void updatePos(){
         movement.setXY(0,0);
+        prevCoord.setXY(coord.getX(),coord.getY());
         if(directionDiagonal()){
             if (movementKeyPressed[UP] && movementKeyPressed[RIGHT]) {
                 movement.addXY((int) (speed * 0.71), (int) (-speed * 0.71));
@@ -64,8 +109,15 @@ public class Player extends LivingEntity {
             }
         }
         coord.addXY(movement.getX(),movement.getY());
+
         hitbox.updateHitbox();
     }
+
+
+
+
+
+
 
     public void updateShootingDirection(){
         XlookingDirection=-1;
