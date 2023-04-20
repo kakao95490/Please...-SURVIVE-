@@ -134,28 +134,6 @@ public class AStar {
         return matriceInverse;
     }
 
-    public static void main(String[] args) {
-        int[][] matrice = {
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                {0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-                {0, 1, 0, 1, 1, 1, 1, 0, 1, 0},
-                {0, 1, 0, 1, 0, 0, 1, 0, 1, 0},
-                {0, 1, 0, 1, 0, 0, 1, 0, 1, 0},
-                {0, 1, 0, 1, 0, 0, 1, 0, 1, 0},
-                {0, 1, 0, 1, 0, 0, 1, 0, 1, 0},
-                {0, 1, 0, 1, 0, 0, 1, 0, 1, 0},
-                {0, 1, 0, 1, 1, 1, 1, 0, 1, 0},
-                {0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-                {0, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        };
 
-        AStar aStar = new AStar(matrice);
-        List<Coord> path = aStar.findPath(new Coord(0, 0), new Coord(12, 8));
-        for(Coord coord : path) {
-            System.out.println(coord);
-        }
-    }
 
 }

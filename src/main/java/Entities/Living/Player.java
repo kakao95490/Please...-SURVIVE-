@@ -36,7 +36,7 @@ public class Player extends LivingEntity {
 
         updateDirection();
         int[] cancelCollision = {0, 0};
-        if(wallCollision[0]){
+        if(collisions[0]){
             if(Xdirection==LEFT){
                 cancelCollision[0]+=1;
             }
@@ -44,7 +44,7 @@ public class Player extends LivingEntity {
                 cancelCollision[1]+=1;
             }
         }
-        if(wallCollision[1]){
+        if(collisions[1]){
             if(Xdirection==RIGHT){
                 cancelCollision[0]-=1;
             }
@@ -52,7 +52,7 @@ public class Player extends LivingEntity {
                 cancelCollision[1]+=1;
             }
         }
-        if(wallCollision[3]){
+        if(collisions[3]){
             if(Xdirection==RIGHT){
                 cancelCollision[0]-=1;
             }
@@ -60,7 +60,7 @@ public class Player extends LivingEntity {
                 cancelCollision[1]-=1;
             }
         }
-        if(wallCollision[2]){
+        if(collisions[2]){
             if(Xdirection==LEFT){
                 cancelCollision[0]+=1;
             }
@@ -69,6 +69,7 @@ public class Player extends LivingEntity {
             }
         }
         coord.addXY(cancelCollision[0],cancelCollision[1]);
+        hitbox.updateHitbox();
 
 
     }

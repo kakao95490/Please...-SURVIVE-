@@ -22,7 +22,7 @@ public abstract class Entity {
     protected int Ydirection=-1;
 
 
-    protected Boolean[] wallCollision = {false, false, false, false};
+    protected Boolean[] collisions = {false, false, false, false};
 
     public int size;
     public int status;
@@ -79,43 +79,22 @@ public abstract class Entity {
         movement.setXY((int)x,(int)y);
     }
 
-    public int getEntityCollisionDirection(Entity entity) {
-        if (hitbox.isCollidingFromLeft(entity.getHitbox())) {
-            return LEFT;
 
-        }
-        if (hitbox.isCollidingFromRight(entity.getHitbox())) {
-            return RIGHT;
-        }
-        return -1;
-    }
 
-    public void cancelEntityCollision(Entity entity){
-        prevCoord.setXY(coord.getX(),coord.getY());
-        if(hitbox.isCollidingFromTopLeft(entity.getHitbox())){
-            while(hitbox.isCollidingFromTopLeft(entity.getHitbox())){
-                coord.addXY(-1,-1);
-                hitbox.updateHitbox();
-            }
+    public void detectEntityCollision(Entity entity){
+        if(entity.getHitbox().isCollidingFromTopLeft(this.getHitbox())){
+            collisions[0]=true;
         }
-        if(hitbox.isCollidingFromTopRight(entity.getHitbox())){
-            while(hitbox.isCollidingFromTopRight(entity.getHitbox())){
-                coord.addXY(1,-1);
-                hitbox.updateHitbox();
-            }
+        if(entity.getHitbox().isCollidingFromTopRight(this.getHitbox())){
+            collisions[1]=true;
         }
-        if(hitbox.isCollidingFromBottomLeft(entity.getHitbox())){
-            while(hitbox.isCollidingFromBottomLeft(entity.getHitbox())){
-                coord.addXY(-1,1);
-                hitbox.updateHitbox();
-            }
+        if(entity.getHitbox().isCollidingFromBottomLeft(this.getHitbox())){
+            collisions[2]=true;
         }
-        if(hitbox.isCollidingFromBottomRight(entity.getHitbox())){
-            while(hitbox.isCollidingFromBottomRight(entity.getHitbox())){
-                coord.addXY(1,1);
-                hitbox.updateHitbox();
-            }
+        if(entity.getHitbox().isCollidingFromBottomRight(this.getHitbox())){
+            collisions[3]=true;
         }
+
     }
 
 
@@ -136,17 +115,17 @@ public abstract class Entity {
     }
 
 
-    public Boolean[] getWallCollision() {
-        return wallCollision;
+    public Boolean[] getCollisions() {
+        return collisions;
     }
 
-    public void setWallCollision(int i,Boolean b) {
-        this.wallCollision[i] = b;
+    public void setCollision(int i,Boolean b) {
+        this.collisions[i] = b;
     }
 
-    public void resetWallCollision(){
+    public void resetCollisions(){
         for(int i=0;i<4;i++){
-            wallCollision[i]=false;
+            collisions[i]=false;
         }
     }
 

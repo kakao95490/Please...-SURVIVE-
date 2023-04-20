@@ -13,8 +13,8 @@ public class BaseMonke extends Enemies {
         this.entityName = "BaseMonke";
         this.speed = (int) (2*SCALE);
         this.size = TILE_SIZE;
-        this.hitbox.setHitboxSize(size/2);
-        this.hitbox.setHitboxOffset(size/4,size/2);
+        this.hitbox.setHitboxSize(size/4);
+        this.hitbox.setHitboxOffset(size/4,size-size/4);
         this.hitbox.updateHitbox();
         this.status = WALKING;
         generateAnimationLib(); //generate the animation library

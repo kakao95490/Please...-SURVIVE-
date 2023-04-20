@@ -55,35 +55,45 @@ public abstract class Enemies extends LivingEntity{
 
                 coord.addXY(movement.getX(), movement.getY());
             }
+            hitbox.updateHitbox();
             updateDirection();
         }
     }
 
     @Override
     public void cancelCollision() {
-
-        updateDirection();
         int[] cancelCollision = {0, 0};
-        if(wallCollision[0]){
+
+        if(collisions[0]){
             cancelCollision[0]+=1;
             cancelCollision[1]+=1;
         }
-        if(wallCollision[1]){
+        if(collisions[1]){
             cancelCollision[0]-=1;
             cancelCollision[1]+=1;
         }
-        if(wallCollision[3]){
+        if(collisions[3]){
             cancelCollision[0]-=1;
             cancelCollision[1]-=1;
         }
-        if(wallCollision[2]){
+        if(collisions[2]){
             cancelCollision[0]+=1;
             cancelCollision[1]-=1;
         }
 
-        coord.addXY(cancelCollision[0],cancelCollision[1]);
-
-
+        if(cancelCollision[0]>0){
+            coord.addXY(1,0);
+        }
+        if(cancelCollision[0]<0){
+            coord.addXY(-1,0);
+        }
+        if(cancelCollision[1]>0){
+            coord.addXY(0,1);
+        }
+        if(cancelCollision[1]<0){
+            coord.addXY(0,-1);
+        }
+        hitbox.updateHitbox();
     }
 
     /**

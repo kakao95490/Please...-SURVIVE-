@@ -1,5 +1,6 @@
 package Game;
 
+import Entities.Living.Enemies;
 import Entities.Living.LivingEntity;
 import Entities.Inert.Bullet;
 import Map.Map;
@@ -46,7 +47,7 @@ public class Game {
 
         this.camera= new Camera(this);
         this.keyboardInput = new KeyboardInput(this);
-        this.level1 = new Level(new int[]{BASE_MONKE,BASE_MONKE,BASE_MONKE,BASE_MONKE,BASE_MONKE,BASE_MONKE,BASE_MONKE,},map.getSpwanCoords());
+        this.level1 = new Level(new int[]{BASE_MONKE,BASE_MONKE,BASE_MONKE,BASE_MONKE,BASE_MONKE,BASE_MONKE,BASE_MONKE,BASE_MONKE,},map.getSpwanCoords());
         this.aStar = new AStar(map.getMapMatrice());
 
 
@@ -56,35 +57,16 @@ public class Game {
 
     }
 
-    public void playerUpdate(){
-        player.updateAnimationIndex();
-        player.updatePos();
-        wallCollision(player);
-        player.updateStatus();
-        player.updateShootingDirection();
-    }
 
-    public boolean wallCollision(Entity entity){
+    public boolean detectWallCollision(Entity entity){
 
-        boolean collide = true;
-        while(collide){
-            collide = false;
             entity.getHitbox().updateHitbox();
-            entity.resetWallCollision();
-            entity.setWallCollision(0, map.getMapMatrice()[entity.getHitbox().getCornerUpLeft().tileCoord().getY()][entity.getHitbox().getCornerUpLeft().tileCoord().getX()] != 0);
-            entity.setWallCollision(1, map.getMapMatrice()[entity.getHitbox().getCornerUpRight().tileCoord().getY()][entity.getHitbox().getCornerUpRight().tileCoord().getX()] != 0);
-            entity.setWallCollision(2, map.getMapMatrice()[entity.getHitbox().getCornerDownLeft().tileCoord().getY()][entity.getHitbox().getCornerDownLeft().tileCoord().getX()] != 0);
-            entity.setWallCollision(3, map.getMapMatrice()[entity.getHitbox().getCornerDownRight().tileCoord().getY()][entity.getHitbox().getCornerDownRight().tileCoord().getX()] != 0);
-            if(entity.getWallCollision()[0] && entity.getWallCollision()[1] && entity.getWallCollision()[2] && entity.getWallCollision()[3]){
-                return true;
-            }
-            if(entity.getWallCollision()[0] || entity.getWallCollision()[1] || entity.getWallCollision()[2] || entity.getWallCollision()[3]){
-                collide = true;
-                entity.cancelCollision();
-            }
-        }
-
-        return collide;
+            entity.resetCollisions();
+            entity.setCollision(0, map.getMapMatrice()[entity.getHitbox().getCornerUpLeft().tileCoord().getY()][entity.getHitbox().getCornerUpLeft().tileCoord().getX()] != 0);
+            entity.setCollision(1, map.getMapMatrice()[entity.getHitbox().getCornerUpRight().tileCoord().getY()][entity.getHitbox().getCornerUpRight().tileCoord().getX()] != 0);
+            entity.setCollision(2, map.getMapMatrice()[entity.getHitbox().getCornerDownLeft().tileCoord().getY()][entity.getHitbox().getCornerDownLeft().tileCoord().getX()] != 0);
+            entity.setCollision(3, map.getMapMatrice()[entity.getHitbox().getCornerDownRight().tileCoord().getY()][entity.getHitbox().getCornerDownRight().tileCoord().getX()] != 0);
+            return entity.getCollisions()[0] || entity.getCollisions()[1] || entity.getCollisions()[2] || entity.getCollisions()[3];
     }
 
 
@@ -101,7 +83,7 @@ public class Game {
 
                 bullet.updateStatus();
                 bullet.updatePos();
-                if(wallCollision(bullet)){
+                if(detectWallCollision(bullet)){
                     bullet.status=STATIC;
                 }
                 bullet.getHitbox().updateHitbox();
@@ -109,17 +91,63 @@ public class Game {
         }
     }
 
+    public void playerUpdate(){
+        player.updateAnimationIndex();
+        player.updatePos();
+        while(detectWallCollision(player)){
+            player.cancelCollision();
+        }
+        player.updateStatus();
+        player.updateShootingDirection();
+    }
+
+
     public void updateEnemies(){
+        Enemies currentEnemy;
         for(int i =0;i<level1.getIngameEnnemyList().size();i++){
-            for(int j =0;j<level1.getIngameEnnemyList().size();j++){
-                if(i!=j){
-                    level1.getIngameEnnemyList().get(i).cancelEntityCollision(level1.getIngameEnnemyList().get(j));
+            currentEnemy = level1.getIngameEnnemyList().get(i);
+
+            currentEnemy.updatePos(aStar);
+
+            detectWallCollision(currentEnemy);
+
+            int compteur=0;
+            while((currentEnemy.getCollisions()[0] || currentEnemy.getCollisions()[1] || currentEnemy.getCollisions()[2] || currentEnemy.getCollisions()[3])){
+                if((currentEnemy.getCollisions()[0]&&currentEnemy.getCollisions()[1]&&currentEnemy.getCollisions()[2]&&currentEnemy.getCollisions()[3])||(currentEnemy.getCollisions()[0]&&currentEnemy.getCollisions()[3]) || (currentEnemy.getCollisions()[1]&&currentEnemy.getCollisions()[2])){
+                    break;
                 }
+                detectWallCollision(currentEnemy);
+                currentEnemy.cancelCollision();
+            }
+            currentEnemy.resetCollisions();
+            currentEnemy.detectEntityCollision(player);
+            while((currentEnemy.getCollisions()[0] || currentEnemy.getCollisions()[1] || currentEnemy.getCollisions()[2] || currentEnemy.getCollisions()[3])){
+                if((currentEnemy.getCollisions()[0]&&currentEnemy.getCollisions()[1]&&currentEnemy.getCollisions()[2]&&currentEnemy.getCollisions()[3])||(currentEnemy.getCollisions()[0]&&currentEnemy.getCollisions()[3]) || (currentEnemy.getCollisions()[1]&&currentEnemy.getCollisions()[2])){
+                    break;
+                }
+                currentEnemy.resetCollisions();
+                currentEnemy.detectEntityCollision(player);
+                currentEnemy.cancelCollision();
             }
 
-            level1.getIngameEnnemyList().get(i).cancelEntityCollision(player);
-            wallCollision(level1.getIngameEnnemyList().get(i));
-            level1.getIngameEnnemyList().get(i).updatePos(aStar);
+            for(int j=0;j<level1.getIngameEnnemyList().size();j++){
+                if(i==j){
+                    continue;
+                }
+                Entity tempEnemy = level1.getIngameEnnemyList().get(j);
+
+                currentEnemy.resetCollisions();
+                currentEnemy.detectEntityCollision(tempEnemy);
+                while((currentEnemy.getCollisions()[0] || currentEnemy.getCollisions()[1] || currentEnemy.getCollisions()[2] || currentEnemy.getCollisions()[3])){
+                    if((currentEnemy.getCollisions()[0]&&currentEnemy.getCollisions()[1]&&currentEnemy.getCollisions()[2]&&currentEnemy.getCollisions()[3])||(currentEnemy.getCollisions()[0]&&currentEnemy.getCollisions()[3]) || (currentEnemy.getCollisions()[1]&&currentEnemy.getCollisions()[2])){
+                        break;
+                    }
+                    currentEnemy.resetCollisions();
+                    currentEnemy.detectEntityCollision(tempEnemy);
+                    currentEnemy.cancelCollision();
+                }
+
+            }
 
 
 

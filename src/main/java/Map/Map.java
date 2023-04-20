@@ -101,14 +101,6 @@ public class Map {
         return spwanCoords;
     }
 
-    public static void main(String[] args) throws URISyntaxException, IOException {
-        Map map = new Map();
-        AStar astar = new AStar(map.getMapMatrice());
-        List<Coord> pathList = astar.findPath(new Coord(6,1), new Coord(8,11));
-        for(Coord coord : pathList) {
-            System.out.println(coord);
-        }
-    }
 
 
 
