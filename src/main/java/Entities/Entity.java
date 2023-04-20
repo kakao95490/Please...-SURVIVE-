@@ -59,35 +59,14 @@ public abstract class Entity {
 
     }
 
+    /**
+     * This method is used to calculate the angle between the entity and the distination
+     * and then calculate the x and y movement based on the angle and the speed
+     *
+     */
     public void directionCalcul(){
         Xdirection=-1;
         Ydirection=-1;
-        if(coord.centeredCoord().getX()==destCoord.getX() && coord.centeredCoord().getY()==destCoord.getY()){
-            return;
-        }
-        if(destCoord.getX()==0 && destCoord.getY()==0){
-            return;
-        }
-        if(destCoord.getX() == 0){
-            if(destCoord.getY()>0){
-                Ydirection=DOWN;
-                movement.setXY(0,speed);
-            } else if (destCoord.getY()<0){
-                Ydirection=UP;
-                movement.setXY(0,-speed);
-            }
-            return;
-        }
-        if(destCoord.getY() == 0){
-            if(destCoord.getX()>0){
-                Xdirection=RIGHT;
-                movement.setXY(speed,0);
-            } else if (destCoord.getX()<0){
-                Xdirection=LEFT;
-                movement.setXY(-speed,0);
-            }
-            return;
-        }
         int xdif = destCoord.getX()-coord.centeredCoord().getX();
         int ydif = destCoord.getY()-coord.centeredCoord().getY();
         double angle = Math.atan2(ydif,xdif);
@@ -107,6 +86,33 @@ public abstract class Entity {
         }
         movement.setXY((int)x,(int)y);
     }
+
+    public int getEntityCollisionDirection(Entity entity) {
+        if (hitbox.isCollidingFromLeft(entity.getHitbox())) {
+            return LEFT;
+
+        }
+        if (hitbox.isCollidingFromRight(entity.getHitbox())) {
+            return RIGHT;
+        }
+        return -1;
+    }
+
+    public void cancelEntityCollision(Entity entity){
+        if(getEntityCollisionDirection(entity)==LEFT){
+            while(hitbox.isCollidingFromLeft(entity.getHitbox())){
+                coord.addXY(-1,0);
+                hitbox.updateHitbox();
+            }
+        }
+        if(getEntityCollisionDirection(entity)==RIGHT){
+            while(hitbox.isCollidingFromRight(entity.getHitbox())){
+                coord.addXY(1,0);
+                hitbox.updateHitbox();
+            }
+        }
+    }
+
 
 
 

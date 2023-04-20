@@ -33,20 +33,20 @@ public class Player extends LivingEntity {
 
 
 
-    /*public void updatePos(){
+    public void updatePos(){
         movement.setXY(0,0);
         if(directionDiagonal()){
             if (movementKeyPressed[UP] && movementKeyPressed[RIGHT]) {
-                movement.addXY((int) (speed * 0.80), (int) (-speed * 0.80));
+                movement.addXY((int) (speed * 0.71), (int) (-speed * 0.71));
             }
             if (movementKeyPressed[DOWN] && movementKeyPressed[RIGHT]) {
-                movement.addXY((int) (speed * 0.80), (int) (speed * 0.80));
+                movement.addXY((int) (speed * 0.71), (int) (speed * 0.71));
             }
             if (movementKeyPressed[UP] && movementKeyPressed[LEFT]) {
-                movement.addXY((int) (-speed * 0.80), (int) (-speed * 0.80));
+                movement.addXY((int) (-speed * 0.71), (int) (-speed * 0.71));
             }
             if (movementKeyPressed[DOWN] && movementKeyPressed[LEFT]) {
-                movement.addXY((int) (-speed * 0.80), (int) (speed * 0.80));
+                movement.addXY((int) (-speed * 0.71), (int) (speed * 0.71));
             }
         }
         else {
@@ -63,28 +63,6 @@ public class Player extends LivingEntity {
                 movement.addXY(speed, 0);
             }
         }
-        coord.addXY(movement.getX(),movement.getY());
-        hitbox.updateHitbox();
-    }*/
-
-    public void updatePos(){
-        destCoord.setXY(0,0);
-        movement.setXY(0,0);
-        this.destCoord.setXY(0,0);
-        if(movementKeyPressed[UP]){
-            destCoord.addXY(0,-5000);
-        }
-        if(movementKeyPressed[DOWN]){
-            destCoord.addXY(0,5000);
-        }
-        if(movementKeyPressed[LEFT]){
-            destCoord.addXY(-5000,0);
-        }
-        if(movementKeyPressed[RIGHT]){
-            destCoord.addXY(5000,0);
-        }
-        directionCalcul();
-
         coord.addXY(movement.getX(),movement.getY());
         hitbox.updateHitbox();
     }

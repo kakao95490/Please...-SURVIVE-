@@ -24,13 +24,10 @@ public abstract class Enemies extends LivingEntity{
 
     public void updatePath(AStar aStar){
         setPath(aStar.findPath(coord.centeredCoord().tileCoord().invertedCoord(),playerCoord.centeredCoord().tileCoord().invertedCoord()));
-        for (Coord value : path) {
-            System.out.println(value);
-        }
     }
 
-
     public void updatePos(AStar aStar) {
+        //find the nearest path 4 times per second
         if (updatePathIndex == 0) {
             updatePathIndex = updatePathTick;
             updatePath(aStar);
@@ -38,29 +35,19 @@ public abstract class Enemies extends LivingEntity{
             updatePathIndex--;
         }
         if(path != null) {
-
-            if( path.size()>3 ){
+            //if the player is too far, the enemy will follow the astar path
+            if (path.size() > 2 && !isNearPlayer()) {
                 Coord nextTile = path.get(0);
+                if (coord.centeredCoord().tileCoord().equals(path.get(0))) {
+                    path.remove(0);
+                    nextTile= path.get(0);
+                }
                 destCoord = nextTile.pixelCoord().centeredCoord();
                 directionCalcul();
                 coord.addXY(movement.getX(), movement.getY());
-                if (coord.centeredCoord().tileCoord() == nextTile) {
-                    path.remove(0);
-                }
 
             }
-
-            else if (path.size() > 2 && !isNearPlayer()) {
-                Coord nextTile = path.get(2);
-                destCoord = nextTile.pixelCoord().centeredCoord();
-                directionCalcul();
-                coord.addXY(movement.getX(), movement.getY());
-                if (coord.centeredCoord().tileCoord() == nextTile) {
-                    path.remove(0);
-                    path.remove(1);
-                    path.remove(2);
-                }
-            }
+            //if the player is near, the enemy will directly the player
             else {
                 destCoord = playerCoord.centeredCoord();
                 directionCalcul();
@@ -69,6 +56,10 @@ public abstract class Enemies extends LivingEntity{
         }
     }
 
+    /**
+     * Check if the player is near the enemy
+     * Used to change the direction of the enemy
+     */
     public boolean isNearPlayer(){
         for(int i=playerCoord.tileCoord().getX()-2;i<=playerCoord.tileCoord().getX()+2;i++){
             for(int j=playerCoord.tileCoord().getY()-2;j<=playerCoord.tileCoord().getY()+2;j++){
