@@ -4,13 +4,7 @@ import Entities.Entity;
 import Entities.Inert.Bullet;
 import Weapons.Weapon;
 import javafx.scene.image.Image;
-import utils.AStar;
-import utils.Coord;
 
-import java.util.Objects;
-
-import static utils.Constants.Directions.*;
-import static utils.Constants.Directions.DOWN;
 import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.PlayerConstants.HIT;
 import static utils.Constants.WindowConstants.FPS_TARGET;
@@ -18,19 +12,20 @@ import static utils.Constants.WindowConstants.FPS_TARGET;
 public abstract class LivingEntity extends Entity {
     protected Weapon weapon;
 
+    protected int HP;
+    protected int maxHP;
+    public double dmgMultiplier;
+    public boolean isAlive= true;
+    public boolean isInvincible = false;
+    protected int animationSpeedFPS = 18;
+    protected int animationspd = FPS_TARGET/ animationSpeedFPS;
 
-    public int XlookingDirection=-1;
-    public int YlookingDirection=-1;
-    public int getXLookingDirection() {
-        return XlookingDirection;
-    }
-    public int getYLookingDirection() {
-        return YlookingDirection;
-    }
+
 
     protected int animationTick = 0;
     public int animationIndex;
-    public Image[][] animationLib;
+    protected int animationHitIndex=0;
+    public Image spriteSheet;
 
     public LivingEntity() {
         super();
@@ -38,8 +33,8 @@ public abstract class LivingEntity extends Entity {
 
     public void updateAnimationIndex(){
         animationTick++;
-        int animationSpeedFPS = 16;
-        int animationspd= FPS_TARGET/ animationSpeedFPS;
+
+
         if(animationTick>=animationspd){
             animationTick=0;
             animationIndex++;
@@ -49,20 +44,73 @@ public abstract class LivingEntity extends Entity {
         }
     }
 
-    public void generateAnimationLib() {
-        animationLib=new Image[3][]; //3 status
-        animationLib[STATIC] = new Image[getSpriteAmount(STATIC)];
-        animationLib[WALKING] = new Image[getSpriteAmount(WALKING)];
-        animationLib[HIT] = new Image[getSpriteAmount(HIT)];
-
-        animationLib[STATIC][0] = new Image(Objects.requireNonNull(getClass().getResource("/Sprites/" + this.entityName + "Walk0.png")).toExternalForm());
-
-        for(int i=0; i<getSpriteAmount(WALKING);i++){
-            animationLib[WALKING][i]=new Image(Objects.requireNonNull(getClass().getResource("/Sprites/" + this.entityName + "Walk" + i + ".png")).toExternalForm());
+    public void updateStatus() {
+        if(status == DEAD){
+            if(animationIndex+1>=getSpriteAmount(DEAD)&& animationTick+1>=animationspd){
+                isAlive=false;
+            }
         }
-        for(int j=0; j<getSpriteAmount(HIT);j++){
-            animationLib[HIT][j]=new Image(Objects.requireNonNull(getClass().getResource("/Sprites/" + this.entityName + "Hit" + j + ".png")).toExternalForm());
+        else if(status == HIT) {
+            if (animationIndex+1 >= getSpriteAmount(HIT)&& animationTick+1>=animationspd ) {
+                animationHitIndex = 0;
+                status = STATIC;
+                isInvincible = false;
+
+            }
         }
+        else{
+            if(movement.getX()==0 && movement.getY()==0) {
+                status = STATIC;
+            }
+            else{
+                status=WALKING;
+            }
+        }
+    }
+
+    public void updateEntityCollisions(Entity entity){
+        this.resetCollisions();
+        this.detectEntityCollision(entity);
+        while((getCollisions()[0] || getCollisions()[1] ||getCollisions()[2] || getCollisions()[3])){
+            this.resetCollisions();
+            this.detectEntityCollision(entity);
+            this.cancelCollision();
+        }
+    }
+
+
+    public void gotHitByBullet(Bullet bullet){
+        if(bullet.getSource().getOwner()!=this){
+            if(hitbox.isColliding(bullet.getHitbox())){
+                if(gotHit(bullet.getSource().getOwner())) {
+                    bullet.status = STATIC;
+                }
+            }
+        }
+    }
+
+    public boolean gotHit(LivingEntity attacker) {
+        if(!isInvincible){
+            HP -= attacker.getWeapon().getDmg();
+            isInvincible = true;
+            status = HIT;
+            animationIndex = 0;
+            animationHitIndex = 0;
+
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean checkIfDied(){
+        if(HP<=0){
+            status=DEAD;
+            animationTick=0;
+            animationIndex=0;
+            return true;
+        }
+        return false;
     }
 
 
@@ -70,5 +118,6 @@ public abstract class LivingEntity extends Entity {
     public Weapon getWeapon() {
         return weapon;
     }
+
 
 }

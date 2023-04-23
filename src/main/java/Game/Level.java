@@ -1,17 +1,19 @@
 package Game;
 
+import Entities.Living.Axie;
 import Entities.Living.BaseMonke;
 import Entities.Living.Enemies;
 
 import java.util.ArrayList;
 
+import static utils.Constants.EntityConstants.AXIE;
 import static utils.Constants.EntityConstants.BASE_MONKE;
 
 public class Level {
     private ArrayList<Enemies> waitingEnnemyList = new ArrayList<>();
     private ArrayList<Enemies> ingameEnnemyList = new ArrayList<>();
-    private final int frameBetweenSpawn = 60;
-    private int frameBetweenSpawnCounter = 60;
+    private final int frameBetweenSpawn = 50;
+    private int frameBetweenSpawnCounter = frameBetweenSpawn;
 
     public Level(int[] entityList, ArrayList<int[]> spawnList){
         int rdmNbr;
@@ -20,6 +22,9 @@ public class Level {
             switch (entityList[i]){
                 case BASE_MONKE:
                     waitingEnnemyList.add(new BaseMonke(spawnList.get(rdmNbr)[1],spawnList.get(rdmNbr)[0]));
+                    break;
+                case AXIE:
+                    waitingEnnemyList.add(new Axie(spawnList.get(rdmNbr)[1],spawnList.get(rdmNbr)[0]));
                     break;
             }
         }

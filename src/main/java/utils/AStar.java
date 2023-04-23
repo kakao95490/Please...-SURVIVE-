@@ -73,7 +73,6 @@ public class AStar {
 
     // retourne le chemin entre la source et la destination, ou null si aucun chemin n'a été trouvé
     public List<Coord> findPath(Coord source, Coord destination) {
-        System.out.println("ça cherche le chemin");
         Node startNode = new Node(source.getX(), source.getY(), 0, getDistance(source.getX(), source.getY(), destination.getX(), destination.getY()), null);
         Node endNode = new Node(destination.getX(), destination.getY(), 0, 0, null);
 
@@ -93,7 +92,6 @@ public class AStar {
                 }
 
                 Collections.reverse(path);
-                System.out.println("chemin trouvé");
                 return path;
             }
 

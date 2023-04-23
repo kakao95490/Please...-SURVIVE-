@@ -17,8 +17,10 @@ import static utils.Constants.WindowConstants.SCALE;
 public class Bullet extends InertEntity {
     private int range;
     private int speed;
+    private Weapon source;
 
-    public Bullet(Coord coord, int Xdirection, int Ydirection, int range, int speed,int bulletSize) {
+    public Bullet(Coord coord, int Xdirection, int Ydirection, int range, int speed,int bulletSize, Weapon source) {
+        this.source = source;
         this.Xdirection = Xdirection;
         this.Ydirection = Ydirection;
         this.coord.setXY(coord.getX()+TILE_SIZE/2-bulletSize, coord.getY()+TILE_SIZE/2-bulletSize/2);
@@ -26,10 +28,10 @@ public class Bullet extends InertEntity {
         this.speed = (int) (speed*SCALE);
         this.status = WALKING;
         this.size= (int) (15*SCALE);
-        this.hitbox.setHitboxSize(size);
+        this.hitbox.setHitboxSize(size,size);
         this.hitbox.setHitboxOffset(0,0);
-        this.hitbox.updateHitbox();
         this.sprite = new Image(Objects.requireNonNull(getClass().getResource("/Objects/BulletSprite.png")).toExternalForm());
+
     }
 
 
@@ -67,5 +69,9 @@ public class Bullet extends InertEntity {
 
     @Override
     public void cancelCollision() {
+    }
+
+    public Weapon getSource() {
+        return source;
     }
 }

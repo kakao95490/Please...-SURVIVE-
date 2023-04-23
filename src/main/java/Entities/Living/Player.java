@@ -1,7 +1,11 @@
 package Entities.Living;
 
 import Weapons.Pistol;
+import Weapons.Uzi;
+import javafx.scene.image.Image;
 import utils.Coord;
+
+import java.util.Objects;
 
 import static utils.Constants.Directions.*;
 import static utils.Constants.MapConstants.TILE_SIZE;
@@ -15,21 +19,33 @@ public class Player extends LivingEntity {
 
     public Player(){
         super();
+
         this.entityName = "Player";
-        this.speed= (int) (3*SCALE);
+        this.spriteSize=64;
         this.size = TILE_SIZE;
-        generateAnimationLib(); //generate the animation library
+
+        this.speed= (int) (3*SCALE);
+        this.HP=100;
+        this.maxHP=100;
+        this.dmgMultiplier=1;
+
+        this.weapon = new Pistol(this); //set the player weapon
+
         this.status=STATIC; //set the player status
         this.coord.setXY(11*TILE_SIZE, 8*TILE_SIZE);//set the player coord spawn
         this.prevCoord.setXY(coord.getX(),coord.getY());
         playerCoord = coord;
-        this.hitbox.setHitboxSize(size/2);
+
+        this.hitbox.setHitboxSize(size/2,size/2);
         this.hitbox.setHitboxOffset(size/4,size/2);
-        this.hitbox.updateHitbox();
-        this.weapon = new Pistol(); //set the player weapon
+
+
         this.movementKeyPressed = new boolean[4];
         this.shootKeyPressed = new boolean[4];
+
+        this.spriteSheet = new Image(Objects.requireNonNull(getClass().getResource("/Sprites/PlayerSPRITESHEET.png")).toExternalForm());
     }
+
 
     @Override
     public void cancelCollision() {
@@ -110,7 +126,6 @@ public class Player extends LivingEntity {
             }
         }
         coord.addXY(movement.getX(),movement.getY());
-
         hitbox.updateHitbox();
     }
 
@@ -146,23 +161,7 @@ public class Player extends LivingEntity {
 
     }
 
-    public void updateStatus() {
-        if(previousStatus==HIT && animationIndex+2<=getSpriteAmount(HIT)){
-            status=HIT;
-        }
-        else{
-            if(movement.getX()==0 && movement.getY()==0) {
-                status = STATIC;
-            }
-            else{
-                status=WALKING;
-            }
-        }
-        if(previousStatus!=status){
-            animationIndex=0;
-        }
-        previousStatus=status;
-    }
+
 
     boolean directionDiagonal(){
         int count=0;
@@ -173,11 +172,6 @@ public class Player extends LivingEntity {
         }
         return count == 2;
     }
-
-
-
-
-
 
 
 }

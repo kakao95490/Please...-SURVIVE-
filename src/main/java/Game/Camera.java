@@ -1,9 +1,11 @@
 package Game;
 
+import Entities.Entity;
 import Entities.Living.Enemies;
 import Entities.Living.LivingEntity;
 import Entities.Inert.Bullet;
 
+import static utils.Constants.Directions.RIGHT;
 import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.WindowConstants.*;
 
@@ -13,6 +15,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import utils.Coord;
 
 public class Camera {
     Game game;
@@ -70,26 +73,51 @@ public class Camera {
 
     //render the player
     public void playerRender(){
-        gc.drawImage(game.player.animationLib[game.player.status][game.player.animationIndex], SPRITE_COORD.getX(), SPRITE_COORD.getY() ,TILE_SIZE,TILE_SIZE);
+        gc.drawImage(game.player.spriteSheet,
+                game.player.animationIndex*game.player.spriteSize,
+                game.player.status*game.player.spriteSize,
+                game.player.spriteSize,
+                game.player.spriteSize,
+                SPRITE_COORD.getX(),
+                SPRITE_COORD.getY() ,
+                game.player.size,
+                game.player.size);
     }
 
     //render bullets shot by an entity
-    public void renderBullets(LivingEntity entity, GraphicsContext g){
-        for(Bullet bullet : entity.getWeapon().getBullets()){
-            bgc.drawImage(bullet.sprite, bullet.getCoord().getX()+decalageCameraX, bullet.getCoord().getY()+decalageCameraY,bullet.size,bullet.size);
-        }
-    }
-
-    void renderEnnemies(){
-        for(Enemies entity : game.level1.getIngameEnnemyList()){
-            entity.updateAnimationIndex();
-            renderEntity(entity, bgc);
-        }
+    public void renderBullets(Bullet bullet, GraphicsContext g){
+        g.drawImage(bullet.sprite, bullet.getCoord().getX()+decalageCameraX, bullet.getCoord().getY()+decalageCameraY,bullet.size,bullet.size);
     }
 
     //render an entity
-    void renderEntity(LivingEntity entity, GraphicsContext g){
-        g.drawImage(entity.animationLib[entity.status][entity.animationIndex], entity.getCoord().getX()+(decalageCameraX), entity.getCoord().getY()+(decalageCameraY), TILE_SIZE, TILE_SIZE);
+    void renderEntity(LivingEntity entity, GraphicsContext g, Coord entityCoord){
+        if(entity.getXLookingDirection()==RIGHT){
+            g.save();
+            g.scale(-1,1);
+            g.drawImage(entity.spriteSheet,
+                    entity.animationIndex*entity.spriteSize,
+                    entity.status*entity.spriteSize,
+                    entity.spriteSize,
+                    entity.spriteSize,
+                    -(entityCoord.getX()+(decalageCameraX))-entity.size,
+                    entityCoord.getY()+(decalageCameraY),
+                    entity.size,
+                    entity.size);
+            g.restore();
+        }
+        else {
+            g.drawImage(entity.spriteSheet,
+                    entity.animationIndex*entity.spriteSize,
+                    entity.status*entity.spriteSize,
+                    entity.spriteSize,
+                    entity.spriteSize,
+                    entityCoord.getX()+(decalageCameraX),
+                    entityCoord.getY()+(decalageCameraY),
+                    entity.size,
+                    entity.size);
+        }
+
+
     }
 
     void renderAll(){
@@ -101,9 +129,17 @@ public class Camera {
         drawMapMatrice();
 
         //render entities
-        playerRender();
-        renderEnnemies();
-        renderBullets(game.player, gc);
+        for(Entity entity: game.displayedEntities){
+            if(entity == game.player){
+                playerRender();
+            }
+            else if(entity instanceof LivingEntity){
+                renderEntity((LivingEntity) entity, gc, entity.getCoord());
+            }
+            else if(entity instanceof Bullet){
+                renderBullets((Bullet) entity, bgc);
+            }
+        }
 
     }
     public void updateCameraOffset(){

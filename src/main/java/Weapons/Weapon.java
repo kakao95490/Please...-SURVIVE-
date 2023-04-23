@@ -5,6 +5,7 @@ import Entities.Living.LivingEntity;
 import utils.Coord;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe abstraite qui représente une arme
@@ -57,12 +58,17 @@ public abstract class Weapon {
 
     public void shoot(Coord ownerCoord, int XlookingDirection, int YlookingDirection){
         if(cooldown==currentCooldown){
-            bullets.add(new Bullet(ownerCoord, XlookingDirection, YlookingDirection, range, 5,bulletSize));
+            bullets.add(new Bullet(ownerCoord, XlookingDirection, YlookingDirection, range, 5,bulletSize,this));
             currentCooldown--;
         }
     }
 
+    public LivingEntity getOwner(){
+        return this.owner;
+    }
 
 
-
+    public int getDmg() {
+        return damage;
+    }
 }

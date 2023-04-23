@@ -7,14 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static utils.Constants.Directions.*;
+import static utils.Constants.PlayerConstants.HIT;
 import static utils.Constants.WindowConstants.FPS_TARGET;
 
 public abstract class Enemies extends LivingEntity{
     private List<Coord> path = new ArrayList<>();
 
-    private int updatePathTick = FPS_TARGET/4;
+    private final int updatePathTick = FPS_TARGET/2;
     private int updatePathIndex = updatePathTick;
 
+    public boolean isInCollisionWithPlayer = false;
 
 
 
@@ -27,7 +29,12 @@ public abstract class Enemies extends LivingEntity{
     }
 
     public void updatePos(AStar aStar) {
+        movement.setXY(0,0);
         prevCoord.setXY(coord.getX(), coord.getY());
+        if(isInCollisionWithPlayer){
+            return;
+        }
+
         //find the nearest path 4 times per second
         if (updatePathIndex == 0) {
             updatePathIndex = updatePathTick;
@@ -38,21 +45,20 @@ public abstract class Enemies extends LivingEntity{
         if(path != null) {
             //if the player is too far, the enemy will follow the astar path
             if (path.size() > 2 && !isNearPlayer()) {
-                Coord nextTile = path.get(0);
-                if (coord.centeredCoord().tileCoord().equals(path.get(0))) {
+                Coord nextTile = path.get(1);
+                if (hitbox.centeredCoord().tileCoord().equals(nextTile)) {
                     path.remove(0);
-                    nextTile= path.get(0);
+                    path.remove(1);
+                    nextTile = path.get(0);
                 }
                 destCoord = nextTile.pixelCoord().centeredCoord();
                 directionCalcul();
                 coord.addXY(movement.getX(), movement.getY());
-
             }
             //if the player is near, the enemy will directly the player
             else {
                 destCoord = playerCoord.centeredCoord();
                 directionCalcul();
-
                 coord.addXY(movement.getX(), movement.getY());
             }
             hitbox.updateHitbox();
@@ -110,6 +116,8 @@ public abstract class Enemies extends LivingEntity{
         }
         return false;
     }
+
+
 
 
 }

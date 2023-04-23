@@ -8,12 +8,14 @@ public class Constants {
         public static final int STATIC=0;
         public static final int WALKING=1;
         public static final int HIT=2;
+        public static final int DEAD=3;
 
         public static int getSpriteAmount(int player_action){
             return switch (player_action) {
-                case STATIC -> 1;
+                case STATIC -> 8;
                 case WALKING -> 9;
-                case HIT -> 3;
+                case HIT -> 5;
+                case DEAD -> 8;
                 default -> 0;
             };
         }
@@ -34,8 +36,7 @@ public class Constants {
         public static final int HEIGHT = 1080;
         public static final double SCALE=3;
         public static final int FPS_TARGET = 60;
-        public static final Coord CENTER = new Coord(WIDTH/2,HEIGHT/2);
-        public static final Coord SPRITE_COORD = new Coord((int) (WIDTH/2-TILE_SIZE/2),(int) (HEIGHT/2-TILE_SIZE/2));
+        public static final Coord SPRITE_COORD = new Coord( (WIDTH/2-TILE_SIZE/2), (HEIGHT/2-TILE_SIZE/2));
     }
 
     public static class MapConstants{
@@ -75,14 +76,8 @@ public class Constants {
     }
 
     public static class EntityConstants{
-
-        public static Coord getSpawnPoint(int randNum){
-            return switch (randNum) {
-                default -> new Coord(6*TILE_SIZE, 3*TILE_SIZE);
-            };
-        }
-
         public static final int BASE_MONKE=0;
+        public static final int AXIE=1;
     }
 
 }

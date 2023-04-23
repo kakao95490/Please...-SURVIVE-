@@ -20,13 +20,23 @@ public abstract class Entity {
 
     protected int Xdirection=-1;
     protected int Ydirection=-1;
+    protected int XlookingDirection=-1;
+    protected int YlookingDirection=-1;
+    public int getXLookingDirection() {
+        return XlookingDirection;
+    }
+    public int getYLookingDirection() {
+        return YlookingDirection;
+    }
+
 
 
     protected Boolean[] collisions = {false, false, false, false};
 
     public int size;
+    public int spriteSize;
     public int status;
-    protected int previousStatus=STATIC;
+
 
     public String entityName;
 
@@ -36,7 +46,7 @@ public abstract class Entity {
         this.spawnPoint = new Coord(0,0);
         this.destCoord = new Coord(0,0);
         this.movement = new Coord(0,0);
-        this.hitbox = new Hitbox(coord,0,0,0);
+        this.hitbox = new Hitbox(coord,0,0,0,0);
     }
 
 
@@ -49,14 +59,23 @@ public abstract class Entity {
 
 
     public void updateDirection(){
+        XlookingDirection=-1;
+        YlookingDirection=-1;
+        Xdirection=-1;
+        Ydirection=-1;
+
         if(prevCoord.getX()<coord.getX()){
+            XlookingDirection=RIGHT;
             Xdirection=RIGHT;
         } else if (prevCoord.getX()>coord.getX()){
+            XlookingDirection=LEFT;
             Xdirection=LEFT;
         }
         if(prevCoord.getY()<coord.getY()){
+            YlookingDirection=DOWN;
             Ydirection=DOWN;
         } else if (prevCoord.getY()>coord.getY()){
+            YlookingDirection=UP;
             Ydirection=UP;
         }
     }
@@ -69,8 +88,8 @@ public abstract class Entity {
     public void directionCalcul(){
         Xdirection=-1;
         Ydirection=-1;
-        int xdif = destCoord.getX()-coord.centeredCoord().getX();
-        int ydif = destCoord.getY()-coord.centeredCoord().getY();
+        int xdif = destCoord.getX()-hitbox.centeredCoord().getX();
+        int ydif = destCoord.getY()-hitbox.centeredCoord().getY();
         double angle = Math.atan2(ydif,xdif);
         double px =  Math.cos(angle);
         double py =  Math.sin(angle);
@@ -96,7 +115,6 @@ public abstract class Entity {
         }
 
     }
-
 
 
 
@@ -131,5 +149,8 @@ public abstract class Entity {
 
     public Coord getCoord() {
         return coord;
+    }
+    public Coord getPrevCoord() {
+        return prevCoord;
     }
 }
