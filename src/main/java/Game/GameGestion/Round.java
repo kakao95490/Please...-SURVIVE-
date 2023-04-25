@@ -1,21 +1,22 @@
-package Game;
+package Game.GameGestion;
 
-import Entities.Living.Axie;
-import Entities.Living.BaseMonke;
-import Entities.Living.Enemies;
+import Entities.Living.Enemies.Axie;
+import Entities.Living.Enemies.BaseMonke;
+import Entities.Living.Enemies.Enemies;
 
 import java.util.ArrayList;
 
 import static utils.Constants.EntityConstants.AXIE;
 import static utils.Constants.EntityConstants.BASE_MONKE;
 
-public class Level {
+public class Round {
     private ArrayList<Enemies> waitingEnnemyList = new ArrayList<>();
     private ArrayList<Enemies> ingameEnnemyList = new ArrayList<>();
-    private final int frameBetweenSpawn = 50;
+    private int frameBetweenSpawn;
     private int frameBetweenSpawnCounter = frameBetweenSpawn;
 
-    public Level(int[] entityList, ArrayList<int[]> spawnList){
+    public Round(int[] entityList, ArrayList<int[]> spawnList, int frameBetweenSpawn){
+        this.frameBetweenSpawn = frameBetweenSpawn;
         int rdmNbr;
         for (int i = 0; i < entityList.length; i++) {
             rdmNbr = (int) (Math.random() * spawnList.size());
@@ -31,8 +32,11 @@ public class Level {
 
     }
 
-    public void update(){
-        if (frameBetweenSpawnCounter == 0){
+    public boolean update(){
+        if(waitingEnnemyList.size() == 0 && ingameEnnemyList.size() == 0){
+            return false;
+        }
+        else if(frameBetweenSpawnCounter == 0){
             if (waitingEnnemyList.size() > 0){
                 ingameEnnemyList.add(waitingEnnemyList.get(0));
                 waitingEnnemyList.remove(0);
@@ -41,10 +45,14 @@ public class Level {
         } else {
             frameBetweenSpawnCounter--;
         }
+        return true;
     }
 
     public ArrayList<Enemies> getIngameEnnemyList() {
         return ingameEnnemyList;
+    }
+    public ArrayList<Enemies> getWaitingEnnemyList() {
+        return waitingEnnemyList;
     }
 
 

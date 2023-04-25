@@ -5,8 +5,8 @@ public class Uzi extends Weapon{
         this.damage = 20;
         this.cooldown = 15;
         this.currentCooldown = this.cooldown;
-        this.range=40;
-        this.bulletSize=5;
+        this.range=60;
+        this.bulletSize=9;
         this.owner=owner;
     }
 }

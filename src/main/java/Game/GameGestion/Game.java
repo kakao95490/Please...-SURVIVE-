@@ -1,13 +1,18 @@
-package Game;
+package Game.GameGestion;
 
-import Entities.Living.BaseMonke;
-import Entities.Living.Enemies;
-import Entities.Living.LivingEntity;
+import Entities.Living.*;
 import Entities.Inert.Bullet;
+import Entities.Living.Enemies.Enemies;
+import Entities.Living.GoodGuys.PNJ;
+import Entities.Living.GoodGuys.Player;
+import Entities.Living.GoodGuys.Seller;
 import Map.Map;
 import Entities.Entity;
-import Entities.Living.Player;
 import Inputs.KeyboardInput;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import utils.AStar;
 
 import java.io.IOException;
@@ -18,6 +23,7 @@ import java.util.Comparator;
 import static utils.Constants.EntityConstants.AXIE;
 import static utils.Constants.EntityConstants.BASE_MONKE;
 import static utils.Constants.PlayerConstants.*;
+import static utils.Constants.WindowConstants.FPS_TARGET;
 
 
 public class Game {
@@ -26,13 +32,19 @@ public class Game {
 
     public KeyboardInput keyboardInput;
     public Double framerate;
+    int frame = 0;
+    long lastCheck=System.currentTimeMillis();
+    double timePerFrame = 1000.0 / FPS_TARGET;
 
     public Player player;
+    public PNJ pnj;
     public Map map;
     public Camera camera;
     public AStar aStar;
-    public Level currentLevel;
+    public Round currentRound;
+    public int roundCounter = 1;
     public ArrayList<Entity> displayedEntities = new ArrayList<>();
+    public ArrayList<Round> roundList = new ArrayList<>();
 
 
     public Game() throws IOException, URISyntaxException {
@@ -43,6 +55,7 @@ public class Game {
 
 
         this.player=new Player();
+        this.pnj = new Seller();
 
 
         this.map = new Map();
@@ -50,46 +63,31 @@ public class Game {
         this.camera= new Camera(this);
         this.keyboardInput = new KeyboardInput(this);
         this.aStar = new AStar(map.getMapMatrice());
+        this.roundList = new ArrayList<>();
+        this.roundList.add(new Round(new int[]{
+                        BASE_MONKE,
+                        BASE_MONKE,
+                        BASE_MONKE,
+                        BASE_MONKE,
+                        BASE_MONKE,
+                        BASE_MONKE,
+                },
+                map.getSpwanCoords(),80));
+        this.roundList.add(new Round(new int[]{
+                AXIE,
+                AXIE,
+                AXIE,
+                AXIE,
+                AXIE,
 
-        this.currentLevel = new Level(new int[]{
-                BASE_MONKE,
-                BASE_MONKE,
-                BASE_MONKE,
-                BASE_MONKE,
-                BASE_MONKE,
-                BASE_MONKE,
-                BASE_MONKE,
-                BASE_MONKE,
-                BASE_MONKE,
-                BASE_MONKE,
-                BASE_MONKE,
-
-
-                AXIE,
-                AXIE,
-                AXIE,
-                AXIE,
         },
-                map.getSpwanCoords());
-
-
-
-
-
+                map.getSpwanCoords(),80));
+        this.currentRound= roundList.get(0);
 
     }
 
 
-    public boolean detectWallCollision(Entity entity){
 
-            entity.getHitbox().updateHitbox();
-            entity.resetCollisions();
-            entity.setCollision(0, map.getMapMatrice()[entity.getHitbox().getCornerUpLeft().tileCoord().getY()][entity.getHitbox().getCornerUpLeft().tileCoord().getX()] != 0);
-            entity.setCollision(1, map.getMapMatrice()[entity.getHitbox().getCornerUpRight().tileCoord().getY()][entity.getHitbox().getCornerUpRight().tileCoord().getX()] != 0);
-            entity.setCollision(2, map.getMapMatrice()[entity.getHitbox().getCornerDownLeft().tileCoord().getY()][entity.getHitbox().getCornerDownLeft().tileCoord().getX()] != 0);
-            entity.setCollision(3, map.getMapMatrice()[entity.getHitbox().getCornerDownRight().tileCoord().getY()][entity.getHitbox().getCornerDownRight().tileCoord().getX()] != 0);
-            return entity.getCollisions()[0] || entity.getCollisions()[1] || entity.getCollisions()[2] || entity.getCollisions()[3];
-    }
 
 
 
@@ -105,7 +103,7 @@ public class Game {
 
                 bullet.updateStatus();
                 bullet.updatePos();
-                if(detectWallCollision(bullet)){
+                if(EntityGestion.detectWallCollision(bullet,map)){
                     bullet.status=STATIC;
                 }
                 bullet.getHitbox().updateHitbox();
@@ -119,7 +117,7 @@ public class Game {
 
         player.updatePos();
 
-        while(detectWallCollision(player)){
+        while(EntityGestion.detectWallCollision(player,map)){
             player.cancelCollision();
         }
 
@@ -135,8 +133,8 @@ public class Game {
     public void updateEnemies(){
         Enemies currentEnemy;
 
-        for(int i =0;i<currentLevel.getIngameEnnemyList().size();i++){
-            currentEnemy = currentLevel.getIngameEnnemyList().get(i);
+        for(int i = 0; i< currentRound.getIngameEnnemyList().size(); i++){
+            currentEnemy = currentRound.getIngameEnnemyList().get(i);
 
 
             for(int j=0;j<player.getWeapon().getBullets().size();j++){
@@ -148,7 +146,7 @@ public class Game {
                 currentEnemy.updateStatus();
                 currentEnemy.updateAnimationIndex();
                 if(!currentEnemy.isAlive){
-                    currentLevel.getIngameEnnemyList().remove(currentEnemy);
+                    currentRound.getIngameEnnemyList().remove(currentEnemy);
                 }
                 continue;
             }
@@ -159,25 +157,18 @@ public class Game {
             }
 
 
-            //if the enemy is hit, it will not move, be invicible for a while and his hitbox will be smaller to let the other enemies pass
-            if(currentEnemy.status==HIT){
-                currentEnemy.updateStatus();
-                currentEnemy.updateAnimationIndex();
-                continue;
-            }
-
             currentEnemy.updatePos(aStar);
 
             //check collision with other enemies
-            for(int j=0;j<currentLevel.getIngameEnnemyList().size();j++){
+            for(int j = 0; j< currentRound.getIngameEnnemyList().size(); j++){
                 if(i==j){
                     continue;
                 }
-                currentEnemy.updateEntityCollisions(currentLevel.getIngameEnnemyList().get(j));
+                currentEnemy.updateEntityCollisions(currentRound.getIngameEnnemyList().get(j));
             }
 
             //cancel wall collision
-            while(detectWallCollision(currentEnemy)){
+            while(EntityGestion.detectWallCollision(currentEnemy,map)){
                 if((currentEnemy.getCollisions()[0]&&currentEnemy.getCollisions()[1]&&currentEnemy.getCollisions()[2]&&currentEnemy.getCollisions()[3]) ){
                     break;
                 }
@@ -196,14 +187,12 @@ public class Game {
     public void updateDisplayedEntitiesList(){
         displayedEntities.clear();
         displayedEntities.add(player);
-        displayedEntities.addAll(currentLevel.getIngameEnnemyList());
+        displayedEntities.add(pnj);
+        displayedEntities.addAll(currentRound.getIngameEnnemyList());
         displayedEntities.addAll(player.getWeapon().getBullets());
-        sortDisplayedEntities();
-    }
-
-    public void sortDisplayedEntities(){
         displayedEntities.sort(Comparator.comparingInt(o -> o.getHitbox().getCornerDownLeft().getY()));
     }
+
 
     public void checkCollideWithPlayer(Enemies entity){
         entity.detectEntityCollision(player);
@@ -217,18 +206,59 @@ public class Game {
         entity.resetCollisions();
     }
 
+    public void updateRounds(){
+        if(!currentRound.update()){
+            if(roundList.size()==0 || roundCounter>=roundList.size()){
+                return;
+            }
+            currentRound=roundList.get(roundCounter);
+            roundCounter++;
+        }
+    }
+
+    private void updatePnj() {
+        pnj.updateAnimationIndex();
+    }
 
 
 
 
-    void updateAll(){
+    public void updateAll(){
+        updateRounds();
         updateBullets(player);
-        currentLevel.update();
+        updatePnj();
         playerUpdate();
         updateEnemies();
-
         updateDisplayedEntitiesList();
+    }
 
+
+
+
+    public void gameUpdateAndRender(){
+        updateAll();
+        camera.updateHUD();
+        camera.renderAll();
+    }
+
+
+
+    public void startGame(){
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(timePerFrame), event -> {
+
+
+            if (System.currentTimeMillis() - lastCheck >= 500) {
+                lastCheck = System.currentTimeMillis();
+                framerate= (double) (frame*2);
+                System.out.println("fps " + framerate);
+                frame=0;
+            }
+
+            gameUpdateAndRender();
+            frame++;
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
 

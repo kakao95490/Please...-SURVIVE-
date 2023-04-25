@@ -2,7 +2,7 @@ package Inputs;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import Game.Game;
+import Game.GameGestion.Game;
 
 import static utils.Constants.Directions.*;
 

@@ -1,5 +1,6 @@
-package Entities.Living;
+package Entities.Living.Enemies;
 
+import Entities.Living.LivingEntity;
 import utils.AStar;
 import utils.Coord;
 
@@ -10,7 +11,7 @@ import static utils.Constants.Directions.*;
 import static utils.Constants.PlayerConstants.HIT;
 import static utils.Constants.WindowConstants.FPS_TARGET;
 
-public abstract class Enemies extends LivingEntity{
+public abstract class Enemies extends LivingEntity {
     private List<Coord> path = new ArrayList<>();
 
     private final int updatePathTick = FPS_TARGET/2;

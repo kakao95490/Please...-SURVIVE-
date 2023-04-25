@@ -9,7 +9,7 @@ public class Pistol extends Weapon{
         this.cooldown = 30;
         this.currentCooldown = this.cooldown;
         this.range=60;
-        this.bulletSize=15;
+        this.bulletSize=13;
         this.owner=owner;
     }
 

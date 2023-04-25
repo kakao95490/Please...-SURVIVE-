@@ -51,6 +51,7 @@ public abstract class LivingEntity extends Entity {
             }
         }
         else if(status == HIT) {
+            isInvincible=true;
             if (animationIndex+1 >= getSpriteAmount(HIT)&& animationTick+1>=animationspd ) {
                 animationHitIndex = 0;
                 status = STATIC;
@@ -59,10 +60,11 @@ public abstract class LivingEntity extends Entity {
             }
         }
         else{
-            if(movement.getX()==0 && movement.getY()==0) {
+            if(movement.getX()==0 && movement.getY()==0 && status!=STATIC){
                 status = STATIC;
+                animationIndex=0;
             }
-            else{
+            else if(movement.getX()!=0 || movement.getY()!=0){
                 status=WALKING;
             }
         }
@@ -108,6 +110,7 @@ public abstract class LivingEntity extends Entity {
             status=DEAD;
             animationTick=0;
             animationIndex=0;
+            hitbox.setHitboxSize(0,0);
             return true;
         }
         return false;

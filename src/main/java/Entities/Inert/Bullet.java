@@ -14,20 +14,21 @@ import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.WindowConstants.SCALE;
 
-public class Bullet extends InertEntity {
+public class Bullet extends Entity {
     private int range;
     private int speed;
     private Weapon source;
+    public Image sprite;
 
     public Bullet(Coord coord, int Xdirection, int Ydirection, int range, int speed,int bulletSize, Weapon source) {
         this.source = source;
         this.Xdirection = Xdirection;
         this.Ydirection = Ydirection;
-        this.coord.setXY(coord.getX()+TILE_SIZE/2-bulletSize, coord.getY()+TILE_SIZE/2-bulletSize/2);
+        this.coord.setXY(coord.getX()+TILE_SIZE/2-bulletSize, coord.getY()+10+TILE_SIZE/2-bulletSize/2);
         this.range = range;
         this.speed = (int) (speed*SCALE);
         this.status = WALKING;
-        this.size= (int) (15*SCALE);
+        this.size= (int) (bulletSize*SCALE);
         this.hitbox.setHitboxSize(size,size);
         this.hitbox.setHitboxOffset(0,0);
         this.sprite = new Image(Objects.requireNonNull(getClass().getResource("/Objects/BulletSprite.png")).toExternalForm());

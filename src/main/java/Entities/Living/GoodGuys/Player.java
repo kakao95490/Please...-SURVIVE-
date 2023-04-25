@@ -1,5 +1,6 @@
-package Entities.Living;
+package Entities.Living.GoodGuys;
 
+import Entities.Living.LivingEntity;
 import Weapons.Pistol;
 import Weapons.Uzi;
 import javafx.scene.image.Image;
@@ -171,6 +172,10 @@ public class Player extends LivingEntity {
             }
         }
         return count == 2;
+    }
+
+    public int getHP() {
+        return HP;
     }
 
 
