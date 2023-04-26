@@ -34,7 +34,11 @@ public class Game {
     public Double framerate;
     int frame = 0;
     long lastCheck=System.currentTimeMillis();
+    long timerCheck=System.currentTimeMillis();
     double timePerFrame = 1000.0 / FPS_TARGET;
+    double timeBetweenRound = 30;
+    double secondLeft=30;
+
 
     public Player player;
     public PNJ pnj;
@@ -211,8 +215,17 @@ public class Game {
             if(roundList.size()==0 || roundCounter>=roundList.size()){
                 return;
             }
-            currentRound=roundList.get(roundCounter);
-            roundCounter++;
+            else {
+                if(secondLeft == 0){
+                    currentRound = roundList.get(roundCounter);
+                    roundCounter++;
+                    secondLeft=timeBetweenRound;
+                }
+                else if(System.currentTimeMillis()-timerCheck>=1000){
+                    timerCheck=System.currentTimeMillis();
+                    secondLeft-=1;
+                }
+            }
         }
     }
 
@@ -247,7 +260,7 @@ public class Game {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(timePerFrame), event -> {
 
 
-            if (System.currentTimeMillis() - lastCheck >= 500) {
+            if (System.currentTimeMillis() - lastCheck >= 1000) {
                 lastCheck = System.currentTimeMillis();
                 framerate= (double) (frame*2);
                 System.out.println("fps " + framerate);

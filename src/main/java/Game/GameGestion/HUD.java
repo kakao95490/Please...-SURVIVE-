@@ -17,6 +17,7 @@ public class HUD {
     public Text MoneyValue;
     public Text roundValue;
     public Text enemiesLeftValue;
+    public Text timerValue;
 
 
     public HUD() {
@@ -88,6 +89,24 @@ public class HUD {
         enemiesLeftText.setFill(Color.WHITE);
         enemiesLeftValue.setFont(font);
         enemiesLeftValue.setFill(Color.WHITE);
+
+
+        HBox downHudContainer = new HBox(); // conteneur pour les éléments du HUD
+        downHudContainer.setPadding(new Insets(10));
+        downHudContainer.setAlignment(Pos.TOP_LEFT);
+        downHudContainer.setPrefWidth(WIDTH);
+        downHudContainer.setMaxWidth(WIDTH);
+        downHudContainer.setMinWidth(WIDTH);
+        downHudContainer.getChildren().addAll();
+
+        HBox timer= new HBox();
+        timer.setAlignment(Pos.CENTER);
+        Text timerText= new Text("Next round in ");
+        timerText.setFont(font);
+        timerText.setFill(Color.WHITE);
+
+        HUDLayer.getChildren().addAll(timerText);
+        HUDLayer.setBottom(downHudContainer);
 
     }
 
