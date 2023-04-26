@@ -2,7 +2,7 @@ package Entities.Living;
 
 import Entities.Entity;
 import Entities.Inert.Bullet;
-import Weapons.Weapon;
+import Objects.Weapons.Weapon;
 import javafx.scene.image.Image;
 
 import static utils.Constants.PlayerConstants.*;

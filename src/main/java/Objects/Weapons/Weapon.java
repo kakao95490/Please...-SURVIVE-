@@ -1,17 +1,17 @@
-package Weapons;
+package Objects.Weapons;
 
 import Entities.Inert.Bullet;
 import Entities.Living.LivingEntity;
+import Objects.AbstractObjects;
 import utils.Coord;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Classe abstraite qui représente une arme
  */
 
-public abstract class Weapon {
+public abstract class Weapon extends AbstractObjects{
     protected int damage;
     protected int range;
     public int bulletSize;
@@ -19,6 +19,10 @@ public abstract class Weapon {
     protected int currentCooldown;
     protected LivingEntity owner;
     protected ArrayList<Bullet> bullets = new ArrayList<>();
+
+    public Weapon(){
+        super();
+    }
 
 
 
@@ -71,4 +75,7 @@ public abstract class Weapon {
     public int getDmg() {
         return damage;
     }
+
+
+
 }

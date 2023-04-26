@@ -1,4 +1,4 @@
-package Weapons;
+package Objects.Weapons;
 import Entities.Living.LivingEntity;
 public class Uzi extends Weapon{
     public Uzi(LivingEntity owner){
@@ -8,5 +8,6 @@ public class Uzi extends Weapon{
         this.range=60;
         this.bulletSize=9;
         this.owner=owner;
+        this.name="Uzi";
     }
 }

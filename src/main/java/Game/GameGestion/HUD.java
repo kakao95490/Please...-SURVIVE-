@@ -9,6 +9,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import static utils.Constants.Style.font;
+import static utils.Constants.Style.font2;
+import static utils.Constants.WindowConstants.HEIGHT;
 import static utils.Constants.WindowConstants.WIDTH;
 
 public class HUD {
@@ -17,7 +20,7 @@ public class HUD {
     public Text MoneyValue;
     public Text roundValue;
     public Text enemiesLeftValue;
-    public Text timerValue;
+    public static Text timerValue;
 
 
     public HUD() {
@@ -70,8 +73,7 @@ public class HUD {
                 BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(3));
 
         // Style
-        Font font = Font.font("Verdana", FontWeight.BOLD, 35);
-        Font font2 = Font.font("Verdana", FontWeight.EXTRA_BOLD, 50);
+
         HPText.setFont(font);
         HPText.setFill(javafx.scene.paint.Color.GREEN);
         HPText.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
@@ -93,20 +95,31 @@ public class HUD {
 
         HBox downHudContainer = new HBox(); // conteneur pour les éléments du HUD
         downHudContainer.setPadding(new Insets(10));
-        downHudContainer.setAlignment(Pos.TOP_LEFT);
+        downHudContainer.setMinHeight(100);
+        downHudContainer.setAlignment(Pos.CENTER);
         downHudContainer.setPrefWidth(WIDTH);
         downHudContainer.setMaxWidth(WIDTH);
         downHudContainer.setMinWidth(WIDTH);
-        downHudContainer.getChildren().addAll();
+
 
         HBox timer= new HBox();
-        timer.setAlignment(Pos.CENTER);
-        Text timerText= new Text("Next round in ");
+        Text timerText= new Text("Next round in : ");
+        timerValue = new Text("");
         timerText.setFont(font);
-        timerText.setFill(Color.WHITE);
+        timerText.setFill(Color.RED);
+        timerValue.setFont(font);
+        timerValue.setFill(Color.RED);
 
-        HUDLayer.getChildren().addAll(timerText);
+        timer.visibleProperty().bind(timerValue.textProperty().isNotEmpty());
+
+
+        timer.getChildren().addAll(timerText, timerValue);
+        downHudContainer.getChildren().add(timer);
+
         HUDLayer.setBottom(downHudContainer);
+
+
+
 
     }
 

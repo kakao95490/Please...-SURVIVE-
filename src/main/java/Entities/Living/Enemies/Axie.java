@@ -1,6 +1,6 @@
 package Entities.Living.Enemies;
 
-import Weapons.Fist;
+import Objects.Weapons.Fist;
 import javafx.scene.image.Image;
 
 import java.util.Objects;

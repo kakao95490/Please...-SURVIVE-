@@ -1,11 +1,9 @@
 package Entities.Inert;
 
 import Entities.Entity;
-import Weapons.Weapon;
-import javafx.scene.canvas.GraphicsContext;
+import Objects.Weapons.Weapon;
 import javafx.scene.image.Image;
 import utils.Coord;
-import utils.Hitbox;
 
 import java.util.Objects;
 

@@ -3,7 +3,6 @@ package Game.GameGestion;
 import Entities.Living.*;
 import Entities.Inert.Bullet;
 import Entities.Living.Enemies.Enemies;
-import Entities.Living.GoodGuys.PNJ;
 import Entities.Living.GoodGuys.Player;
 import Entities.Living.GoodGuys.Seller;
 import Map.Map;
@@ -36,12 +35,12 @@ public class Game {
     long lastCheck=System.currentTimeMillis();
     long timerCheck=System.currentTimeMillis();
     double timePerFrame = 1000.0 / FPS_TARGET;
-    double timeBetweenRound = 30;
-    double secondLeft=30;
+    int timeBetweenRound = 30;
+    int secondLeft=30;
 
 
     public Player player;
-    public PNJ pnj;
+    public Seller pnj;
     public Map map;
     public Camera camera;
     public AStar aStar;
@@ -90,7 +89,9 @@ public class Game {
 
     }
 
-
+    public void init(){
+        pnj.initMenu(camera.HUD.HUDLayer);
+    }
 
 
 
@@ -224,6 +225,7 @@ public class Game {
                 else if(System.currentTimeMillis()-timerCheck>=1000){
                     timerCheck=System.currentTimeMillis();
                     secondLeft-=1;
+                    HUD.timerValue.setText(String.valueOf(secondLeft));
                 }
             }
         }
@@ -257,12 +259,13 @@ public class Game {
 
 
     public void startGame(){
+        init();
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(timePerFrame), event -> {
 
 
             if (System.currentTimeMillis() - lastCheck >= 1000) {
                 lastCheck = System.currentTimeMillis();
-                framerate= (double) (frame*2);
+                framerate= (double) (frame);
                 System.out.println("fps " + framerate);
                 frame=0;
             }
@@ -273,9 +276,6 @@ public class Game {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
-
-
-
 
 }
 

@@ -1,5 +1,8 @@
 package utils;
 
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
 import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.WindowConstants.SCALE;
 
@@ -78,6 +81,11 @@ public class Constants {
     public static class EntityConstants{
         public static final int BASE_MONKE=0;
         public static final int AXIE=1;
+    }
+
+    public static class Style{
+        public static final Font font = Font.font("Verdana", FontWeight.BOLD, 35);
+        public static final Font font2 = Font.font("Verdana", FontWeight.EXTRA_BOLD, 50);
     }
 
 }

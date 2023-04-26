@@ -1,10 +1,8 @@
 package Entities.Living.GoodGuys;
 
 import Entities.Living.LivingEntity;
-import Weapons.Pistol;
-import Weapons.Uzi;
+import Objects.Weapons.Pistol;
 import javafx.scene.image.Image;
-import utils.Coord;
 
 import java.util.Objects;
 
