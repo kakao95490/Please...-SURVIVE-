@@ -14,6 +14,8 @@ import static utils.Constants.WindowConstants.*;
 public class Player extends LivingEntity {
     public boolean[] movementKeyPressed;
     public boolean[] shootKeyPressed;
+    public boolean actionKeyPressed;
+    public boolean isOnMenu;
 
 
     public Player(){
@@ -23,6 +25,7 @@ public class Player extends LivingEntity {
         this.spriteSize=64;
         this.size = TILE_SIZE;
 
+        this.money=100;
         this.speed= (int) (3*SCALE);
         this.HP=100;
         this.maxHP=100;
@@ -174,6 +177,13 @@ public class Player extends LivingEntity {
 
     public int getHP() {
         return HP;
+    }
+
+    public boolean isNearPnj( PNJ pnj){
+        if(this.getCoord().distance(pnj.getCoord())<pnj.getDetectionRange()){
+            return true;
+        }
+        return false;
     }
 
 

@@ -17,7 +17,7 @@ import static utils.Constants.WindowConstants.WIDTH;
 public class HUD {
     public final BorderPane HUDLayer;
     public Text HPValue;
-    public Text MoneyValue;
+    public Text moneyValue;
     public Text roundValue;
     public Text enemiesLeftValue;
     public static Text timerValue;
@@ -43,9 +43,9 @@ public class HUD {
         HBox MoneyBox = new HBox();
         Text HPText = new Text("HP : " );
         Text MoneyText = new Text("Money : " );
-        MoneyValue = new Text("");
+        moneyValue = new Text("");
         HPValue = new Text("");
-        MoneyBox.getChildren().addAll(MoneyText, MoneyValue);
+        MoneyBox.getChildren().addAll(MoneyText, moneyValue);
         HPBox.getChildren().addAll(HPText, HPValue);
         HPandMoney.getChildren().addAll(HPBox, MoneyBox);
         HBox.setHgrow(HPandMoney, Priority.ALWAYS);
@@ -81,8 +81,8 @@ public class HUD {
         HPValue.setFill(javafx.scene.paint.Color.GREEN);
         MoneyText.setFont(font);
         MoneyText.setFill(Color.YELLOW);
-        MoneyValue.setFont(font);
-        MoneyValue.setFill(Color.YELLOW);
+        moneyValue.setFont(font);
+        moneyValue.setFill(Color.YELLOW);
         roundText.setFont(font2);
         roundText.setFill(Color.RED);
         roundValue.setFont(font2);

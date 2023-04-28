@@ -6,8 +6,9 @@ public class Uzi extends Weapon{
         this.cooldown = 15;
         this.currentCooldown = this.cooldown;
         this.range=60;
-        this.bulletSize=9;
+        this.bulletSize=10;
         this.owner=owner;
         this.name="Uzi";
+        this.price=100;
     }
 }

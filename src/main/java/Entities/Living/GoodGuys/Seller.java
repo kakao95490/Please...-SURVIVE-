@@ -2,10 +2,11 @@ package Entities.Living.GoodGuys;
 
 import Objects.Weapons.Pistol;
 import Objects.Weapons.Uzi;
+import Objects.Weapons.Weapon;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -18,13 +19,13 @@ import static utils.Constants.PlayerConstants.STATIC;
 import static utils.Constants.Style.font;
 import static utils.Constants.WindowConstants.*;
 import Objects.AbstractObjects;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import utils.Constants.Style.*;
 
 public class Seller extends PNJ{
 
-    public ArrayList<AbstractObjects> itemList = new ArrayList<>();
+    private ArrayList<AbstractObjects> itemList = new ArrayList<>();
+    private ArrayList<Button> buyButtonList = new ArrayList<>();
+    private VBox menuBox = new VBox();
 
     public Seller(){
         super();
@@ -40,15 +41,25 @@ public class Seller extends PNJ{
         this.coord.setXY(18*TILE_SIZE, 11*TILE_SIZE);
         this.hitbox.updateHitbox();
         initItemList();
+        initInteractionBox();
     }
+
 
     @Override
     public void cancelCollision() {
 
     }
 
-    public void initMenu(BorderPane HUD){
-        VBox menuBox = new VBox();
+    @Override
+    public Node interaction(Player player){
+        updateButtons(player);
+        return menuBox;
+
+    }
+
+
+    void initInteractionBox(){
+
         int menuWidth = 500;
         int menuHeight = 800;
         menuBox.setMinSize(menuWidth,menuHeight);
@@ -59,10 +70,15 @@ public class Seller extends PNJ{
             itemBox.setMinSize(menuWidth,menuHeight/10);
             itemBox.setMaxSize(menuWidth,menuHeight/10);
             Text itemName = new Text(item.name);
-            Text itemPrice = new Text(Integer.toString(10));
+            Text itemPrice = new Text(Integer.toString(item.price));
             Button buyButton = new Button("Buy");
-            buyButton.setStyle("-fx-background-color: #40421C; -fx-border-color: #40421C; -fx-border-width: 5;");
+            buyButtonList.add(buyButton);
+            buyButton.setOnAction(event -> {});
+
+
+            buyButton.setStyle("-fx-background-color: #40421C; -fx-border-color: #40421C; -fx-border-width: 5; -fx-border-radius: 8;");
             buyButton.setTextFill(Color.YELLOW);
+
 
             itemName.setFont(font);
             itemName.setFill(Color.valueOf("#40421C"));
@@ -74,11 +90,40 @@ public class Seller extends PNJ{
             menuBox.getChildren().add(itemBox);
         }
 
+    }
 
-        HUD.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0.5), CornerRadii.EMPTY, Insets.EMPTY)));
+    public void updateButtons(Player player){
+        for(int i = 0; i<buyButtonList.size();i++){
+            int finalI = i;
+            buyButtonList.get(i).setOnAction(event -> {
+                    buyItem(player,itemList.get(finalI));
+                    updateButtons(player);
+            });
+            if(Objects.equals(player.getWeapon().name, itemList.get(finalI).name)){
+                buyButtonList.get(finalI).setText("Equipped");
+                buyButtonList.get(finalI).setDisable(true);
+            }
+            else{
+                buyButtonList.get(finalI).setText("Buy");
+                buyButtonList.get(finalI).setDisable(false);
+                buyButtonList.get(i).setDisable(player.money < itemList.get(i).price);
+            }
 
-        HUD.setCenter(menuBox);
 
+
+
+        }
+
+    }
+
+
+    public void buyItem(Player player,AbstractObjects item){
+        if(player.money>=item.price){
+            player.money-=item.price;
+            if(item instanceof Weapon) {
+                player.setWeapon((Weapon) item);
+            }
+        }
     }
 
     public void initItemList(){

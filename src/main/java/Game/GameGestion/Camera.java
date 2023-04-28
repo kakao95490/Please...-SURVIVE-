@@ -11,6 +11,7 @@ import static utils.Constants.WindowConstants.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -146,6 +147,7 @@ public class Camera {
 
     public void renderAll(){
         //clear all
+        updateHUD();
         bgc.clearRect(0, 0, WIDTH, HEIGHT);
         gc.clearRect(0,0,WIDTH,HEIGHT);
 
@@ -180,12 +182,7 @@ public class Camera {
         HUD.HPValue.setText(String.valueOf(game.player.getHP()));
         HUD.roundValue.setText(String.valueOf(game.roundCounter));
         HUD.enemiesLeftValue.setText(String.valueOf(game.currentRound.getIngameEnnemyList().size()));
-
-
-
-
-
-
+        HUD.moneyValue.setText(String.valueOf(game.player.money));
     }
 
 
@@ -195,5 +192,15 @@ public class Camera {
 
     public Scene getScene() {
         return scene;
+    }
+
+    public void displayDialog(Node interaction) {
+        HUD.HUDLayer.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0.5), CornerRadii.EMPTY, Insets.EMPTY)));
+        HUD.HUDLayer.setCenter(interaction);
+    }
+
+    public void hideDialog() {
+        HUD.HUDLayer.setBackground(null);
+        HUD.HUDLayer.getChildren().remove(HUD.HUDLayer.getCenter());
     }
 }

@@ -6,6 +6,7 @@ import Objects.AbstractObjects;
 import utils.Coord;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Classe abstraite qui représente une arme
@@ -19,6 +20,7 @@ public abstract class Weapon extends AbstractObjects{
     protected int currentCooldown;
     protected LivingEntity owner;
     protected ArrayList<Bullet> bullets = new ArrayList<>();
+
 
     public Weapon(){
         super();
@@ -69,6 +71,9 @@ public abstract class Weapon extends AbstractObjects{
 
     public LivingEntity getOwner(){
         return this.owner;
+    }
+    public void setOwner(LivingEntity owner){
+        this.owner=owner;
     }
 
 

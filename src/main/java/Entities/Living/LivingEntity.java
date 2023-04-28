@@ -2,6 +2,7 @@ package Entities.Living;
 
 import Entities.Entity;
 import Entities.Inert.Bullet;
+import Objects.AbstractObjects;
 import Objects.Weapons.Weapon;
 import javafx.scene.image.Image;
 
@@ -19,6 +20,7 @@ public abstract class LivingEntity extends Entity {
     public boolean isInvincible = false;
     protected int animationSpeedFPS = 18;
     protected int animationspd = FPS_TARGET/ animationSpeedFPS;
+    public int money;
 
 
 
@@ -121,6 +123,7 @@ public abstract class LivingEntity extends Entity {
     public Weapon getWeapon() {
         return weapon;
     }
+    public void setWeapon(Weapon weapon) { this.weapon = weapon; this.weapon.setOwner(this); }
 
 
 }

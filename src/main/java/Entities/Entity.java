@@ -150,7 +150,4 @@ public abstract class Entity {
     public Coord getCoord() {
         return coord;
     }
-    public Coord getPrevCoord() {
-        return prevCoord;
-    }
 }

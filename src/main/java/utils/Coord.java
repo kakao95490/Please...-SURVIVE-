@@ -60,4 +60,8 @@ public class Coord {
         return new Coord(X+ TILE_SIZE/2, Y+ TILE_SIZE/2);
     }
 
+    public double distance(Coord coord){
+        return Math.sqrt(Math.pow(coord.getX()-this.getX(),2)+Math.pow(coord.getY()-this.getY(),2));
+    }
+
 }

@@ -44,6 +44,9 @@ public class KeyboardInput {
             if(event.getCode() == KeyCode.RIGHT){
                 game.player.shootKeyPressed[RIGHT]=true;
             }
+            if(event.getCode() == KeyCode.SPACE){
+                game.player.actionKeyPressed=true;
+            }
 
 
 
@@ -77,6 +80,9 @@ public class KeyboardInput {
             }
             if(event.getCode() == KeyCode.RIGHT){
                 game.player.shootKeyPressed[RIGHT]=false;
+            }
+            if(event.getCode() == KeyCode.SPACE){
+                game.player.actionKeyPressed=false;
             }
         });
 

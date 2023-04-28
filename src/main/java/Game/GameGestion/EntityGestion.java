@@ -1,6 +1,9 @@
 package Game.GameGestion;
 
 import Entities.Entity;
+import Entities.Living.GoodGuys.PNJ;
+import Entities.Living.GoodGuys.Player;
+import Entities.Living.LivingEntity;
 import Map.Map;
 
 public class EntityGestion {
@@ -15,6 +18,23 @@ public class EntityGestion {
         entity.setCollision(3, map.getMapMatrice()[entity.getHitbox().getCornerDownRight().tileCoord().getY()][entity.getHitbox().getCornerDownRight().tileCoord().getX()] != 0);
         return entity.getCollisions()[0] || entity.getCollisions()[1] || entity.getCollisions()[2] || entity.getCollisions()[3];
     }
+
+    public static void interactWithPnj(Camera camera,Player player, PNJ pnj){
+        if(player.isNearPnj(pnj) && !player.isOnMenu){
+                camera.displayDialog(pnj.interaction(player));
+                player.isOnMenu=true;
+        }
+        else if(!player.isNearPnj(pnj) && player.isOnMenu){
+            player.isOnMenu=false;
+            camera.hideDialog();
+        }
+    }
+
+    public static void leavePnj(Camera camera,Player player, PNJ pnj){
+
+    }
+
+
 
 
 }

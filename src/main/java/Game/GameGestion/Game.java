@@ -89,9 +89,6 @@ public class Game {
 
     }
 
-    public void init(){
-        pnj.initMenu(camera.HUD.HUDLayer);
-    }
 
 
 
@@ -126,9 +123,13 @@ public class Game {
             player.cancelCollision();
         }
 
+
+
         player.updateShootingDirection();
         player.updateStatus();
         player.updateAnimationIndex();
+
+        EntityGestion.interactWithPnj(camera,player,pnj);
     }
 
 
@@ -221,6 +222,7 @@ public class Game {
                     currentRound = roundList.get(roundCounter);
                     roundCounter++;
                     secondLeft=timeBetweenRound;
+                    HUD.timerValue.setText("");
                 }
                 else if(System.currentTimeMillis()-timerCheck>=1000){
                     timerCheck=System.currentTimeMillis();
@@ -252,14 +254,12 @@ public class Game {
 
     public void gameUpdateAndRender(){
         updateAll();
-        camera.updateHUD();
         camera.renderAll();
     }
 
 
 
     public void startGame(){
-        init();
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(timePerFrame), event -> {
 
 
