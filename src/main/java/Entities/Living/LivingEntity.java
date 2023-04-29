@@ -2,6 +2,7 @@ package Entities.Living;
 
 import Entities.Entity;
 import Entities.Inert.Bullet;
+import Entities.Living.GoodGuys.Player;
 import Objects.AbstractObjects;
 import Objects.Weapons.Weapon;
 import javafx.scene.image.Image;
@@ -96,6 +97,9 @@ public abstract class LivingEntity extends Entity {
     public boolean gotHit(LivingEntity attacker) {
         if(!isInvincible){
             HP -= attacker.getWeapon().getDmg();
+            if(attacker instanceof Player && 0>=this.HP){
+                ((Player) attacker).money+=this.money;
+            }
             isInvincible = true;
             status = HIT;
             animationIndex = 0;

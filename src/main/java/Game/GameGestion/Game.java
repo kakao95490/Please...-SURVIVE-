@@ -119,6 +119,7 @@ public class Game {
 
         player.updatePos();
 
+        EntityGestion.interactWithPnj(camera,player,pnj);
         while(EntityGestion.detectWallCollision(player,map)){
             player.cancelCollision();
         }
@@ -129,7 +130,7 @@ public class Game {
         player.updateStatus();
         player.updateAnimationIndex();
 
-        EntityGestion.interactWithPnj(camera,player,pnj);
+
     }
 
 
@@ -182,7 +183,7 @@ public class Game {
             }
 
             currentEnemy.resetCollisions();
-            checkCollideWithPlayer(currentEnemy);
+            EntityGestion.checkCollideWithPlayer(player,currentEnemy);
             currentEnemy.updateStatus();
             currentEnemy.updateAnimationIndex();
         }
@@ -200,17 +201,7 @@ public class Game {
     }
 
 
-    public void checkCollideWithPlayer(Enemies entity){
-        entity.detectEntityCollision(player);
-        if(entity.getCollisions()[0] || entity.getCollisions()[1] || entity.getCollisions()[2] || entity.getCollisions()[3]){
-            entity.isInCollisionWithPlayer=true;
-            player.gotHit(entity);
-        }
-        else {
-            entity.isInCollisionWithPlayer=false;
-        }
-        entity.resetCollisions();
-    }
+
 
     public void updateRounds(){
         if(!currentRound.update()){

@@ -28,6 +28,7 @@ public class Axie extends Enemies {
         this.maxHP = 30;
         this.dmgMultiplier = 0.5;
         this.weapon = new Fist(this);
+        this.money= 5;
 
     }
 

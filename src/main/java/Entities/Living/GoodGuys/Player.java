@@ -25,7 +25,7 @@ public class Player extends LivingEntity {
         this.spriteSize=64;
         this.size = TILE_SIZE;
 
-        this.money=100;
+        this.money=0;
         this.speed= (int) (3*SCALE);
         this.HP=100;
         this.maxHP=100;

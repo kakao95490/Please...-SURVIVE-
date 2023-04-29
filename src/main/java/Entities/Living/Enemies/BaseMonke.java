@@ -29,6 +29,7 @@ public class BaseMonke extends Enemies {
         this.HP = maxHP;
         this.dmgMultiplier = 1;
         this.weapon = new Fist(this);
+        this.money = 10;
     }
 
 }
