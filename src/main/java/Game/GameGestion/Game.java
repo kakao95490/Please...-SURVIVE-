@@ -192,7 +192,9 @@ public class Game {
                 return;
             }
             else {
-                camera.bonusMenu();
+                if(secondLeft==20){
+                    camera.bonusMenu();
+                }
                 if(secondLeft == 0){
                     currentRound = roundList.get(roundCounter);
                     roundCounter++;
