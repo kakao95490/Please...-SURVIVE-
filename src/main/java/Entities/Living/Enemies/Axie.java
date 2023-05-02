@@ -1,11 +1,14 @@
 package Entities.Living.Enemies;
 
+import Entities.Living.GoodGuys.Player;
+import Entities.Living.LivingEntity;
 import Objects.Weapons.Fist;
 import javafx.scene.image.Image;
 
 import java.util.Objects;
 
 import static utils.Constants.MapConstants.TILE_SIZE;
+import static utils.Constants.PlayerConstants.HIT;
 import static utils.Constants.PlayerConstants.WALKING;
 import static utils.Constants.WindowConstants.SCALE;
 
@@ -29,7 +32,22 @@ public class Axie extends Enemies {
         this.dmgMultiplier = 0.5;
         this.weapon = new Fist(this);
         this.money= 5;
-
     }
 
+    @Override
+    public boolean gotHit(LivingEntity attacker) {
+        if(!isInvincible){
+            HP -= attacker.getWeapon().getDmg() * attacker.dmgMultiplier;
+            if(attacker instanceof Player && 0>=this.HP){
+                ((Player) attacker).money+=this.money;
+            }
+            status = HIT;
+            cantMove = true;
+            animationIndex = 0;
+            animationHitIndex = 0;
+
+            return true;
+        }
+        return false;
+    }
 }

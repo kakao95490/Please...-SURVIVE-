@@ -4,8 +4,12 @@ import Entities.Entity;
 import Entities.Living.LivingEntity;
 import Entities.Inert.Bullet;
 
+import static utils.Constants.BonusConstants.*;
 import static utils.Constants.Directions.RIGHT;
+import static utils.Constants.GameConstants.WIN;
 import static utils.Constants.MapConstants.TILE_SIZE;
+import static utils.Constants.Style.font;
+import static utils.Constants.Style.font2;
 import static utils.Constants.WindowConstants.*;
 
 import javafx.geometry.Insets;
@@ -15,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -24,6 +29,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import utils.Coord;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class Camera {
     Game game;
@@ -37,6 +45,14 @@ public class Camera {
     private final StackPane root;
     public GraphicsContext gc;
     public GraphicsContext bgc;
+
+    public Scene endScene;
+    public StackPane endRoot;
+    public VBox endLayer;
+
+
+    public VBox bonusMenu;
+
 
 
     public Camera(Game game){
@@ -53,9 +69,6 @@ public class Camera {
         gc.setImageSmoothing(false);
         bgc.setImageSmoothing(false);
         scene = new Scene(root,WIDTH, HEIGHT);
-
-
-
 
         //fond noir
         Rectangle background = new Rectangle(WIDTH, HEIGHT, Color.BLACK);
@@ -76,9 +89,50 @@ public class Camera {
 
         this.stage.show();
 
+        initBonusMenu();
 
 
 
+
+
+    }
+
+    private void initBonusMenu(){
+        bonusMenu = new VBox();
+        int menuWidth = 500;
+        int menuHeight = 800;
+        bonusMenu.setMinSize(menuWidth,menuHeight);
+        bonusMenu.setMaxSize(menuWidth,menuHeight);
+        bonusMenu.setStyle("-fx-background-color: #A0A445; -fx-border-color: #40421C; -fx-border-width: 5;");
+        Text title = new Text("Choose a bonus");
+        title.setFont(font);
+        bonusMenu.getChildren().add(title);
+        Button health = new Button("Health +");
+        Button damage = new Button("Damage +");
+        Button speed = new Button("Speed +");
+        health.setStyle("-fx-background-color: #40421C; -fx-border-color: #40421C; -fx-border-width: 5; -fx-border-radius: 8;");
+        health.setTextFill(Color.YELLOW);
+        damage.setStyle("-fx-background-color: #40422C; -fx-border-color: #40421C; -fx-border-width: 5; -fx-border-radius: 8;");
+        damage.setTextFill(Color.YELLOW);
+        speed.setStyle("-fx-background-color: #40421C; -fx-border-color: #40421C; -fx-border-width: 5; -fx-border-radius: 8;");
+        speed.setTextFill(Color.YELLOW);
+
+        health.setOnAction(e -> {
+            EntityGestion.bonus(HEALTH);
+            HUD.HUDLayer.getChildren().remove(bonusMenu);
+            HUD.HUDLayer.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0), CornerRadii.EMPTY, Insets.EMPTY)));
+        });
+        damage.setOnAction(e -> {
+            EntityGestion.bonus(DAMAGE);
+            HUD.HUDLayer.getChildren().remove(bonusMenu);
+            HUD.HUDLayer.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0), CornerRadii.EMPTY, Insets.EMPTY)));
+        });
+        speed.setOnAction(e -> {
+            EntityGestion.bonus(SPEED);
+            HUD.HUDLayer.getChildren().remove(bonusMenu);
+            HUD.HUDLayer.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0), CornerRadii.EMPTY, Insets.EMPTY)));
+        });
+        bonusMenu.getChildren().addAll(health, damage,speed);
     }
 
 
@@ -98,15 +152,15 @@ public class Camera {
 
     //render the player
     public void playerRender(){
-        gc.drawImage(game.player.spriteSheet,
-                game.player.animationIndex*game.player.spriteSize,
-                game.player.status*game.player.spriteSize,
-                game.player.spriteSize,
-                game.player.spriteSize,
+        gc.drawImage(EntityGestion.player.spriteSheet,
+                EntityGestion.player.animationIndex*EntityGestion.player.spriteSize,
+                EntityGestion.player.status*EntityGestion.player.spriteSize,
+                EntityGestion.player.spriteSize,
+                EntityGestion.player.spriteSize,
                 SPRITE_COORD.getX(),
                 SPRITE_COORD.getY() ,
-                game.player.size,
-                game.player.size);
+                EntityGestion.player.size,
+                EntityGestion.player.size);
     }
 
     //render bullets shot by an entity
@@ -155,8 +209,8 @@ public class Camera {
         drawMapMatrice();
 
         //render entities in order of priority (height) to simulate 3D
-        for(Entity entity: game.displayedEntities){
-            if(entity == game.player){
+        for(Entity entity: game.EntityGestion.displayedEntities){
+            if(entity == EntityGestion.player){
                 playerRender();
             }
             else if(entity instanceof LivingEntity){
@@ -169,8 +223,8 @@ public class Camera {
 
     }
     public void updateCameraOffset(){
-        decalageCameraX=SPRITE_COORD.getX() - game.player.getCoord().getX();
-        decalageCameraY=SPRITE_COORD.getY() - game.player.getCoord().getY();
+        decalageCameraX=SPRITE_COORD.getX() - EntityGestion.player.getCoord().getX();
+        decalageCameraY=SPRITE_COORD.getY() - EntityGestion.player.getCoord().getY();
     }
 
 
@@ -179,10 +233,10 @@ public class Camera {
 
 
     public void updateHUD(){
-        HUD.HPValue.setText(String.valueOf(game.player.getHP()));
+        HUD.HPValue.setText(String.valueOf(EntityGestion.player.getHP()));
         HUD.roundValue.setText(String.valueOf(game.roundCounter));
         HUD.enemiesLeftValue.setText(String.valueOf(game.currentRound.getIngameEnnemyList().size()));
-        HUD.moneyValue.setText(String.valueOf(game.player.money));
+        HUD.moneyValue.setText(String.valueOf(EntityGestion.player.money));
     }
 
 
@@ -202,5 +256,77 @@ public class Camera {
     public void hideDialog() {
         HUD.HUDLayer.setBackground(null);
         HUD.HUDLayer.getChildren().remove(HUD.HUDLayer.getCenter());
+    }
+
+
+    public void displayEndScreen(int end){
+        endRoot = new StackPane();
+        endLayer = new VBox();
+        endRoot.getChildren().add(endLayer);
+        endScene = new Scene(endRoot,WIDTH,HEIGHT);
+        endScene.setFill(Color.BLACK);
+        stage.setScene(endScene);
+        endLayer.setAlignment(Pos.CENTER);
+        if(end == WIN){
+            Label victory = new Label("VICTORY");
+
+            victory.setFont(font2);
+            victory.setTextFill(Color.RED);
+            victory.setAlignment(Pos.CENTER);
+            double labelHeight = victory.getHeight();
+            double verticalPadding = (HEIGHT - labelHeight) / 2;
+            victory.setPadding(new javafx.geometry.Insets(verticalPadding, 0, verticalPadding, 0));
+
+            endLayer.getChildren().add(victory);
+            endLayer.setMinHeight(HEIGHT);
+            endLayer.setMinWidth(WIDTH);
+        }
+        else{
+
+            Label defeat = new Label("DEFEAT");
+
+            defeat.setFont(font2);
+            defeat.setTextFill(Color.RED);
+            defeat.setAlignment(Pos.CENTER);
+
+            endLayer.getChildren().add(defeat);
+            endLayer.setMinHeight(HEIGHT);
+            endLayer.setMinWidth(WIDTH);
+
+        }
+        Button quit = new Button("Quit");
+        Button restart = new Button("Restart");
+        restart.setFont(font2);
+        restart.setTextFill(Color.WHITE);
+        restart.setStyle("-fx-background-color: black;");
+        quit.setFont(font2);
+        quit.setTextFill(Color.WHITE);
+        quit.setStyle("-fx-background-color: black;");
+        endLayer.setSpacing(60);
+
+        restart.setOnAction(e -> {
+            try {
+                game.initGame();
+            } catch (URISyntaxException | IOException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            game.gameLoop();
+            stage.setScene(scene);
+
+        });
+
+        quit.setOnAction(e -> {
+            stage.close();
+        });
+
+        endLayer.getChildren().addAll(restart,quit);
+
+    }
+
+
+    public void bonusMenu() {
+        HUD.HUDLayer.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0.5), CornerRadii.EMPTY, Insets.EMPTY)));
+        HUD.HUDLayer.setCenter(bonusMenu);
     }
 }

@@ -88,4 +88,17 @@ public class Constants {
         public static final Font font2 = Font.font("Verdana", FontWeight.EXTRA_BOLD, 50);
     }
 
+    public static class GameConstants{
+        public static final int PAUSED=0;
+        public static final int RUNNING=1;
+        public static final int GAME_OVER=2;
+        public static final int WIN=3;
+    }
+
+    public static class BonusConstants{
+        public static final int HEALTH=0;
+        public static final int SPEED=1;
+        public static final int DAMAGE=2;
+        public static final int ATTACK_SPEED=4;
+    }
 }

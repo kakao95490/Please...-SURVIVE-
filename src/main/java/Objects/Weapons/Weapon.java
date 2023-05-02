@@ -8,14 +8,16 @@ import utils.Coord;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static utils.Constants.WindowConstants.SCALE;
+
 /**
  * Classe abstraite qui représente une arme
  */
 
 public abstract class Weapon extends AbstractObjects{
     protected int damage;
-    protected int range;
-    public int bulletSize;
+    protected int range= (int) SCALE;
+    public int bulletSize= (int) SCALE;
     protected int cooldown;
     protected int currentCooldown;
     protected LivingEntity owner;
@@ -62,9 +64,9 @@ public abstract class Weapon extends AbstractObjects{
         }
     }
 
-    public void shoot(Coord ownerCoord, int XlookingDirection, int YlookingDirection){
+    public void shoot(){
         if(cooldown==currentCooldown){
-            bullets.add(new Bullet(ownerCoord, XlookingDirection, YlookingDirection, range, 5,bulletSize,this));
+            bullets.add(new Bullet(owner.getCoord(), owner.getXLookingDirection(), owner.getYLookingDirection(), range, 5,bulletSize,this));
             currentCooldown--;
         }
     }

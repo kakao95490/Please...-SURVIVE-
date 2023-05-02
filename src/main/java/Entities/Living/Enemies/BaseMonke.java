@@ -25,7 +25,7 @@ public class BaseMonke extends Enemies {
 
 
         this.speed = (int) (2*SCALE);
-        this.maxHP = 50;
+        this.maxHP = 60;
         this.HP = maxHP;
         this.dmgMultiplier = 1;
         this.weapon = new Fist(this);

@@ -1,6 +1,7 @@
 package Entities.Living.GoodGuys;
 
 import Objects.Weapons.Pistol;
+import Objects.Weapons.Shotgun;
 import Objects.Weapons.Uzi;
 import Objects.Weapons.Weapon;
 import javafx.geometry.Insets;
@@ -129,8 +130,10 @@ public class Seller extends PNJ{
     public void initItemList(){
         AbstractObjects pistol = new Pistol(this);
         AbstractObjects uzi = new Uzi(this);
+        AbstractObjects shotgun = new Shotgun(this);
         itemList.add(pistol);
         itemList.add(uzi);
+        itemList.add(shotgun);
     }
 
 

@@ -18,34 +18,34 @@ public class KeyboardInput {
 
         game.camera.getScene().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if(event.getCode() == KeyCode.Q) {
-                game.player.movementKeyPressed[LEFT]=true;
+                game.EntityGestion.getPlayer().movementKeyPressed[LEFT]=true;
             }
             if(event.getCode() == KeyCode.Z) {
-                game.player.movementKeyPressed[UP]=true;
+                game.EntityGestion.getPlayer().movementKeyPressed[UP]=true;
             }
             if(event.getCode() == KeyCode.D) {
-                game.player.movementKeyPressed[RIGHT]=true;
+                game.EntityGestion.getPlayer().movementKeyPressed[RIGHT]=true;
             }
             if(event.getCode() == KeyCode.S) {
-                game.player.movementKeyPressed[DOWN]=true;
+                game.EntityGestion.getPlayer().movementKeyPressed[DOWN]=true;
             }
             if(event.getCode() == KeyCode.T) {
                 testKey=true;
             }
             if(event.getCode() == KeyCode.UP){
-                game.player.shootKeyPressed[UP]=true;
+                game.EntityGestion.getPlayer().shootKeyPressed[UP]=true;
             }
             if(event.getCode() == KeyCode.DOWN){
-                game.player.shootKeyPressed[DOWN]=true;
+                game.EntityGestion.getPlayer().shootKeyPressed[DOWN]=true;
             }
             if(event.getCode() == KeyCode.LEFT){
-                game.player.shootKeyPressed[LEFT]=true;
+                game.EntityGestion.getPlayer().shootKeyPressed[LEFT]=true;
             }
             if(event.getCode() == KeyCode.RIGHT){
-                game.player.shootKeyPressed[RIGHT]=true;
+                game.EntityGestion.getPlayer().shootKeyPressed[RIGHT]=true;
             }
             if(event.getCode() == KeyCode.SPACE){
-                game.player.actionKeyPressed=true;
+                game.EntityGestion.getPlayer().actionKeyPressed=true;
             }
 
 
@@ -55,34 +55,34 @@ public class KeyboardInput {
 
         game.camera.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if(event.getCode() == KeyCode.Q) {
-                game.player.movementKeyPressed[LEFT]=false;
+                game.EntityGestion.getPlayer().movementKeyPressed[LEFT]=false;
             }
             if(event.getCode() == KeyCode.Z) {
-                game.player.movementKeyPressed[UP]=false;
+                game.EntityGestion.getPlayer().movementKeyPressed[UP]=false;
             }
             if(event.getCode() == KeyCode.D) {
-                game.player.movementKeyPressed[RIGHT]=false;
+                game.EntityGestion.getPlayer().movementKeyPressed[RIGHT]=false;
             }
             if(event.getCode() == KeyCode.S) {
-                game.player.movementKeyPressed[DOWN]=false;
+                game.EntityGestion.getPlayer().movementKeyPressed[DOWN]=false;
             }
             if(event.getCode() == KeyCode.T) {
                 testKey=false;
             }
             if(event.getCode() == KeyCode.UP){
-                game.player.shootKeyPressed[UP]=false;
+                game.EntityGestion.getPlayer().shootKeyPressed[UP]=false;
             }
             if(event.getCode() == KeyCode.DOWN){
-                game.player.shootKeyPressed[DOWN]=false;
+                game.EntityGestion.getPlayer().shootKeyPressed[DOWN]=false;
             }
             if(event.getCode() == KeyCode.LEFT){
-                game.player.shootKeyPressed[LEFT]=false;
+                game.EntityGestion.getPlayer().shootKeyPressed[LEFT]=false;
             }
             if(event.getCode() == KeyCode.RIGHT){
-                game.player.shootKeyPressed[RIGHT]=false;
+                game.EntityGestion.getPlayer().shootKeyPressed[RIGHT]=false;
             }
             if(event.getCode() == KeyCode.SPACE){
-                game.player.actionKeyPressed=false;
+                game.EntityGestion.getPlayer().actionKeyPressed=false;
             }
         });
 

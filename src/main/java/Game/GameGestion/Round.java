@@ -10,23 +10,20 @@ import static utils.Constants.EntityConstants.AXIE;
 import static utils.Constants.EntityConstants.BASE_MONKE;
 
 public class Round {
-    private ArrayList<Enemies> waitingEnnemyList = new ArrayList<>();
-    private ArrayList<Enemies> ingameEnnemyList = new ArrayList<>();
+    private final ArrayList<Enemies> waitingEnnemyList = new ArrayList<>();
+    private final ArrayList<Enemies> ingameEnnemyList = new ArrayList<>();
     private int frameBetweenSpawn;
     private int frameBetweenSpawnCounter = frameBetweenSpawn;
 
     public Round(int[] entityList, ArrayList<int[]> spawnList, int frameBetweenSpawn){
         this.frameBetweenSpawn = frameBetweenSpawn;
         int rdmNbr;
-        for (int i = 0; i < entityList.length; i++) {
+        for (int j : entityList) {
             rdmNbr = (int) (Math.random() * spawnList.size());
-            switch (entityList[i]){
-                case BASE_MONKE:
-                    waitingEnnemyList.add(new BaseMonke(spawnList.get(rdmNbr)[1],spawnList.get(rdmNbr)[0]));
-                    break;
-                case AXIE:
-                    waitingEnnemyList.add(new Axie(spawnList.get(rdmNbr)[1],spawnList.get(rdmNbr)[0]));
-                    break;
+            switch (j) {
+                case BASE_MONKE ->
+                        waitingEnnemyList.add(new BaseMonke(spawnList.get(rdmNbr)[1], spawnList.get(rdmNbr)[0]));
+                case AXIE -> waitingEnnemyList.add(new Axie(spawnList.get(rdmNbr)[1], spawnList.get(rdmNbr)[0]));
             }
         }
 

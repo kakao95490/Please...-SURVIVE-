@@ -2,6 +2,8 @@ package Entities.Living.GoodGuys;
 
 import Entities.Living.LivingEntity;
 import Objects.Weapons.Pistol;
+import Objects.Weapons.Shotgun;
+import Objects.Weapons.Uzi;
 import javafx.scene.image.Image;
 
 import java.util.Objects;
@@ -157,7 +159,7 @@ public class Player extends LivingEntity {
 
     public void shooting(){
         if(XlookingDirection!=-1 || YlookingDirection!=-1){
-            weapon.shoot(coord, XlookingDirection, YlookingDirection);
+            weapon.shoot();
         }
         weapon.updateCooldown();
 
@@ -179,12 +181,31 @@ public class Player extends LivingEntity {
         return HP;
     }
 
-    public boolean isNearPnj( PNJ pnj){
-        if(this.getCoord().distance(pnj.getCoord())<pnj.getDetectionRange()){
-            return true;
-        }
-        return false;
+    public void setHP(int HP) {
+        this.HP = HP;
     }
+
+    public int getMaxHP() {
+        return maxHP;
+    }
+
+    public void setMaxHP(int maxHP) {
+        this.maxHP = maxHP;
+    }
+
+    public void addSpeed(int speed){
+        this.speed += (speed*SCALE)/2;
+    }
+
+    public void addDmg(double multiplicator){
+        this.dmgMultiplier *= multiplicator;
+    }
+
+    public boolean isNearPnj( PNJ pnj){
+        return this.getCoord().distance(pnj.getCoord()) < pnj.getDetectionRange();
+    }
+
+
 
 
 }

@@ -22,6 +22,7 @@ public abstract class LivingEntity extends Entity {
     protected int animationSpeedFPS = 18;
     protected int animationspd = FPS_TARGET/ animationSpeedFPS;
     public int money;
+    public boolean cantMove = false;
 
 
 
@@ -54,11 +55,11 @@ public abstract class LivingEntity extends Entity {
             }
         }
         else if(status == HIT) {
-            isInvincible=true;
             if (animationIndex+1 >= getSpriteAmount(HIT)&& animationTick+1>=animationspd ) {
                 animationHitIndex = 0;
                 status = STATIC;
                 isInvincible = false;
+                cantMove = false;
 
             }
         }
@@ -96,11 +97,13 @@ public abstract class LivingEntity extends Entity {
 
     public boolean gotHit(LivingEntity attacker) {
         if(!isInvincible){
-            HP -= attacker.getWeapon().getDmg();
+            if(this instanceof Player){
+                ((Player) this).isInvincible=true;
+            }
+            HP -= attacker.getWeapon().getDmg() * attacker.dmgMultiplier;
             if(attacker instanceof Player && 0>=this.HP){
                 ((Player) attacker).money+=this.money;
             }
-            isInvincible = true;
             status = HIT;
             animationIndex = 0;
             animationHitIndex = 0;
