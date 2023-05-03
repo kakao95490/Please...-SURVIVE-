@@ -187,7 +187,7 @@ public class Game {
 
     public void updateRounds(){
         if(!currentRound.update()){
-            if(roundList.size()==0){
+            if(roundCounter > roundList.size()){
                 status=WIN;
                 return;
             }
