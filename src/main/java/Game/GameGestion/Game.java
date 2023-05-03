@@ -37,8 +37,8 @@ public class Game {
     public Camera camera;
     public AStar aStar;
     public Round currentRound;
-    public int roundCounter = 1;
-    public ArrayList<Round> roundList = new ArrayList<>();
+    public int roundCounter;
+    public ArrayList<Round> roundList;
 
     public Timeline timeline = null;
 
@@ -53,7 +53,8 @@ public class Game {
         EntityGestion.initEntities();
         this.map = new Map();
         this.keyboardInput = new KeyboardInput(this);
-
+        this.secondLeft = 20;
+        this.roundCounter=0;
         this.aStar = new AStar(map.getMapMatrice());
         this.roundList = new ArrayList<>();
         this.roundList.add(new Round(new int[]{
@@ -64,7 +65,7 @@ public class Game {
         },
                 map.getSpwanCoords(),80));
 
-        this.roundList.add(new Round(new int[]{
+        /*this.roundList.add(new Round(new int[]{
                 BASE_MONKE,
                 BASE_MONKE,
                 BASE_MONKE,
@@ -164,19 +165,20 @@ public class Game {
 
 
 
-        }, map.getSpwanCoords(),30));
+        }, map.getSpwanCoords(),30));*/
 
         this.currentRound= roundList.get(0);
     }
 
 
-    private void cleanGame() {
+    public void cleanGame() {
         EntityGestion.cleanEntities();
         this.map = null;
         this.keyboardInput = null;
         this.aStar = null;
         this.roundList = null;
         this.currentRound= null;
+
     }
 
 
@@ -187,17 +189,20 @@ public class Game {
 
     public void updateRounds(){
         if(!currentRound.update()){
-            if(roundCounter > roundList.size()){
+            if(roundCounter >= roundList.size()){
                 status=WIN;
                 return;
             }
             else {
                 if(secondLeft==20){
-                    camera.bonusMenu();
-                }
-                if(secondLeft == 0){
-                    currentRound = roundList.get(roundCounter);
                     roundCounter++;
+                    if(roundCounter<roundList.size()){
+                        camera.bonusMenu();
+                    }
+
+                }
+                else if(secondLeft == 0){
+                    currentRound = roundList.get(roundCounter);
                     secondLeft=20;
                     HUD.timerValue.setText("");
                 }

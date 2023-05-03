@@ -271,11 +271,8 @@ public class Camera {
             Label victory = new Label("VICTORY");
 
             victory.setFont(font2);
-            victory.setTextFill(Color.RED);
+            victory.setTextFill(Color.GREEN);
             victory.setAlignment(Pos.CENTER);
-            double labelHeight = victory.getHeight();
-            double verticalPadding = (HEIGHT - labelHeight) / 2;
-            victory.setPadding(new javafx.geometry.Insets(verticalPadding, 0, verticalPadding, 0));
 
             endLayer.getChildren().add(victory);
             endLayer.setMinHeight(HEIGHT);
@@ -306,6 +303,7 @@ public class Camera {
 
         restart.setOnAction(e -> {
             try {
+                game.cleanGame();
                 game.initGame();
             } catch (URISyntaxException | IOException ex) {
                 throw new RuntimeException(ex);
@@ -329,4 +327,5 @@ public class Camera {
         HUD.HUDLayer.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0.5), CornerRadii.EMPTY, Insets.EMPTY)));
         HUD.HUDLayer.setCenter(bonusMenu);
     }
+
 }
