@@ -233,7 +233,7 @@ public class EntityGestion {
                 player.setHP(player.getMaxHP());
             }
             case SPEED -> player.addSpeed(1);
-            case DAMAGE -> player.addDmg(1.2);
+            case DAMAGE -> player.addDmg(0.15);
         }
 
     }

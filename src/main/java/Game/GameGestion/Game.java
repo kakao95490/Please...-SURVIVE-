@@ -40,6 +40,8 @@ public class Game {
     public int roundCounter;
     public ArrayList<Round> roundList;
 
+    public boolean hasTakenBonus;
+
     public Timeline timeline = null;
 
     public int status = PAUSED;
@@ -51,21 +53,20 @@ public class Game {
 
     public void initGame() throws URISyntaxException, IOException {
         EntityGestion.initEntities();
+        camera.initBonusMenu();
         this.map = new Map();
         this.keyboardInput = new KeyboardInput(this);
         this.secondLeft = 20;
         this.roundCounter=0;
         this.aStar = new AStar(map.getMapMatrice());
         this.roundList = new ArrayList<>();
+        this.hasTakenBonus=false;
         this.roundList.add(new Round(new int[]{
-                BASE_MONKE,
-                BASE_MONKE,
-                BASE_MONKE,
                 BASE_MONKE,
         },
                 map.getSpwanCoords(),80));
 
-        /*this.roundList.add(new Round(new int[]{
+        this.roundList.add(new Round(new int[]{
                 BASE_MONKE,
                 BASE_MONKE,
                 BASE_MONKE,
@@ -165,7 +166,7 @@ public class Game {
 
 
 
-        }, map.getSpwanCoords(),30));*/
+        }, map.getSpwanCoords(),30));
 
         this.currentRound= roundList.get(0);
     }
@@ -194,17 +195,16 @@ public class Game {
                 return;
             }
             else {
-                if(secondLeft==20){
-                    roundCounter++;
-                    if(roundCounter<roundList.size()){
-                        camera.bonusMenu();
-                    }
-
+                if(!hasTakenBonus && !EntityGestion.getPlayer().isOnMenu){
+                    camera.bonusMenu();
                 }
-                else if(secondLeft == 0){
+                if(secondLeft == 0){
+                    roundCounter++;
                     currentRound = roundList.get(roundCounter);
                     secondLeft=20;
+                    hasTakenBonus =false;
                     HUD.timerValue.setText("");
+
                 }
                 else if(System.currentTimeMillis()-timerCheck>=1000){
                     timerCheck=System.currentTimeMillis();

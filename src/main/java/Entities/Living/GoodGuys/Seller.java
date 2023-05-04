@@ -24,9 +24,9 @@ import javafx.scene.text.Text;
 
 public class Seller extends PNJ{
 
-    private ArrayList<AbstractObjects> itemList = new ArrayList<>();
-    private ArrayList<Button> buyButtonList = new ArrayList<>();
-    private VBox menuBox = new VBox();
+    private final ArrayList<AbstractObjects> itemList = new ArrayList<>();
+    private final ArrayList<Button> buyButtonList = new ArrayList<>();
+    private final VBox menuBox = new VBox();
 
     public Seller(){
         super();

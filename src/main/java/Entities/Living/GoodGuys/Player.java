@@ -47,6 +47,8 @@ public class Player extends LivingEntity {
         this.movementKeyPressed = new boolean[4];
         this.shootKeyPressed = new boolean[4];
 
+        this.isOnMenu = false;
+
         this.spriteSheet = new Image(Objects.requireNonNull(getClass().getResource("/Sprites/PlayerSPRITESHEET.png")).toExternalForm());
     }
 
@@ -194,11 +196,12 @@ public class Player extends LivingEntity {
     }
 
     public void addSpeed(int speed){
-        this.speed += (speed*SCALE)/2;
+        System.out.println(this.speed);
+        this.speed += (speed*SCALE)/2 + 1;
     }
 
     public void addDmg(double multiplicator){
-        this.dmgMultiplier *= multiplicator;
+        this.dmgMultiplier += multiplicator;
     }
 
     public boolean isNearPnj( PNJ pnj){

@@ -32,6 +32,7 @@ import utils.Coord;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class Camera {
     Game game;
@@ -46,7 +47,6 @@ public class Camera {
     public GraphicsContext gc;
     public GraphicsContext bgc;
 
-    public Scene endScene;
     public StackPane endRoot;
     public VBox endLayer;
 
@@ -89,50 +89,63 @@ public class Camera {
 
         this.stage.show();
 
-        initBonusMenu();
-
-
-
-
 
     }
 
-    private void initBonusMenu(){
+    void initBonusMenu(){
+        game.EntityGestion.getPlayer().isOnMenu=true;
         bonusMenu = new VBox();
         int menuWidth = 500;
         int menuHeight = 800;
         bonusMenu.setMinSize(menuWidth,menuHeight);
         bonusMenu.setMaxSize(menuWidth,menuHeight);
         bonusMenu.setStyle("-fx-background-color: #A0A445; -fx-border-color: #40421C; -fx-border-width: 5;");
-        Text title = new Text("Choose a bonus");
-        title.setFont(font);
+        Label title = new Label("Select a bonus");
+        title.setFont(font2);
+        title.setTextFill(Color.rgb(64, 66, 28));
         bonusMenu.getChildren().add(title);
         Button health = new Button("Health +");
         Button damage = new Button("Damage +");
         Button speed = new Button("Speed +");
-        health.setStyle("-fx-background-color: #40421C; -fx-border-color: #40421C; -fx-border-width: 5; -fx-border-radius: 8;");
-        health.setTextFill(Color.YELLOW);
-        damage.setStyle("-fx-background-color: #40422C; -fx-border-color: #40421C; -fx-border-width: 5; -fx-border-radius: 8;");
-        damage.setTextFill(Color.YELLOW);
-        speed.setStyle("-fx-background-color: #40421C; -fx-border-color: #40421C; -fx-border-width: 5; -fx-border-radius: 8;");
-        speed.setTextFill(Color.YELLOW);
+
+        ArrayList<Button> buttons = new ArrayList<>();
+        buttons.add(health);
+        buttons.add(damage);
+        buttons.add(speed);
 
         health.setOnAction(e -> {
             EntityGestion.bonus(HEALTH);
-            HUD.HUDLayer.getChildren().remove(bonusMenu);
+            HUD.HUDLayer.setCenter(null);
             HUD.HUDLayer.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0), CornerRadii.EMPTY, Insets.EMPTY)));
+            game.EntityGestion.getPlayer().isOnMenu = false;
+            game.hasTakenBonus=true;
         });
         damage.setOnAction(e -> {
             EntityGestion.bonus(DAMAGE);
-            HUD.HUDLayer.getChildren().remove(bonusMenu);
+            HUD.HUDLayer.setCenter(null);
             HUD.HUDLayer.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0), CornerRadii.EMPTY, Insets.EMPTY)));
+            game.EntityGestion.getPlayer().isOnMenu = false;
+            game.hasTakenBonus=true;
         });
         speed.setOnAction(e -> {
             EntityGestion.bonus(SPEED);
-            HUD.HUDLayer.getChildren().remove(bonusMenu);
+            HUD.HUDLayer.setCenter(null);
             HUD.HUDLayer.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0), CornerRadii.EMPTY, Insets.EMPTY)));
+            game.EntityGestion.getPlayer().isOnMenu = false;
+            game.hasTakenBonus=true;
+
         });
-        bonusMenu.getChildren().addAll(health, damage,speed);
+
+        for(Button b : buttons){
+            b.setFont(font);
+            b.setMaxHeight((double) menuHeight /10);
+            b.setAlignment(Pos.CENTER);
+            bonusMenu.getChildren().add(b);
+            b.setStyle("-fx-background-color: #40421C; -fx-border-color: #40421C; -fx-border-width: 5; -fx-border-radius: 8;");
+            b.setTextFill(Color.YELLOW);
+        }
+        bonusMenu.setSpacing(10);
+        bonusMenu.setAlignment(Pos.CENTER);
     }
 
 
@@ -234,7 +247,7 @@ public class Camera {
 
     public void updateHUD(){
         HUD.HPValue.setText(String.valueOf(EntityGestion.player.getHP()));
-        HUD.roundValue.setText(String.valueOf(game.roundCounter));
+        HUD.roundValue.setText(String.valueOf(game.roundCounter+1));
         HUD.enemiesLeftValue.setText(String.valueOf(game.currentRound.getIngameEnnemyList().size()));
         HUD.moneyValue.setText(String.valueOf(EntityGestion.player.money));
     }
@@ -263,9 +276,7 @@ public class Camera {
         endRoot = new StackPane();
         endLayer = new VBox();
         endRoot.getChildren().add(endLayer);
-        endScene = new Scene(endRoot,WIDTH,HEIGHT);
-        endScene.setFill(Color.BLACK);
-        stage.setScene(endScene);
+        scene.setRoot(endRoot);
         endLayer.setAlignment(Pos.CENTER);
         if(end == WIN){
             Label victory = new Label("VICTORY");
@@ -310,7 +321,7 @@ public class Camera {
             }
 
             game.gameLoop();
-            stage.setScene(scene);
+            scene.setRoot(root);
 
         });
 
