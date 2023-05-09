@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,16 +17,37 @@ import static utils.Constants.MapConstants.*;
 
 public class Map {
     public Image[] textureLib;
-    private final int[][] mapMatrice;
+    private int[][] mapMatrice;
     private ArrayList<int[]> spwanCoords = new ArrayList<>();
 
 
     public Map() throws URISyntaxException, IOException {
         this.textureLib=new Image[31];
-        this.mapMatrice = getMapCSV();
+        initManualMatrix();
+        //this.mapMatrice = getMapCSV();
         importTexture();
-        CSVReader.printMatrix(mapMatrice);
         setSpwanCoords(mapMatrice);
+        CSVReader.printMatrix(mapMatrice);
+    }
+
+
+    private void initManualMatrix(){
+        mapMatrice = new int[][]{
+                {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1, 6, 3, 3, 3, 3, 3, 3, 3, 5, -1, -1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1, 2, 0, 0, 0, 0, 0, 0, 0, 1, -1, -1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1, 14, 0, 0, 0, 0, 0, 0, 0, 1, -1, -1, -1, -1, -1, -1},
+                {6, 3, 3, 3, 3, 29, 0, 0, 11, 4, 12, 0, 0, 1, -1, -1, -1, -1, -1, -1},
+                {2, 0, 0, 0, 0, 25, 0, 0, 1, -1, 2, 0, 0, 1, -1, -1, -1, -1, -1, -1},
+                {14, 0, 0, 0, 0, 25, 0, 0, 9, 3, 10, 0, 0, 1, -1, -1, -1, -1, -1, -1},
+                {2, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 1, -1, -1, -1, -1, -1, -1},
+                {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, -1, -1, -1, -1, -1},
+                {2, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 9, 3, 3, 15, 3, 3, 5},
+                {2, 0, 0, 0, 0, 27, 0, 0, 22, 19, 21, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {2, 0, 0, 0, 0, 25, 0, 0, 24, 20, 23, 17, 0, 0, 0, 0, 0, 0, 0, 1},
+                {2, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {8, 4, 4, 4, 4, 28, 4, 4, 4, 16, 4, 4, 4, 4, 4, 4, 4, 4, 4, 7}
+        };
     }
 
     private void importTexture() {
@@ -48,18 +70,17 @@ public class Map {
         textureLib[DOORD] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoorD.png")).toExternalForm());
         textureLib[CHAIR] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/Chair.png")).toExternalForm());
         textureLib[CHAIR2] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/Chair2.png")).toExternalForm());
-        textureLib[DOUBLEWALL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoubleWallVertical.png")).toExternalForm());
+        textureLib[DOUBLEWALL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/doubleWallVertical.png")).toExternalForm());
         textureLib[DOUBLEWALLCORNERD] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoubleWallCornerD.png")).toExternalForm());
         textureLib[DOUBLEWALLCORNERU] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/DoubleWallCornerU.png")).toExternalForm());
-        textureLib[TABLEU] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TableU.png")).toExternalForm());
-        textureLib[TABLED] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TableD.png")).toExternalForm());
-        textureLib[TABLEUR] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TableUR.png")).toExternalForm());
-        textureLib[TABLEUL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TableUL.png")).toExternalForm());
-        textureLib[TABLEDR] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TableDR.png")).toExternalForm());
-        textureLib[TABLEDL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TableDL.png")).toExternalForm());
+        textureLib[TABLEU] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/tableU.png")).toExternalForm());
+        textureLib[TABLED] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/tableD.png")).toExternalForm());
+        textureLib[TABLEUR] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/tableUR.png")).toExternalForm());
+        textureLib[TABLEUL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/tableUL.png")).toExternalForm());
+        textureLib[TABLEDR] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/tableDR.png")).toExternalForm());
+        textureLib[TABLEDL] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/tableDL.png")).toExternalForm());
         textureLib[TRIPLEWALLDOWN] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TripleWallDown.png")).toExternalForm());
         textureLib[TRIPLEWALLUP] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/TripleWallUp.png")).toExternalForm());
-        textureLib[PLANT] = new Image(Objects.requireNonNull(getClass().getResource( "/Map/Plant.png")).toExternalForm());
 
     }
 
@@ -67,6 +88,7 @@ public class Map {
         URL url = CSVReader.class.getResource("/Map/map.csv");
         assert url != null;
         String file = String.valueOf(Paths.get(url.toURI()).toFile());
+        System.out.println(file);
         return CSVReader.readCsv(String.valueOf(file));
     }
 

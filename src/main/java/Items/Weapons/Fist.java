@@ -1,4 +1,4 @@
-package Objects.Weapons;
+package Items.Weapons;
 import Entities.Living.LivingEntity;
 public class Fist extends Weapon{
     public Fist(LivingEntity owner){
@@ -6,4 +6,5 @@ public class Fist extends Weapon{
         this.owner=owner;
         this.name="Fist";
     }
+
 }

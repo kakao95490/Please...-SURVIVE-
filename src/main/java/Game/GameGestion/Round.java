@@ -3,11 +3,11 @@ package Game.GameGestion;
 import Entities.Living.Enemies.Axie;
 import Entities.Living.Enemies.BaseMonke;
 import Entities.Living.Enemies.Enemies;
+import Entities.Living.Enemies.Maskass;
 
 import java.util.ArrayList;
 
-import static utils.Constants.EntityConstants.AXIE;
-import static utils.Constants.EntityConstants.BASE_MONKE;
+import static utils.Constants.EntityConstants.*;
 
 public class Round {
     private final ArrayList<Enemies> waitingEnnemyList = new ArrayList<>();
@@ -21,9 +21,9 @@ public class Round {
         for (int j : entityList) {
             rdmNbr = (int) (Math.random() * spawnList.size());
             switch (j) {
-                case BASE_MONKE ->
-                        waitingEnnemyList.add(new BaseMonke(spawnList.get(rdmNbr)[1], spawnList.get(rdmNbr)[0]));
+                case BASE_MONKE -> waitingEnnemyList.add(new BaseMonke(spawnList.get(rdmNbr)[1], spawnList.get(rdmNbr)[0]));
                 case AXIE -> waitingEnnemyList.add(new Axie(spawnList.get(rdmNbr)[1], spawnList.get(rdmNbr)[0]));
+                case MASKASS -> waitingEnnemyList.add(new Maskass(spawnList.get(rdmNbr)[1], spawnList.get(rdmNbr)[0]));
             }
         }
 

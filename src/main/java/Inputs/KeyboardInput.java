@@ -47,6 +47,16 @@ public class KeyboardInput {
             if(event.getCode() == KeyCode.SPACE){
                 game.EntityGestion.getPlayer().actionKeyPressed=true;
             }
+            if(event.getCode() == KeyCode.DIGIT1){
+                game.EntityGestion.getPlayer().itemUseKeyPressed[0]=true;
+            }
+            if(event.getCode() == KeyCode.DIGIT2){
+                game.EntityGestion.getPlayer().itemUseKeyPressed[1]=true;
+            }
+            if(event.getCode() == KeyCode.DIGIT3){
+                game.EntityGestion.getPlayer().itemUseKeyPressed[2]=true;
+            }
+
 
 
 
@@ -83,6 +93,15 @@ public class KeyboardInput {
             }
             if(event.getCode() == KeyCode.SPACE){
                 game.EntityGestion.getPlayer().actionKeyPressed=false;
+            }
+            if(event.getCode() == KeyCode.DIGIT1){
+                game.EntityGestion.getPlayer().itemUseKeyPressed[0]=false;
+            }
+            if(event.getCode() == KeyCode.DIGIT2){
+                game.EntityGestion.getPlayer().itemUseKeyPressed[1]=false;
+            }
+            if(event.getCode() == KeyCode.DIGIT3){
+                game.EntityGestion.getPlayer().itemUseKeyPressed[2]=false;
             }
         });
 

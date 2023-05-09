@@ -1,10 +1,9 @@
 package Entities.Living.GoodGuys;
 
-import Objects.Weapons.Pistol;
-import Objects.Weapons.Shotgun;
-import Objects.Weapons.Uzi;
-import Objects.Weapons.Weapon;
-import javafx.geometry.Insets;
+import Items.Weapons.Pistol;
+import Items.Weapons.Shotgun;
+import Items.Weapons.Uzi;
+import Items.Weapons.Weapon;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -19,12 +18,12 @@ import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.PlayerConstants.STATIC;
 import static utils.Constants.Style.font;
 import static utils.Constants.WindowConstants.*;
-import Objects.AbstractObjects;
+import Items.AbstractItem;
 import javafx.scene.text.Text;
 
 public class Seller extends PNJ{
 
-    private final ArrayList<AbstractObjects> itemList = new ArrayList<>();
+    private final ArrayList<AbstractItem> itemList = new ArrayList<>();
     private final ArrayList<Button> buyButtonList = new ArrayList<>();
     private final VBox menuBox = new VBox();
 
@@ -66,7 +65,7 @@ public class Seller extends PNJ{
         menuBox.setMinSize(menuWidth,menuHeight);
         menuBox.setMaxSize(menuWidth,menuHeight);
         menuBox.setStyle("-fx-background-color: #A0A445; -fx-border-color: #40421C; -fx-border-width: 5;");
-        for(AbstractObjects item : itemList){
+        for(AbstractItem item : itemList){
             HBox itemBox = new HBox();
             itemBox.setMinSize(menuWidth,menuHeight/10);
             itemBox.setMaxSize(menuWidth,menuHeight/10);
@@ -118,7 +117,7 @@ public class Seller extends PNJ{
     }
 
 
-    public void buyItem(Player player,AbstractObjects item){
+    public void buyItem(Player player, AbstractItem item){
         if(player.money>=item.price){
             player.money-=item.price;
             if(item instanceof Weapon) {
@@ -128,9 +127,9 @@ public class Seller extends PNJ{
     }
 
     public void initItemList(){
-        AbstractObjects pistol = new Pistol(this);
-        AbstractObjects uzi = new Uzi(this);
-        AbstractObjects shotgun = new Shotgun(this);
+        AbstractItem pistol = new Pistol(this);
+        AbstractItem uzi = new Uzi(this);
+        AbstractItem shotgun = new Shotgun(this);
         itemList.add(pistol);
         itemList.add(uzi);
         itemList.add(shotgun);

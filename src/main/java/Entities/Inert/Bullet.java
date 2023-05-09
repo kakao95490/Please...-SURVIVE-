@@ -1,7 +1,7 @@
 package Entities.Inert;
 
 import Entities.Entity;
-import Objects.Weapons.Weapon;
+import Items.Weapons.Weapon;
 import javafx.scene.image.Image;
 import utils.Coord;
 

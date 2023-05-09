@@ -1,4 +1,4 @@
-package Objects.Weapons;
+package Items.Weapons;
 
 import Entities.Inert.Bullet;
 import Entities.Living.LivingEntity;
@@ -41,4 +41,5 @@ public class Shotgun extends Weapon {
         Random random = new Random();
         return (int) ((random.nextInt(10) + bulletSize/2) * SCALE);
     }
+
 }

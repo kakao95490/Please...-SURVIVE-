@@ -1,4 +1,4 @@
-package Objects.Weapons;
+package Items.Weapons;
 
 
 import Entities.Living.LivingEntity;

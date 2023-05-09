@@ -1,12 +1,10 @@
-package Objects.Weapons;
+package Items.Weapons;
 
 import Entities.Inert.Bullet;
 import Entities.Living.LivingEntity;
-import Objects.AbstractObjects;
-import utils.Coord;
+import Items.AbstractItem;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static utils.Constants.WindowConstants.SCALE;
 
@@ -14,7 +12,7 @@ import static utils.Constants.WindowConstants.SCALE;
  * Classe abstraite qui représente une arme
  */
 
-public abstract class Weapon extends AbstractObjects{
+public abstract class Weapon extends AbstractItem {
     protected int damage;
     protected int range= (int) SCALE;
     public int bulletSize= (int) SCALE;
@@ -81,6 +79,11 @@ public abstract class Weapon extends AbstractObjects{
 
     public int getDmg() {
         return damage;
+    }
+
+    @Override
+    public void use(LivingEntity entity) {
+        return;
     }
 
 

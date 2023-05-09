@@ -2,7 +2,7 @@ package Entities.Living.Enemies;
 
 import Entities.Living.GoodGuys.Player;
 import Entities.Living.LivingEntity;
-import Objects.Weapons.Fist;
+import Items.Weapons.Fist;
 import javafx.scene.image.Image;
 
 import java.util.Objects;

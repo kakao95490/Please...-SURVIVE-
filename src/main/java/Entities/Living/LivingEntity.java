@@ -3,16 +3,20 @@ package Entities.Living;
 import Entities.Entity;
 import Entities.Inert.Bullet;
 import Entities.Living.GoodGuys.Player;
-import Objects.AbstractObjects;
-import Objects.Weapons.Weapon;
+import Items.AbstractItem;
+import Items.Weapons.Weapon;
 import javafx.scene.image.Image;
+
+import java.util.ArrayList;
 
 import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.PlayerConstants.HIT;
 import static utils.Constants.WindowConstants.FPS_TARGET;
 
+
 public abstract class LivingEntity extends Entity {
     protected Weapon weapon;
+    protected AbstractItem[] inventory;
 
     protected int HP;
     protected int maxHP;
@@ -130,7 +134,17 @@ public abstract class LivingEntity extends Entity {
     public Weapon getWeapon() {
         return weapon;
     }
+
     public void setWeapon(Weapon weapon) { this.weapon = weapon; this.weapon.setOwner(this); }
+
+    public void heal( int healAmount ) {
+        HP += healAmount;
+        if( HP > maxHP ) HP = maxHP;
+    }
+
+    public int getMaxHp() {
+        return maxHP;
+    }
 
 
 }

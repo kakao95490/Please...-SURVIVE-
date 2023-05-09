@@ -12,8 +12,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import static utils.Constants.EntityConstants.AXIE;
-import static utils.Constants.EntityConstants.BASE_MONKE;
+import static utils.Constants.EntityConstants.*;
 import static utils.Constants.GameConstants.*;
 import static utils.Constants.WindowConstants.FPS_TARGET;
 
@@ -62,7 +61,7 @@ public class Game {
         this.roundList = new ArrayList<>();
         this.hasTakenBonus=false;
         this.roundList.add(new Round(new int[]{
-                BASE_MONKE,
+                MASKASS,
         },
                 map.getSpwanCoords(),80));
 

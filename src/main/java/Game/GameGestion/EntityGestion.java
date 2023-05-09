@@ -70,19 +70,18 @@ public class EntityGestion {
 
 
     public PNJ initPNJ(String type){
-        switch(type){
-            case "Seller":
-                return new Seller();
-            default:
-                return null;
+        if (type.equals("Seller")) {
+            return new Seller();
         }
+        return null;
     }
 
 
     public void playerUpdate(Camera camera, Map map){
+        player.useItem();
         player.updatePos();
-        for(int i=0;i<pnjList.size();i++){
-            interactWithPnj(camera,player, pnjList.get(i));
+        for (PNJ pnj : pnjList) {
+            interactWithPnj(camera, player, pnj);
         }
 
         while(detectWallCollision(player,map)){
@@ -91,14 +90,12 @@ public class EntityGestion {
         player.updateShootingDirection();
         player.updateStatus();
         player.updateAnimationIndex();
-        if(isPlayerDead()){
-
-        }
     }
 
     public void updatePnj() {
-        for(PNJ pnj : pnjList)
-        pnj.updateAnimationIndex();
+        for(PNJ pnj : pnjList) {
+            pnj.updateAnimationIndex();
+        }
     }
 
     /**
@@ -191,10 +188,13 @@ public class EntityGestion {
                 }
             }
         }
-
     }
 
 
+    /**
+     * Update the list of entities displayed to see which one to display behind or in front of the others
+     *
+     */
     public void updateDisplayedEntitiesList(ArrayList<Enemies> inGameEnemies){
         displayedEntities.clear();
         displayedEntities.add(player);

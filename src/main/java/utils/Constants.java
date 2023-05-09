@@ -81,6 +81,7 @@ public class Constants {
     public static class EntityConstants{
         public static final int BASE_MONKE=0;
         public static final int AXIE=1;
+        public static final int MASKASS=2;
     }
 
     public static class Style{

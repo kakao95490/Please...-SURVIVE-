@@ -9,25 +9,25 @@ import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.PlayerConstants.WALKING;
 import static utils.Constants.WindowConstants.SCALE;
 
-public class BaseMonke extends Enemies {
-    public BaseMonke(int x, int y) {
+public class Maskass extends Enemies {
+    public Maskass(int x, int y) {
         this.coord.setXY(x*TILE_SIZE, y*TILE_SIZE);
         this.prevCoord.setXY(coord.getX(),coord.getY());
-        this.entityName = "BaseMonke";
+        this.entityName = "Masskass";
 
-        this.spriteSize = 64;
-        this.size = TILE_SIZE;
-        this.hitbox.setHitboxSize(size/3, size-size/3);
-        this.hitbox.setHitboxOffset(size/3,size/3);
+        this.spriteSize = 100;
+        this.size = (int) (this.spriteSize*SCALE);
+        this.hitbox.setHitboxSize((int) (size/1.8), (int) (size/1.8));
+        this.hitbox.setHitboxOffset((int) (size/3.8),(int) (size/3.8));
         this.hitbox.updateHitbox();
         this.status = WALKING;
-        this.spriteSheet =new Image(Objects.requireNonNull(getClass().getResource("/Sprites/BaseMonkeSPRITESHEET.png")).toExternalForm());
+        this.spriteSheet =new Image(Objects.requireNonNull(getClass().getResource("/Sprites/MaskassSPRITESHEET.png")).toExternalForm());
 
 
         this.speed = (int) (2*SCALE);
-        this.maxHP = 60;
+        this.maxHP = 200;
         this.HP = maxHP;
-        this.dmgMultiplier = 1;
+        this.dmgMultiplier = 4;
         this.weapon = new Fist(this);
         this.money = 10;
     }

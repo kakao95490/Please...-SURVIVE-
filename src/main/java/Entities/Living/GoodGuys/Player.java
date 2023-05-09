@@ -1,9 +1,9 @@
 package Entities.Living.GoodGuys;
 
 import Entities.Living.LivingEntity;
-import Objects.Weapons.Pistol;
-import Objects.Weapons.Shotgun;
-import Objects.Weapons.Uzi;
+import Items.AbstractItem;
+import Items.Consume.HealPotion;
+import Items.Weapons.Pistol;
 import javafx.scene.image.Image;
 
 import java.util.Objects;
@@ -14,8 +14,9 @@ import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.WindowConstants.*;
 
 public class Player extends LivingEntity {
-    public boolean[] movementKeyPressed;
-    public boolean[] shootKeyPressed;
+    public boolean[] movementKeyPressed = new boolean[4];
+    public boolean[] shootKeyPressed = new boolean[4];
+    public boolean[] itemUseKeyPressed = new boolean[3];
     public boolean actionKeyPressed;
     public boolean isOnMenu;
 
@@ -43,13 +44,12 @@ public class Player extends LivingEntity {
         this.hitbox.setHitboxSize(size/2,size/2);
         this.hitbox.setHitboxOffset(size/4,size/2);
 
-
-        this.movementKeyPressed = new boolean[4];
-        this.shootKeyPressed = new boolean[4];
-
         this.isOnMenu = false;
 
         this.spriteSheet = new Image(Objects.requireNonNull(getClass().getResource("/Sprites/PlayerSPRITESHEET.png")).toExternalForm());
+
+        this.inventory = new AbstractItem[3];
+        this.inventory[0] = new HealPotion();
     }
 
 
@@ -94,6 +94,17 @@ public class Player extends LivingEntity {
         hitbox.updateHitbox();
 
 
+    }
+
+    public void useItem(){
+        for(int i=0;i<3;i++){
+            if(itemUseKeyPressed[i]){
+                if(inventory[i]!=null){
+                    inventory[i].use(this);
+                    inventory[i]=null;
+                }
+            }
+        }
     }
 
 
