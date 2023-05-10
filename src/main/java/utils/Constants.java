@@ -13,6 +13,8 @@ public class Constants {
         public static final int HIT=2;
         public static final int DEAD=3;
 
+        public static final int INVENTORYSIZE=3;
+
         public static int getSpriteAmount(int player_action){
             return switch (player_action) {
                 case STATIC -> 8;

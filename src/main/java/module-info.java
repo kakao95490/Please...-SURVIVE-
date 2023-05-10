@@ -1,7 +1,10 @@
 module test {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.sql;
-    requires java.desktop;
-    requires org.apache.commons.lang3;
+
+
+    opens Game to javafx.fxml;
+    exports Game;
+    exports Game.GameGestion;
+    opens Game.GameGestion to javafx.fxml;
 }

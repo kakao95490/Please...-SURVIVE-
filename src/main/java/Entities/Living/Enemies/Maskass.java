@@ -18,7 +18,7 @@ public class Maskass extends Enemies {
         this.spriteSize = 100;
         this.size = (int) (this.spriteSize*SCALE);
         this.hitbox.setHitboxSize((int) (size/1.8), (int) (size/1.8));
-        this.hitbox.setHitboxOffset((int) (size/3.8),(int) (size/3.8));
+        this.hitbox.setHitboxOffset((int) (size/3.8),(int) (size/1.8));
         this.hitbox.updateHitbox();
         this.status = WALKING;
         this.spriteSheet =new Image(Objects.requireNonNull(getClass().getResource("/Sprites/MaskassSPRITESHEET.png")).toExternalForm());

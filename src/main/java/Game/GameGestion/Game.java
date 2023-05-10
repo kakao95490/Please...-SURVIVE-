@@ -7,6 +7,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import utils.AStar;
+import utils.Timer;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,7 +20,7 @@ import static utils.Constants.WindowConstants.FPS_TARGET;
 
 public class Game {
 
-
+    public ArrayList<Timer> timerList = new ArrayList<>();
 
     public KeyboardInput keyboardInput;
     public Double framerate;
@@ -28,7 +29,9 @@ public class Game {
     long lastCheck=System.currentTimeMillis();
     long timerCheck=System.currentTimeMillis();
     double timePerFrame = 1000.0 / FPS_TARGET;
-    int secondLeft=20;
+    int secondLeft=15;
+
+    private Timer timerBeetweenRound = null;
 
 
 
@@ -61,7 +64,9 @@ public class Game {
         this.roundList = new ArrayList<>();
         this.hasTakenBonus=false;
         this.roundList.add(new Round(new int[]{
-                MASKASS,
+                BASE_MONKE,
+                BASE_MONKE,
+                BASE_MONKE,
         },
                 map.getSpwanCoords(),80));
 
@@ -165,7 +170,18 @@ public class Game {
 
 
 
-        }, map.getSpwanCoords(),30));
+        }, map.getSpwanCoords(),50));
+        this.roundList.add(new Round(new int[]{
+                MASKASS,
+                AXIE,
+                AXIE,
+                AXIE,
+                AXIE,
+                AXIE,
+                AXIE,
+                AXIE,
+                AXIE,
+        }, map.getSpwanCoords(),200));
 
         this.currentRound= roundList.get(0);
     }
@@ -197,10 +213,12 @@ public class Game {
                 if(!hasTakenBonus && !EntityGestion.getPlayer().isOnMenu){
                     camera.bonusMenu();
                 }
+
+                /*
                 if(secondLeft == 0){
                     roundCounter++;
                     currentRound = roundList.get(roundCounter);
-                    secondLeft=20;
+                    secondLeft=15;
                     hasTakenBonus =false;
                     HUD.timerValue.setText("");
 
@@ -209,7 +227,25 @@ public class Game {
                     timerCheck=System.currentTimeMillis();
                     secondLeft-=1;
                     HUD.timerValue.setText(String.valueOf(secondLeft));
+                }*/
+
+                if(timerBeetweenRound == null){
+                    timerBeetweenRound = new Timer(10);
+                    timerList.add(timerBeetweenRound);
                 }
+                if(timerBeetweenRound.isFinished()){
+                    roundCounter++;
+                    currentRound = roundList.get(roundCounter);
+                    secondLeft=15;
+                    hasTakenBonus =false;
+                    HUD.timerValue.setText("");
+                    timerBeetweenRound=null;
+                }
+                else{
+                    HUD.timerValue.setText(String.valueOf(timerBeetweenRound.getSecondLeft()));
+                }
+
+
             }
         }
     }
@@ -234,6 +270,9 @@ public class Game {
 
 
     public void gameUpdateAndRender(){
+        for(Timer timer : timerList){
+            timer.updateTimer();
+        }
         updateAll();
         camera.renderAll();
     }
