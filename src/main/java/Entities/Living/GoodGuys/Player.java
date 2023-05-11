@@ -2,10 +2,12 @@ package Entities.Living.GoodGuys;
 
 import Entities.Living.LivingEntity;
 import Items.AbstractItem;
+import Items.Consume.BigDmg;
 import Items.Consume.HealPotion;
 import Items.Weapons.Pistol;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static utils.Constants.Directions.*;
@@ -19,7 +21,7 @@ public class Player extends LivingEntity {
     public boolean[] itemUseKeyPressed = new boolean[3];
     public boolean actionKeyPressed;
     public boolean isOnMenu;
-
+    public ArrayList<AbstractItem> temporaryBonus = new ArrayList<>();
 
     public Player(){
         super();
@@ -50,6 +52,7 @@ public class Player extends LivingEntity {
 
         this.inventory = new AbstractItem[3];
         this.inventory[0] = new HealPotion();
+        this.inventory[1] = new BigDmg();
     }
 
 

@@ -78,6 +78,7 @@ public class EntityGestion {
 
 
     public void playerUpdate(Camera camera, Map map){
+        player.updateBonus();
         player.useItem();
         player.updatePos();
         for (PNJ pnj : pnjList) {

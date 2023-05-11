@@ -16,7 +16,8 @@ import static utils.Constants.WindowConstants.FPS_TARGET;
 
 public abstract class LivingEntity extends Entity {
     protected Weapon weapon;
-    protected AbstractItem[] inventory;
+    public AbstractItem[] inventory;
+    public ArrayList<AbstractItem> temporaryBonus = new ArrayList<>();
 
     protected int HP;
     protected int maxHP;
@@ -147,4 +148,20 @@ public abstract class LivingEntity extends Entity {
     }
 
 
+    public boolean inventoryIsFull() {
+        for (AbstractItem item : inventory) {
+            if (item == null) return false;
+        }
+        return true;
+    }
+
+    public void updateBonus(){
+        for(AbstractItem item : temporaryBonus){
+            item.bonusTimer.updateTimer();
+            if(item.bonusTimer.isFinished()){
+                item.removeBonus(this);
+                temporaryBonus.remove(item);
+            }
+        }
+    }
 }

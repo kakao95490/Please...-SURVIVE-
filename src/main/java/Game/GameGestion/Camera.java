@@ -21,6 +21,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -250,6 +252,24 @@ public class Camera {
         HUD.roundValue.setText(String.valueOf(game.roundCounter+1));
         HUD.enemiesLeftValue.setText(String.valueOf(game.currentRound.getIngameEnnemyList().size()));
         HUD.moneyValue.setText(String.valueOf(EntityGestion.player.money));
+        if(EntityGestion.player.inventory[0] != null) {
+            HUD.itemView1.setImage(EntityGestion.player.inventory[0].sprite);
+        }
+        else{
+            HUD.itemView1.setImage(null);
+        }
+        if(EntityGestion.player.inventory[1] != null) {
+            HUD.itemView2.setImage(EntityGestion.player.inventory[1].sprite);
+        }
+        else{
+            HUD.itemView2.setImage(null);
+        }
+        if(EntityGestion.player.inventory[2] != null) {
+            HUD.itemView3.setImage(EntityGestion.player.inventory[2].sprite);
+        }
+        else{
+            HUD.itemView3.setImage(null);
+        }
     }
 
 

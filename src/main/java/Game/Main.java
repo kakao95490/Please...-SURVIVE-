@@ -17,12 +17,9 @@ public class  Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-
         game = new Game();
         game.initGame();
         game.gameLoop();
-
-
 
     }
 

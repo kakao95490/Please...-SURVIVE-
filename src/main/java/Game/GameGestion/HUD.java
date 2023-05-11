@@ -26,6 +26,9 @@ public class HUD {
     public Text roundValue;
     public Text enemiesLeftValue;
     public static Text timerValue;
+    public ImageView itemView1 = new ImageView();
+    public ImageView itemView2 = new ImageView();
+    public ImageView itemView3 = new ImageView();
 
 
     public HUD() {
@@ -107,7 +110,12 @@ public class HUD {
         downHudContainer.setMinWidth(WIDTH);
 
 
+
+        VBox timerAndInventoryBox = new VBox();
+        timerAndInventoryBox.setAlignment(Pos.CENTER);
+        timerAndInventoryBox.setMinWidth(500);
         HBox timer= new HBox();
+        timer.setAlignment(Pos.CENTER);
         Text timerText= new Text("Next round in : ");
         timerValue = new Text("");
         timerText.setFont(font);
@@ -116,22 +124,49 @@ public class HUD {
         timerValue.setFill(Color.RED);
 
         timer.visibleProperty().bind(timerValue.textProperty().isNotEmpty());
-
-
         timer.getChildren().addAll(timerText, timerValue);
-        downHudContainer.getChildren().add(timer);
+
+        HBox inventoryBox = new HBox();
+        inventoryBox.setSpacing(10);
+        inventoryBox.setAlignment(Pos.CENTER);
+        ImageView inventoryImage1 = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("/Objects/InventoryCase.png")).toExternalForm()));
+        ImageView inventoryImage2 = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("/Objects/InventoryCase.png")).toExternalForm()));
+        ImageView inventoryImage3 = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("/Objects/InventoryCase.png")).toExternalForm()));
+
+        StackPane inventoryCase1 = new StackPane();
+        StackPane inventoryCase2 = new StackPane();
+        StackPane inventoryCase3 = new StackPane();
+
+
+
+        inventoryCase1.getChildren().add(inventoryImage1);
+        inventoryCase2.getChildren().add(inventoryImage2);
+        inventoryCase3.getChildren().add(inventoryImage3);
+
+
+        inventoryCase1.getChildren().add(itemView1);
+        inventoryCase2.getChildren().add(itemView2);
+        inventoryCase3.getChildren().add(itemView3);
+
+
+
+        inventoryBox.getChildren().addAll(inventoryCase1, inventoryCase2, inventoryCase3);
+
+
+        timerAndInventoryBox.getChildren().addAll(timer,inventoryBox);
+        downHudContainer.getChildren().add(timerAndInventoryBox);
 
         HUDLayer.setBottom(downHudContainer);
 
-        GridPane inventoryGrid = new GridPane();
 
-        inventoryGrid.setPadding(new Insets(10));
-        inventoryGrid.setHgap(10);
-        inventoryGrid.setVgap(10);
-        inventoryGrid.setAlignment(Pos.CENTER);
-        HUDLayer.setRight(inventoryGrid);
+
+
+
+
+
 
     }
+
 
 
 

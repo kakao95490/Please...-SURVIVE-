@@ -27,9 +27,7 @@ public class Game {
     public EntityGestion EntityGestion = new EntityGestion();
     int frame = 0;
     long lastCheck=System.currentTimeMillis();
-    long timerCheck=System.currentTimeMillis();
     double timePerFrame = 1000.0 / FPS_TARGET;
-    int secondLeft=15;
 
     private Timer timerBeetweenRound = null;
 
@@ -58,14 +56,11 @@ public class Game {
         camera.initBonusMenu();
         this.map = new Map();
         this.keyboardInput = new KeyboardInput(this);
-        this.secondLeft = 20;
         this.roundCounter=0;
         this.aStar = new AStar(map.getMapMatrice());
         this.roundList = new ArrayList<>();
         this.hasTakenBonus=false;
         this.roundList.add(new Round(new int[]{
-                BASE_MONKE,
-                BASE_MONKE,
                 BASE_MONKE,
         },
                 map.getSpwanCoords(),80));
@@ -214,29 +209,15 @@ public class Game {
                     camera.bonusMenu();
                 }
 
-                /*
-                if(secondLeft == 0){
-                    roundCounter++;
-                    currentRound = roundList.get(roundCounter);
-                    secondLeft=15;
-                    hasTakenBonus =false;
-                    HUD.timerValue.setText("");
-
-                }
-                else if(System.currentTimeMillis()-timerCheck>=1000){
-                    timerCheck=System.currentTimeMillis();
-                    secondLeft-=1;
-                    HUD.timerValue.setText(String.valueOf(secondLeft));
-                }*/
 
                 if(timerBeetweenRound == null){
-                    timerBeetweenRound = new Timer(10);
+                    timerBeetweenRound = new Timer(15);
                     timerList.add(timerBeetweenRound);
                 }
                 if(timerBeetweenRound.isFinished()){
                     roundCounter++;
                     currentRound = roundList.get(roundCounter);
-                    secondLeft=15;
+
                     hasTakenBonus =false;
                     HUD.timerValue.setText("");
                     timerBeetweenRound=null;

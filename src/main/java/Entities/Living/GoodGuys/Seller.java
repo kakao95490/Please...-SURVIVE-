@@ -73,7 +73,6 @@ public class Seller extends PNJ{
             Text itemPrice = new Text(Integer.toString(item.price));
             Button buyButton = new Button("Buy");
             buyButtonList.add(buyButton);
-            buyButton.setOnAction(event -> {});
 
 
             buyButton.setStyle("-fx-background-color: #40421C; -fx-border-color: #40421C; -fx-border-width: 5; -fx-border-radius: 8;");
@@ -99,18 +98,27 @@ public class Seller extends PNJ{
                     buyItem(player,itemList.get(finalI));
                     updateButtons(player);
             });
-            if(Objects.equals(player.getWeapon().name, itemList.get(finalI).name)){
-                buyButtonList.get(finalI).setText("Equipped");
-                buyButtonList.get(finalI).setDisable(true);
+            if(itemList.get(finalI) instanceof Weapon){
+                if(Objects.equals(player.getWeapon().name, itemList.get(finalI).name)){
+                    buyButtonList.get(finalI).setText("Equipped");
+                    buyButtonList.get(finalI).setDisable(true);
+                }
+                else{
+                    buyButtonList.get(finalI).setText("Buy");
+                    buyButtonList.get(finalI).setDisable(false);
+                }
             }
             else{
-                buyButtonList.get(finalI).setText("Buy");
-                buyButtonList.get(finalI).setDisable(false);
-                buyButtonList.get(i).setDisable(player.money < itemList.get(i).price);
+                if(player.inventoryIsFull()){
+                    buyButtonList.get(finalI).setText("Inventory Full");
+                    buyButtonList.get(finalI).setDisable(true);
+                }
+                else{
+                    buyButtonList.get(finalI).setText("Buy");
+                    buyButtonList.get(finalI).setDisable(false);
+                }
             }
-
-
-
+            buyButtonList.get(i).setDisable(player.money < itemList.get(i).price);
 
         }
 
@@ -123,6 +131,14 @@ public class Seller extends PNJ{
             if(item instanceof Weapon) {
                 player.setWeapon((Weapon) item);
             }
+            else{
+                for(int i = 0; i < player.inventory.length ;i++){
+                    if(player.inventory[i]==null){
+                        player.inventory[i]=item;
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -130,9 +146,13 @@ public class Seller extends PNJ{
         AbstractItem pistol = new Pistol(this);
         AbstractItem uzi = new Uzi(this);
         AbstractItem shotgun = new Shotgun(this);
+        AbstractItem healPotion = new Items.Consume.HealPotion();
+        AbstractItem bigDmg = new Items.Consume.BigDmg();
         itemList.add(pistol);
         itemList.add(uzi);
         itemList.add(shotgun);
+        itemList.add(healPotion);
+        itemList.add(bigDmg);
     }
 
 
