@@ -1,5 +1,6 @@
 package Entities.Living.GoodGuys;
 
+import Items.Consume.ConsumeItem;
 import Items.Weapons.Pistol;
 import Items.Weapons.Shotgun;
 import Items.Weapons.Uzi;
@@ -70,6 +71,7 @@ public class Seller extends PNJ{
             itemBox.setMinSize(menuWidth,menuHeight/10);
             itemBox.setMaxSize(menuWidth,menuHeight/10);
             Text itemName = new Text(item.name);
+            itemName.setWrappingWidth(menuWidth/2);
             Text itemPrice = new Text(Integer.toString(item.price));
             Button buyButton = new Button("Buy");
             buyButtonList.add(buyButton);
@@ -134,7 +136,7 @@ public class Seller extends PNJ{
             else{
                 for(int i = 0; i < player.inventory.length ;i++){
                     if(player.inventory[i]==null){
-                        player.inventory[i]=item;
+                        player.inventory[i]= (ConsumeItem) item;
                         break;
                     }
                 }

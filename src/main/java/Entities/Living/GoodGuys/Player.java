@@ -3,6 +3,7 @@ package Entities.Living.GoodGuys;
 import Entities.Living.LivingEntity;
 import Items.AbstractItem;
 import Items.Consume.BigDmg;
+import Items.Consume.ConsumeItem;
 import Items.Consume.HealPotion;
 import Items.Weapons.Pistol;
 import javafx.scene.image.Image;
@@ -50,7 +51,7 @@ public class Player extends LivingEntity {
 
         this.spriteSheet = new Image(Objects.requireNonNull(getClass().getResource("/Sprites/PlayerSPRITESHEET.png")).toExternalForm());
 
-        this.inventory = new AbstractItem[3];
+        this.inventory = new ConsumeItem[3];
         this.inventory[0] = new HealPotion();
         this.inventory[1] = new BigDmg();
     }

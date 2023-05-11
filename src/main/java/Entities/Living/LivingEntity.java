@@ -4,6 +4,7 @@ import Entities.Entity;
 import Entities.Inert.Bullet;
 import Entities.Living.GoodGuys.Player;
 import Items.AbstractItem;
+import Items.Consume.ConsumeItem;
 import Items.Weapons.Weapon;
 import javafx.scene.image.Image;
 
@@ -16,8 +17,8 @@ import static utils.Constants.WindowConstants.FPS_TARGET;
 
 public abstract class LivingEntity extends Entity {
     protected Weapon weapon;
-    public AbstractItem[] inventory;
-    public ArrayList<AbstractItem> temporaryBonus = new ArrayList<>();
+    public ConsumeItem[] inventory;
+    public ArrayList<ConsumeItem> temporaryBonus = new ArrayList<>();
 
     protected int HP;
     protected int maxHP;
@@ -100,6 +101,7 @@ public abstract class LivingEntity extends Entity {
         }
     }
 
+
     public boolean gotHit(LivingEntity attacker) {
         if(!isInvincible){
             if(this instanceof Player){
@@ -148,6 +150,10 @@ public abstract class LivingEntity extends Entity {
     }
 
 
+    /**
+     * Checks if the inventory is full
+     *
+     */
     public boolean inventoryIsFull() {
         for (AbstractItem item : inventory) {
             if (item == null) return false;
@@ -155,8 +161,12 @@ public abstract class LivingEntity extends Entity {
         return true;
     }
 
+
+    /**
+     * Updates the temporary bonus timer of the player
+     */
     public void updateBonus(){
-        for(AbstractItem item : temporaryBonus){
+        for(ConsumeItem item : temporaryBonus){
             item.bonusTimer.updateTimer();
             if(item.bonusTimer.isFinished()){
                 item.removeBonus(this);

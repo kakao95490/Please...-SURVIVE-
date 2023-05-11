@@ -81,20 +81,6 @@ public abstract class Weapon extends AbstractItem {
         return damage;
     }
 
-    @Override
-    public void use(LivingEntity entity) {
-        return;
-    }
-
-    @Override
-    public void setBonus(LivingEntity entity) {
-        return;
-    }
-
-    @Override
-    public void removeBonus(LivingEntity entity) {
-        return;
-    }
 
 
 

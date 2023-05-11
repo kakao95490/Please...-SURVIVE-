@@ -5,11 +5,11 @@ import Items.AbstractItem;
 import javafx.scene.image.Image;
 import utils.Timer;
 
-public class BigDmg extends AbstractItem {
+public class BigDmg extends ConsumeItem {
 
 
     public BigDmg(){
-        this.name="Temporary Big Damage";
+        this.name="Temporary damage +";
         this.price=150;
         this.sprite = new Image(String.valueOf(getClass().getResource("/Objects/BigDmg.png")));
         this.bonusTimer = new Timer(10);
@@ -26,7 +26,6 @@ public class BigDmg extends AbstractItem {
     }
 
 
-    @Override
     public void use(LivingEntity entity){
         entity.temporaryBonus.add(this);
         setBonus(entity);

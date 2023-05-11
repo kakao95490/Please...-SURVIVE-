@@ -5,7 +5,7 @@ import Items.AbstractItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class HealPotion extends AbstractItem {
+public class HealPotion extends ConsumeItem {
     public HealPotion(){
         this.name="Heal Potion";
         this.price=50;
