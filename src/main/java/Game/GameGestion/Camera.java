@@ -56,7 +56,10 @@ public class Camera {
     public VBox bonusMenu;
 
 
-
+    /**
+     * Constructeur de la caméra
+     * @param game
+     */
     public Camera(Game game){
         this.game = game;
         Color BACKGROUND_COLOR = Color.BLACK;
@@ -94,6 +97,10 @@ public class Camera {
 
     }
 
+
+    /**
+     * Initialise le menu de choix de bonus en fin de rounds.
+     */
     void initBonusMenu(){
         game.EntityGestion.getPlayer().isOnMenu=true;
         bonusMenu = new VBox();
@@ -151,8 +158,10 @@ public class Camera {
     }
 
 
-
-    //draw the map with the movement of the player (decalageCamera)
+    /**
+     * Dessine la map à l'écran en fonction de la position de la caméra
+     *
+     */
     public void drawMapMatrice(){
         updateCameraOffset();
         for (int i = 0; i < game.map.getMapMatrice().length; i++) {
@@ -165,7 +174,9 @@ public class Camera {
     }
 
 
-    //render the player
+    /**
+     * Rend le plaer à l'écran
+     */
     public void playerRender(){
         gc.drawImage(EntityGestion.player.spriteSheet,
                 EntityGestion.player.animationIndex*EntityGestion.player.spriteSize,
@@ -178,12 +189,23 @@ public class Camera {
                 EntityGestion.player.size);
     }
 
-    //render bullets shot by an entity
+    /**
+     * Render des balles
+     *
+     * @param bullet
+     * @param g
+     */
     public void renderBullets(Bullet bullet, GraphicsContext g){
         g.drawImage(bullet.sprite, bullet.getCoord().getX()+decalageCameraX, bullet.getCoord().getY()+decalageCameraY,bullet.size,bullet.size);
     }
 
-    //render an entity
+    /**
+     * Render des entités
+     *
+     * @param entity
+     * @param g
+     * @param entityCoord
+     */
     void renderEntity(LivingEntity entity, GraphicsContext g, Coord entityCoord){
         if(entity.getXLookingDirection()==RIGHT){
             g.save();
@@ -214,6 +236,9 @@ public class Camera {
 
     }
 
+    /**
+     * Render de tout les éléments à l'écran dans l'ordre de la liste displayedEntities pour une simulation 3D.
+     */
     public void renderAll(){
         //clear all
         updateHUD();
@@ -237,16 +262,20 @@ public class Camera {
         }
 
     }
+
+
+    /**
+     * Met à jour le décalage de la caméra en fonction de la position du joueur
+     */
     public void updateCameraOffset(){
         decalageCameraX=SPRITE_COORD.getX() - EntityGestion.player.getCoord().getX();
         decalageCameraY=SPRITE_COORD.getY() - EntityGestion.player.getCoord().getY();
     }
 
 
-
-
-
-
+    /**
+     * Met à jour les valeurs du HUD
+     */
     public void updateHUD(){
         HUD.HPValue.setText(String.valueOf(EntityGestion.player.getHP()));
         HUD.roundValue.setText(String.valueOf(game.roundCounter+1));

@@ -1,0 +1,14 @@
+module:test
+Entities
+Entities.Inert
+Entities.Living
+Entities.Living.Enemies
+Entities.Living.GoodGuys
+Game
+Game.GameGestion
+Inputs
+Items
+Items.Consume
+Items.Weapons
+Map
+utils

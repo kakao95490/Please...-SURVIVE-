@@ -9,6 +9,9 @@ import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.PlayerConstants.WALKING;
 import static utils.Constants.WindowConstants.SCALE;
 
+/**
+ * Classe des Maskass, ennemis qui se déplacent lentement, mais qui ont beaucoup de points de vie. Le boss du jeu est un Maskass.
+ */
 public class Maskass extends Enemies {
     public Maskass(int x, int y) {
         this.coord.setXY(x*TILE_SIZE, y*TILE_SIZE);
@@ -25,7 +28,7 @@ public class Maskass extends Enemies {
 
 
         this.speed = (int) (2*SCALE);
-        this.maxHP = 200;
+        this.maxHP = 1000;
         this.HP = maxHP;
         this.dmgMultiplier = 4;
         this.weapon = new Fist(this);

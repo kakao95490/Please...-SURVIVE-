@@ -24,13 +24,22 @@ public class EntityGestion {
 
 
 
-
+    /**
+     * Initialise player et pnj
+     *
+     */
     public void initEntities(){
         player=new Player();
         pnjList.add(initPNJ("Seller"));
     }
 
 
+    /**
+     * Detecte les collisions entre une entité et les murs. Si il y a bien une collision, l'information va être entrée dans un tableau de booléens {@link Entity#getCollisions}
+     * @param entity
+     * @param map
+     * @return
+     */
     public boolean detectWallCollision(Entity entity, Map map){
 
         entity.getHitbox().updateHitbox();
@@ -42,6 +51,12 @@ public class EntityGestion {
         return entity.getCollisions()[0] || entity.getCollisions()[1] || entity.getCollisions()[2] || entity.getCollisions()[3];
     }
 
+
+    /**
+     * Detecte les collisions entre le player et les autres entités. Si il y a bien une collision, l'entité va être immobilisé
+     * @param player
+     * @param entity
+     */
     public void checkCollideWithPlayer(Player player, Enemies entity){
         entity.detectEntityCollision(player);
         if(entity.getCollisions()[0] || entity.getCollisions()[1] || entity.getCollisions()[2] || entity.getCollisions()[3]){
@@ -54,6 +69,12 @@ public class EntityGestion {
         entity.resetCollisions();
     }
 
+
+    /**
+     * Detecte la proximité entre le player et un pnj. Si le player est assez proche, le pnj va lui parler.
+     * @param pnj
+     * @param camera
+     */
     public void interactWithPnj(Camera camera,Player player, PNJ pnj){
         if(player.isNearPnj(pnj) && !player.isOnMenu){
                 camera.displayDialog(pnj.interaction(player));
@@ -68,7 +89,11 @@ public class EntityGestion {
 
 
 
-
+    /**
+     * Initialise un pnj en fonction de son type
+     * @param type
+     * @return
+     */
     public PNJ initPNJ(String type){
         if (type.equals("Seller")) {
             return new Seller();
@@ -76,7 +101,11 @@ public class EntityGestion {
         return null;
     }
 
-
+    /**
+     * Update the player, bonus used, items used, position, collisions, shooting direction, status, animation index
+     * @param camera
+     * @param map
+     */
     public void playerUpdate(Camera camera, Map map){
         player.updateBonus();
         player.useItem();
@@ -100,8 +129,10 @@ public class EntityGestion {
     }
 
     /**
-     * Update the enemies
-     * Posistions, collisions, status, animation index
+     * Update the enemies, position, collisions, status, animation index
+     * @param currentRound
+     * @param aStar A* algorithm pour suivre le player
+     * @param map
      */
     public void updateEnemies(Round currentRound, AStar aStar, Map map){
         Enemies currentEnemy;
@@ -193,8 +224,8 @@ public class EntityGestion {
 
 
     /**
-     * Update the list of entities displayed to see which one to display behind or in front of the others
-     *
+     * Update la liste des entités affichées à l'écran (player, pnj, enemies, bullets) et les trie par ordre de position y pour une impression de profondeur
+     * @param inGameEnemies
      */
     public void updateDisplayedEntitiesList(ArrayList<Enemies> inGameEnemies){
         displayedEntities.clear();
@@ -226,6 +257,7 @@ public class EntityGestion {
             }
         }
     }
+
 
     static void bonus(int type){
         switch (type){

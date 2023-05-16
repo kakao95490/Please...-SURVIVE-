@@ -51,9 +51,9 @@ public abstract class Weapon extends AbstractItem {
     }
 
 
-
-
-
+    /**
+     * Met à jour le cooldown de l'arme
+     */
     public void updateCooldown(){
         if(currentCooldown>0 && currentCooldown!=cooldown){
             currentCooldown--;
@@ -62,6 +62,10 @@ public abstract class Weapon extends AbstractItem {
         }
     }
 
+    /**
+     * Tire un projectile, créer une entité bullet.
+     * @see Bullet
+     */
     public void shoot(){
         if(cooldown==currentCooldown){
             bullets.add(new Bullet(owner.getCoord(), owner.getXLookingDirection(), owner.getYLookingDirection(), range, 5,bulletSize,this));

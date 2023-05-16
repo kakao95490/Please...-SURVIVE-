@@ -54,6 +54,26 @@ public abstract class LivingEntity extends Entity {
         }
     }
 
+
+    /**
+     * Met à jour le statut de l'entité.
+     *
+     * <p>
+     * Les différents statuts possibles sont :
+     * </p>
+     * <ul>
+     *     <li>Si l'entité subit des dégâts : <strong>HIT</strong></li>
+     *     <li>Si l'entité est morte : <strong>DEAD</strong></li>
+     *     <li>Si l'entité est immobile : <strong>STATIC</strong></li>
+     *     <li>Si l'entité est en mouvement : <strong>WALKING</strong></li>
+     * </ul>
+     *
+     * <p>
+     * Si l'entité est morte, on vérifie si l'animation de mort est terminée, et si c'est le cas, on la supprime.
+     * Si l'entité est touchée, on vérifie si l'animation de touché est terminée, et si c'est le cas, on la supprime.
+     * </p>
+     */
+
     public void updateStatus() {
         if(status == DEAD){
             if(animationIndex+1>=getSpriteAmount(DEAD)&& animationTick+1>=animationspd){
@@ -80,6 +100,11 @@ public abstract class LivingEntity extends Entity {
         }
     }
 
+
+    /**
+     * Detect collisions and cancel them
+     * @param entity
+     */
     public void updateEntityCollisions(Entity entity){
         this.resetCollisions();
         this.detectEntityCollision(entity);
@@ -91,6 +116,10 @@ public abstract class LivingEntity extends Entity {
     }
 
 
+    /**
+     * Checks if the entity got hit by a bullet
+     * @param bullet
+     */
     public void gotHitByBullet(Bullet bullet){
         if(bullet.getSource().getOwner()!=this){
             if(hitbox.isColliding(bullet.getHitbox())){
@@ -101,7 +130,11 @@ public abstract class LivingEntity extends Entity {
         }
     }
 
-
+    /**
+     * Checks if the entity got hit by another entity
+     * @param attacker
+     * @return boolean
+     */
     public boolean gotHit(LivingEntity attacker) {
         if(!isInvincible){
             if(this instanceof Player){
@@ -137,7 +170,6 @@ public abstract class LivingEntity extends Entity {
     public Weapon getWeapon() {
         return weapon;
     }
-
     public void setWeapon(Weapon weapon) { this.weapon = weapon; this.weapon.setOwner(this); }
 
     public void heal( int healAmount ) {
@@ -163,7 +195,7 @@ public abstract class LivingEntity extends Entity {
 
 
     /**
-     * Updates the temporary bonus timer of the player
+     * Updates the temporary bonus timer of the entity
      */
     public void updateBonus(){
         for(ConsumeItem item : temporaryBonus){

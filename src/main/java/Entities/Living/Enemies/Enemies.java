@@ -29,6 +29,11 @@ public abstract class Enemies extends LivingEntity {
         setPath(aStar.findPath(coord.centeredCoord().tileCoord().invertedCoord(),playerCoord.centeredCoord().tileCoord().invertedCoord()));
     }
 
+
+    /**
+     * Met à jour la position de l'entité avec la méthode de déplacement AStar.
+     * @param aStar
+     */
     public void updatePos(AStar aStar) {
         movement.setXY(0,0);
         prevCoord.setXY(coord.getX(), coord.getY());
@@ -67,6 +72,10 @@ public abstract class Enemies extends LivingEntity {
         }
     }
 
+
+    /**
+     * Annule la collision de l'entité en fonction du tableau de boolean collisions.
+     */
     @Override
     public void cancelCollision() {
         int[] cancelCollision = {0, 0};
@@ -104,8 +113,7 @@ public abstract class Enemies extends LivingEntity {
     }
 
     /**
-     * Check if the player is near the enemy
-     * Used to change the direction of the enemy
+     * Retourne true si l'entité est proche du joueur.
      */
     public boolean isNearPlayer(){
         for(int i=playerCoord.tileCoord().getX()-2;i<=playerCoord.tileCoord().getX()+2;i++){

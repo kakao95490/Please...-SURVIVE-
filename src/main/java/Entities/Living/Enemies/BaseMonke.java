@@ -9,6 +9,13 @@ import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.PlayerConstants.WALKING;
 import static utils.Constants.WindowConstants.SCALE;
 
+
+/**
+ * BaseMonke class, extends Enemies
+ *Ennemi basique, toute ces stats sont équilibrées
+ *
+ *
+ */
 public class BaseMonke extends Enemies {
     public BaseMonke(int x, int y) {
         this.coord.setXY(x*TILE_SIZE, y*TILE_SIZE);

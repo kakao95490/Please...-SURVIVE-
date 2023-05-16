@@ -9,6 +9,10 @@ import java.util.ArrayList;
 
 import static utils.Constants.EntityConstants.*;
 
+
+/**
+ * Gère les rounds
+ */
 public class Round {
     private final ArrayList<Enemies> waitingEnnemyList = new ArrayList<>();
     private final ArrayList<Enemies> ingameEnnemyList = new ArrayList<>();
@@ -29,6 +33,10 @@ public class Round {
 
     }
 
+    /**
+     * Met à jour les rounds, si il n'y a plus d'ennemis à faire spawn, retourne false pour indiquer que le round est fini
+     * @return
+     */
     public boolean update(){
         if(waitingEnnemyList.size() == 0 && ingameEnnemyList.size() == 0){
             return false;

@@ -12,6 +12,10 @@ import static utils.Constants.PlayerConstants.HIT;
 import static utils.Constants.PlayerConstants.WALKING;
 import static utils.Constants.WindowConstants.SCALE;
 
+
+/**
+ * Classe des Axies. Les Axies sont des ennemis qui se déplacent rapidement, mais qui ont peu de points de vie.
+ */
 public class Axie extends Enemies {
     public Axie(int x, int y) {
         this.coord.setXY(x*TILE_SIZE, y*TILE_SIZE);
@@ -26,7 +30,7 @@ public class Axie extends Enemies {
         this.status = WALKING;
         this.spriteSheet =new Image(Objects.requireNonNull(getClass().getResource("/Sprites/AxieSPRITESHEET.png")).toExternalForm());
 
-        this.speed = (int) (3*SCALE);
+        this.speed = (int) ((3*SCALE)+SCALE/2);
         this.HP = 30;
         this.maxHP = 30;
         this.dmgMultiplier = 0.5;

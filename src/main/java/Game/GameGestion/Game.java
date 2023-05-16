@@ -46,11 +46,21 @@ public class Game {
 
     public int status = PAUSED;
 
+    /**
+     * Constructeur du jeu, initialise la caméra (créer une fenetre de jeu)
+     * @throws URISyntaxException
+     * @throws IOException
+     */
     public Game() throws URISyntaxException, IOException {
         camera = new Camera(this);
     }
 
 
+    /**
+     * Initialise le jeu et ses composants (map, entités, etc)
+     * @throws URISyntaxException
+     * @throws IOException
+     */
     public void initGame() throws URISyntaxException, IOException {
         EntityGestion.initEntities();
         camera.initBonusMenu();
@@ -182,6 +192,9 @@ public class Game {
     }
 
 
+    /**
+     * Clean le jeu et ses composants
+     */
     public void cleanGame() {
         EntityGestion.cleanEntities();
         this.map = null;
@@ -197,7 +210,10 @@ public class Game {
 
 
 
-
+    /**
+     * Update l'apparition des vagues d'ennemis et les fait spawn
+     *
+     */
     public void updateRounds(){
         if(!currentRound.update()){
             if(roundCounter >= roundList.size()){
@@ -232,8 +248,15 @@ public class Game {
     }
 
 
-
-
+    /**
+     * Update toutes les entités du jeu (joueur, ennemis, pnj, balles) et les fait interagir entre elles et avec la map
+     * @see EntityGestion#updateBullets(Map)
+     * @see EntityGestion#updatePnj()
+     * @see EntityGestion#playerUpdate(Camera, Map)
+     * @see EntityGestion#updateEnemies(Round, AStar, Map)
+     * @see EntityGestion#updateDisplayedEntitiesList(ArrayList)
+     * @see #updateRounds()
+     */
     public void updateAll(){
         updateRounds();
         EntityGestion.updateBullets(map);
@@ -249,7 +272,11 @@ public class Game {
 
 
 
-
+    /**
+     * Update et render le jeu
+     * @see #updateAll()
+     * @see Camera#renderAll()
+     */
     public void gameUpdateAndRender(){
         for(Timer timer : timerList){
             timer.updateTimer();
@@ -258,7 +285,10 @@ public class Game {
         camera.renderAll();
     }
 
-
+    /**
+     * Lance la boucle de jeu
+     * @see #gameUpdateAndRender()
+     */
     public void gameLoop(){
         status = RUNNING;
         this.timeline = new Timeline(new KeyFrame(Duration.millis(timePerFrame), event -> {
@@ -273,13 +303,14 @@ public class Game {
             }
             frame++;
 
+            //si le jeu tourne toujours, on update et on render
             if(status==RUNNING){
                 gameUpdateAndRender();
             }
+            //si le jeu est en GAME_OVER ou WIN, on stop le jeu et on affiche l'écran de fin
             else if(status==GAME_OVER){
                 timeline.stop();
                 cleanGame();
-                System.out.println("game over");
                 camera.displayEndScreen(GAME_OVER);
 
             }

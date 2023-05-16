@@ -57,7 +57,12 @@ public abstract class Entity {
 
 
 
-
+    /**
+     * Met à jour la direction de l'entité. (gauche, droite, haut, bas) et la direction de regard (gauche, droite, haut, bas)
+     * @see utils.Constants.Directions
+     * @see utils.Constants.PlayerConstants
+     *
+     */
     public void updateDirection(){
         XlookingDirection=-1;
         YlookingDirection=-1;
@@ -81,8 +86,7 @@ public abstract class Entity {
     }
 
     /**
-     * This method is used to calculate the angle between the entity and the distination
-     * and then calculate the x and y movement based on the angle and the speed
+     * Calcul l'angle de la direction de l'entité en fonction de sa destination.
      *
      */
     public void directionCalcul(){
@@ -99,7 +103,10 @@ public abstract class Entity {
     }
 
 
-
+    /**
+     * detecte les collisions avec les autres entités
+     * @param entity
+     */
     public void detectEntityCollision(Entity entity){
         if(entity.getHitbox().isCollidingFromTopLeft(this.getHitbox())){
             collisions[0]=true;

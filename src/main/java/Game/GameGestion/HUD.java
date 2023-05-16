@@ -1,22 +1,17 @@
 package Game.GameGestion;
 
-import javafx.css.Style;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.util.Objects;
 
-import static utils.Constants.PlayerConstants.INVENTORYSIZE;
 import static utils.Constants.Style.font;
 import static utils.Constants.Style.font2;
-import static utils.Constants.WindowConstants.HEIGHT;
 import static utils.Constants.WindowConstants.WIDTH;
 
 public class HUD {
@@ -33,10 +28,14 @@ public class HUD {
 
     public HUD() {
         this.HUDLayer = new BorderPane();
-        setHUDLayer();
+        initHUD();
     }
 
-    public void setHUDLayer(){
+
+    /**
+     * Initialise le HUD.
+     */
+    public void initHUD(){
         HBox upHudContainer = new HBox(); // conteneur pour les éléments du HUD
         upHudContainer.setPadding(new Insets(10));
         upHudContainer.setAlignment(Pos.TOP_LEFT);
@@ -157,13 +156,6 @@ public class HUD {
         downHudContainer.getChildren().add(timerAndInventoryBox);
 
         HUDLayer.setBottom(downHudContainer);
-
-
-
-
-
-
-
 
     }
 
