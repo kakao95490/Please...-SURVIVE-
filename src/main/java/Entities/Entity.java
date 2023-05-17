@@ -92,6 +92,9 @@ public abstract class Entity {
     public void directionCalcul(){
         Xdirection=-1;
         Ydirection=-1;
+        if(destCoord.equals(coord)){
+            return;
+        }
         int xdif = destCoord.getX()-hitbox.centeredCoord().getX();
         int ydif = destCoord.getY()-hitbox.centeredCoord().getY();
         double angle = Math.atan2(ydif,xdif);

@@ -114,7 +114,6 @@ public class Camera {
      * Initialise le menu de choix de bonus en fin de rounds.
      */
     void initBonusMenu(){
-        game.EntityGestion.getPlayer().isOnMenu=true;
         bonusMenu = new VBox();
         int menuWidth = 500;
         int menuHeight = 800;

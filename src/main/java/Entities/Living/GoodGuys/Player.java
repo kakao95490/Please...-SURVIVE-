@@ -7,6 +7,7 @@ import Items.Consume.ConsumeItem;
 import Items.Consume.HealPotion;
 import Items.Weapons.Pistol;
 import javafx.scene.image.Image;
+import utils.Coord;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -116,35 +117,23 @@ public class Player extends LivingEntity {
     public void updatePos(){
         movement.setXY(0,0);
         prevCoord.setXY(coord.getX(),coord.getY());
-
-        if(directionDiagonal()){
-            if (movementKeyPressed[UP] && movementKeyPressed[RIGHT]) {
-                movement.addXY((int) (speed * 0.71), (int) (-speed * 0.71));
-            }
-            if (movementKeyPressed[DOWN] && movementKeyPressed[RIGHT]) {
-                movement.addXY((int) (speed * 0.71), (int) (speed * 0.71));
-            }
-            if (movementKeyPressed[UP] && movementKeyPressed[LEFT]) {
-                movement.addXY((int) (-speed * 0.71), (int) (-speed * 0.71));
-            }
-            if (movementKeyPressed[DOWN] && movementKeyPressed[LEFT]) {
-                movement.addXY((int) (-speed * 0.71), (int) (speed * 0.71));
-            }
+        destCoord.setXY(coord.getX(),coord.getY());
+        if(isOnMenu){
+            return;
         }
-        else {
-            if (movementKeyPressed[UP]) {
-                movement.addXY(0, -speed);
-            }
-            if (movementKeyPressed[DOWN]) {
-                movement.addXY(0, speed);
-            }
-            if (movementKeyPressed[LEFT]) {
-                movement.addXY(-speed, 0);
-            }
-            if (movementKeyPressed[RIGHT]) {
-                movement.addXY(speed, 0);
-            }
+        if(movementKeyPressed[UP]){
+            destCoord.addXY(0,-10000);
         }
+        if(movementKeyPressed[DOWN]){
+            destCoord.addXY(0,10000);
+        }
+        if(movementKeyPressed[LEFT]){
+            destCoord.addXY(-10000,0);
+        }
+        if(movementKeyPressed[RIGHT]){
+            destCoord.addXY(10000,0);
+        }
+        directionCalcul();
         coord.addXY(movement.getX(),movement.getY());
         hitbox.updateHitbox();
     }
@@ -191,6 +180,10 @@ public class Player extends LivingEntity {
             }
         }
         return count == 2;
+    }
+
+    public void setDestCoord(int x, int y){
+        destCoord.setXY(x,y);
     }
 
     public int getHP() {
