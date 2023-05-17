@@ -12,6 +12,7 @@ import static utils.Constants.Style.font;
 import static utils.Constants.Style.font2;
 import static utils.Constants.WindowConstants.*;
 
+import Items.Consume.ConsumeItem;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -199,6 +200,13 @@ public class Camera {
         g.drawImage(bullet.sprite, bullet.getCoord().getX()+decalageCameraX, bullet.getCoord().getY()+decalageCameraY,bullet.size,bullet.size);
     }
 
+
+    public void renderDroppedItem(){
+        for (ConsumeItem item : EntityGestion.droppedItems) {
+            bgc.drawImage(item.sprite, item.getCoord().getX()+decalageCameraX, item.getCoord().getY()+decalageCameraY,item.getSize(),item.getSize());
+        }
+    }
+
     /**
      * Render des entités
      *
@@ -245,8 +253,12 @@ public class Camera {
         bgc.clearRect(0, 0, WIDTH, HEIGHT);
         gc.clearRect(0,0,WIDTH,HEIGHT);
 
+
         //redraw the map with the movement of the player
         drawMapMatrice();
+
+        //render dropped items
+        renderDroppedItem();
 
         //render entities in order of priority (height) to simulate 3D
         for(Entity entity: game.EntityGestion.displayedEntities){
@@ -260,6 +272,7 @@ public class Camera {
                 renderBullets((Bullet) entity, bgc);
             }
         }
+
 
     }
 

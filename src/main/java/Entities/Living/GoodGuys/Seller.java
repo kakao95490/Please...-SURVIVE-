@@ -148,13 +148,9 @@ public class Seller extends PNJ{
         AbstractItem pistol = new Pistol(this);
         AbstractItem uzi = new Uzi(this);
         AbstractItem shotgun = new Shotgun(this);
-        AbstractItem healPotion = new Items.Consume.HealPotion();
-        AbstractItem bigDmg = new Items.Consume.BigDmg();
         itemList.add(pistol);
         itemList.add(uzi);
         itemList.add(shotgun);
-        itemList.add(healPotion);
-        itemList.add(bigDmg);
     }
 
 

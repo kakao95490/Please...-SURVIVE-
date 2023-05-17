@@ -52,8 +52,6 @@ public class Player extends LivingEntity {
         this.spriteSheet = new Image(Objects.requireNonNull(getClass().getResource("/Sprites/PlayerSPRITESHEET.png")).toExternalForm());
 
         this.inventory = new ConsumeItem[3];
-        this.inventory[0] = new HealPotion();
-        this.inventory[1] = new BigDmg();
     }
 
 
@@ -224,6 +222,15 @@ public class Player extends LivingEntity {
     }
 
 
-
-
+    public void addItem(ConsumeItem consumeItem) {
+        if(inventory[0]==null){
+            inventory[0]=consumeItem;
+        }
+        else if(inventory[1]==null){
+            inventory[1]=consumeItem;
+        }
+        else if(inventory[2]==null){
+            inventory[2]=consumeItem;
+        }
+    }
 }

@@ -72,6 +72,8 @@ public class Game {
         this.hasTakenBonus=false;
         this.roundList.add(new Round(new int[]{
                 BASE_MONKE,
+                BASE_MONKE,
+                BASE_MONKE,
         },
                 map.getSpwanCoords(),80));
 
@@ -186,7 +188,13 @@ public class Game {
                 AXIE,
                 AXIE,
                 AXIE,
-        }, map.getSpwanCoords(),200));
+                AXIE,
+                AXIE,
+                AXIE,
+                AXIE,
+                AXIE,
+
+        }, map.getSpwanCoords(),40));
 
         this.currentRound= roundList.get(0);
     }

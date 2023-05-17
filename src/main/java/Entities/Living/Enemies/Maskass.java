@@ -27,8 +27,8 @@ public class Maskass extends Enemies {
         this.spriteSheet =new Image(Objects.requireNonNull(getClass().getResource("/Sprites/MaskassSPRITESHEET.png")).toExternalForm());
 
 
-        this.speed = (int) (2*SCALE);
-        this.maxHP = 1000;
+        this.speed = (int) ((int) (2*SCALE)+SCALE/2);
+        this.maxHP = 2000;
         this.HP = maxHP;
         this.dmgMultiplier = 4;
         this.weapon = new Fist(this);

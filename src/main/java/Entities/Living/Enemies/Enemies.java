@@ -1,7 +1,11 @@
 package Entities.Living.Enemies;
 
 import Entities.Living.LivingEntity;
+import Items.Consume.BigDmg;
+import Items.Consume.ConsumeItem;
+import Items.Consume.HealPotion;
 import utils.AStar;
+import utils.Constants;
 import utils.Coord;
 
 import java.util.ArrayList;
@@ -124,6 +128,20 @@ public abstract class Enemies extends LivingEntity {
             }
         }
         return false;
+    }
+
+    public ConsumeItem dropRandomItem(){
+        int random = (int) (Math.random()*100);
+        ConsumeItem item = null;
+        if(random<=4){
+            item = new HealPotion(hitbox.centeredCoord());
+            item.onGround = true;
+        }
+        else if(random<=8){
+            item = new BigDmg(hitbox.centeredCoord());
+            item.onGround = true;
+        }
+        return item;
     }
 
 

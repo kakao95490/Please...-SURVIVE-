@@ -6,7 +6,7 @@ import Entities.Living.Enemies.Enemies;
 import Entities.Living.GoodGuys.PNJ;
 import Entities.Living.GoodGuys.Player;
 import Entities.Living.GoodGuys.Seller;
-import Entities.Living.LivingEntity;
+import Items.Consume.ConsumeItem;
 import Map.Map;
 import utils.AStar;
 
@@ -16,11 +16,13 @@ import java.util.Comparator;
 import static utils.Constants.BonusConstants.*;
 import static utils.Constants.PlayerConstants.DEAD;
 import static utils.Constants.PlayerConstants.STATIC;
+import static utils.Constants.WindowConstants.SCALE;
 
 public class EntityGestion {
     public static Player player;
     private ArrayList<PNJ> pnjList = new ArrayList<>();
     public ArrayList<Entity> displayedEntities = new ArrayList<>();
+    public static ArrayList<ConsumeItem> droppedItems = new ArrayList<>();
 
 
 
@@ -117,6 +119,7 @@ public class EntityGestion {
         while(detectWallCollision(player,map)){
             player.cancelCollision();
         }
+        getDroppedItems();
         player.updateShootingDirection();
         player.updateStatus();
         player.updateAnimationIndex();
@@ -153,6 +156,10 @@ public class EntityGestion {
                 currentEnemy.updateStatus();
                 currentEnemy.updateAnimationIndex();
                 if(!currentEnemy.isAlive){
+                    ConsumeItem tempItem = currentEnemy.dropRandomItem();
+                    if(tempItem!=null){
+                        droppedItems.add(tempItem);
+                    }
                     currentRound.getIngameEnnemyList().remove(currentEnemy);
                 }
                 continue;
@@ -268,7 +275,14 @@ public class EntityGestion {
             case SPEED -> player.addSpeed(1);
             case DAMAGE -> player.addDmg(0.15);
         }
-
     }
 
+    public void getDroppedItems() {
+        for (int i = 0; i < droppedItems.size(); i++) {
+            if (player.getHitbox().centeredCoord().distance(droppedItems.get(i).getCoord().centeredCoord()) < 40 * SCALE) {
+                player.addItem(droppedItems.get(i));
+                droppedItems.remove(i);
+            }
+        }
+    }
 }
