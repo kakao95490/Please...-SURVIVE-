@@ -2,6 +2,7 @@ package utils;
 
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Screen;
 
 import static utils.Constants.MapConstants.TILE_SIZE;
 import static utils.Constants.WindowConstants.SCALE;
@@ -37,8 +38,9 @@ public class Constants {
     }
 
     public static class WindowConstants{
-        public static final int WIDTH = 1920;
-        public static final int HEIGHT = 1080;
+        public static final Screen screen = Screen.getPrimary();
+        public static final int WIDTH = (int) screen.getBounds().getWidth();
+        public static final int HEIGHT = (int) screen.getBounds().getHeight();
         public static final double SCALE=3;
         public static final int FPS_TARGET = 60;
         public static final Coord SPRITE_COORD = new Coord( (WIDTH/2-TILE_SIZE/2), (HEIGHT/2-TILE_SIZE/2));

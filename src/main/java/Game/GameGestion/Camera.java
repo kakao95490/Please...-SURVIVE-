@@ -15,6 +15,7 @@ import static utils.Constants.WindowConstants.*;
 import Items.Consume.ConsumeItem;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -30,6 +31,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import utils.Coord;
 
@@ -65,10 +67,16 @@ public class Camera {
         this.game = game;
         Color BACKGROUND_COLOR = Color.BLACK;
 
+
+        // Ajuster la taille de la scène à la taille de l'écran
+
+
         this.stage = new Stage();
         this.root = new StackPane();
         this.canvas = new Canvas(WIDTH,HEIGHT);
         this.bgCanvas = new Canvas(WIDTH,HEIGHT);
+
+
 
         this.gc = canvas.getGraphicsContext2D();
         this.bgc = bgCanvas.getGraphicsContext2D();
@@ -88,9 +96,12 @@ public class Camera {
 
         this.stage.setTitle("Please....SURVIVE!");
 
+
         this.stage.setResizable(false);
         this.stage.setFullScreen(true);
         this.stage.setFullScreenExitHint("");
+
+
 
 
         this.stage.show();
