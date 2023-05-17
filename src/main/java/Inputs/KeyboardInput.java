@@ -45,7 +45,10 @@ public class KeyboardInput {
                 game.EntityGestion.getPlayer().shootKeyPressed[RIGHT]=true;
             }
             if(event.getCode() == KeyCode.SPACE){
-                game.EntityGestion.getPlayer().actionKeyPressed=true;
+                for(int i=0;i<game.EntityGestion.getPnjList().size();i++){
+                    game.EntityGestion.interactWithPnj(game.camera,game.EntityGestion.getPlayer(),game.EntityGestion.getPnjList().get(i));
+                }
+
             }
             if(event.getCode() == KeyCode.DIGIT1){
                 game.EntityGestion.getPlayer().itemUseKeyPressed[0]=true;
@@ -104,6 +107,9 @@ public class KeyboardInput {
                 game.EntityGestion.getPlayer().itemUseKeyPressed[2]=false;
             }
         });
+
+
+
 
     }
 

@@ -23,8 +23,11 @@ public abstract class LivingEntity extends Entity {
     protected int HP;
     protected int maxHP;
     public double dmgMultiplier;
+
     public boolean isAlive= true;
     public boolean isInvincible = false;
+    protected static double detectionRange=100;
+
     protected int animationSpeedFPS = 18;
     protected int animationspd = FPS_TARGET/ animationSpeedFPS;
     public int money;
@@ -205,5 +208,9 @@ public abstract class LivingEntity extends Entity {
                 temporaryBonus.remove(item);
             }
         }
+    }
+
+    public double getDetectionRange() {
+        return detectionRange;
     }
 }

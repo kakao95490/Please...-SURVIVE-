@@ -20,9 +20,9 @@ import static utils.Constants.WindowConstants.SCALE;
 
 public class EntityGestion {
     public static Player player;
-    private ArrayList<PNJ> pnjList = new ArrayList<>();
-    public ArrayList<Entity> displayedEntities = new ArrayList<>();
-    public static ArrayList<ConsumeItem> droppedItems = new ArrayList<>();
+    private ArrayList<PNJ> pnjList;
+    public ArrayList<Entity> displayedEntities;
+    public static ArrayList<ConsumeItem> droppedItems;
 
 
 
@@ -31,6 +31,9 @@ public class EntityGestion {
      *
      */
     public void initEntities(){
+        pnjList = new ArrayList<>();
+        displayedEntities = new ArrayList<>();
+        droppedItems = new ArrayList<>();
         player=new Player();
         pnjList.add(initPNJ("Seller"));
     }
@@ -78,11 +81,11 @@ public class EntityGestion {
      * @param camera
      */
     public void interactWithPnj(Camera camera,Player player, PNJ pnj){
-        if(player.isNearPnj(pnj) && !player.isOnMenu){
+        if(player.isNearEntity(pnj) && !player.isOnMenu){
                 camera.displayDialog(pnj.interaction(player));
                 player.isOnMenu=true;
         }
-        else if(!player.isNearPnj(pnj) && player.isOnMenu){
+        else if(player.isOnMenu){
             player.isOnMenu=false;
             camera.hideDialog();
         }
@@ -112,9 +115,6 @@ public class EntityGestion {
         player.updateBonus();
         player.useItem();
         player.updatePos();
-        for (PNJ pnj : pnjList) {
-            interactWithPnj(camera, player, pnj);
-        }
 
         while(detectWallCollision(player,map)){
             player.cancelCollision();
@@ -258,11 +258,9 @@ public class EntityGestion {
     }
 
     public void cleanEntities() {
-        for (int i = 0; i < displayedEntities.size(); i++) {
-            if (displayedEntities.get(i).status == STATIC) {
-                displayedEntities.remove(i);
-            }
-        }
+        pnjList.clear();
+        droppedItems.clear();
+
     }
 
 

@@ -40,7 +40,7 @@ public class Player extends LivingEntity {
         this.weapon = new Pistol(this); //set the player weapon
 
         this.status=STATIC; //set the player status
-        this.coord.setXY(11*TILE_SIZE, 8*TILE_SIZE);//set the player coord spawn
+        this.coord.setXY(17*TILE_SIZE, 11*TILE_SIZE);//set the player coord spawn
         this.prevCoord.setXY(coord.getX(),coord.getY());
         playerCoord = coord;
 
@@ -116,6 +116,7 @@ public class Player extends LivingEntity {
     public void updatePos(){
         movement.setXY(0,0);
         prevCoord.setXY(coord.getX(),coord.getY());
+
         if(directionDiagonal()){
             if (movementKeyPressed[UP] && movementKeyPressed[RIGHT]) {
                 movement.addXY((int) (speed * 0.71), (int) (-speed * 0.71));
@@ -217,8 +218,8 @@ public class Player extends LivingEntity {
         this.dmgMultiplier += multiplicator;
     }
 
-    public boolean isNearPnj( PNJ pnj){
-        return this.getCoord().distance(pnj.getCoord()) < pnj.getDetectionRange();
+    public boolean isNearEntity( LivingEntity entity){
+        return this.getCoord().distance(entity.getCoord()) < entity.getDetectionRange();
     }
 
 
