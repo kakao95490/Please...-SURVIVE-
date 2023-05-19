@@ -139,11 +139,10 @@ public class Player extends LivingEntity {
     }
 
 
-
-
-
-
-
+    /**
+     * Update la direction de tir du joueur en fonction des inputs
+     * @see Inputs.KeyboardInput
+     */
     public void updateShootingDirection(){
         XlookingDirection=-1;
         YlookingDirection=-1;
@@ -162,28 +161,16 @@ public class Player extends LivingEntity {
         shooting();
     }
 
+    /**
+     * Tire une balle dans la direction de tir du joueur
+     * @see Inputs.KeyboardInput
+     */
     public void shooting(){
         if(XlookingDirection!=-1 || YlookingDirection!=-1){
             weapon.shoot();
         }
         weapon.updateCooldown();
 
-    }
-
-
-
-    boolean directionDiagonal(){
-        int count=0;
-        for(int i=0;i<4;i++){
-            if(movementKeyPressed[i]){
-                count++;
-            }
-        }
-        return count == 2;
-    }
-
-    public void setDestCoord(int x, int y){
-        destCoord.setXY(x,y);
     }
 
     public int getHP() {

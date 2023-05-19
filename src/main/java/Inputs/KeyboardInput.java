@@ -44,7 +44,7 @@ public class KeyboardInput {
             if(event.getCode() == KeyCode.RIGHT){
                 game.EntityGestion.getPlayer().shootKeyPressed[RIGHT]=true;
             }
-            if(event.getCode() == KeyCode.SPACE){
+            if(event.getCode() == KeyCode.E){
                 for(int i=0;i<game.EntityGestion.getPnjList().size();i++){
                     game.EntityGestion.interactWithPnj(game.camera,game.EntityGestion.getPlayer(),game.EntityGestion.getPnjList().get(i));
                 }

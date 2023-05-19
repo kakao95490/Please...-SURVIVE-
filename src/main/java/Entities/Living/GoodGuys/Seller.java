@@ -22,6 +22,7 @@ import static utils.Constants.WindowConstants.*;
 import Items.AbstractItem;
 import javafx.scene.text.Text;
 
+
 public class Seller extends PNJ{
 
     private final ArrayList<AbstractItem> itemList = new ArrayList<>();
